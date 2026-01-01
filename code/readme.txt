@@ -12,7 +12,7 @@ At the very top of the Fortran code there is a module titled "Global_Vars". At t
 
 For generating the benchmark, please set:
 
-	remove_controlled_market=0
+		remove_controlled_market=0
         remove_free_market=0
         random_assignment=0
         redistribute_as_income_tax_reduction=0
@@ -27,7 +27,7 @@ Experiments 1, 2, 3, and 4
 
 1. For Experiment 1, please set:
 
-	remove_controlled_market=1
+		remove_controlled_market=1
         remove_free_market=0
         random_assignment=0
         redistribute_as_income_tax_reduction=1
@@ -41,7 +41,7 @@ Experiments 1, 2, 3, and 4
 
 2. Experiment 2:
 
-	remove_controlled_market=1
+		remove_controlled_market=1
         remove_free_market=0
         random_assignment=0
         redistribute_as_income_tax_reduction=0
@@ -54,7 +54,7 @@ Experiments 1, 2, 3, and 4
 
 3. Experiment 3:
 
-	remove_controlled_market=1
+		remove_controlled_market=1
         remove_free_market=0
         random_assignment=0
         redistribute_as_income_tax_reduction=0
@@ -67,7 +67,7 @@ Experiments 1, 2, 3, and 4
 
 4. Experiment 4:
 
-	remove_controlled_market=1
+		remove_controlled_market=1
         remove_free_market=0
         random_assignment=0
         redistribute_as_income_tax_reduction=0
@@ -77,4 +77,5 @@ Experiments 1, 2, 3, and 4
         distribute_to_below_these_productivities=9
         distribution_to_below_these_age=1
         is_counterfactual=1
+
         
