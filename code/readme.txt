@@ -1,12 +1,12 @@
-This file shows you how to run the simulations in "Can Rent Control Outperform Decontrol? A Welfare Analysis", by Shahar Rotberg and Lin Zhang.
+This file shows you how to run the simulations in "Rent Control? Bad in Theory, Not Always in Practice", by Shahar Rotberg and Lin Zhang.
 
 Before running each simulation you will have to run the following commands:
 
 Write the command in the line below and press enter:
-gfortran can_rent_control_outperform_decontrol_a_welfare_analysis_Rotberg_Zhang_v3.f90 -I/usr/local/include -lm -mcmodel=medium -fopenmp -g -o can_rent_control_outperform_decontrol_a_welfare_analysis
+gfortran rent_control_bad_in_theory_not_always_in_practice_Rotberg_Zhang_v3.f90 -I/usr/local/include -lm -mcmodel=medium -fopenmp -g -o rent_control_bad_in_theory_not_always_in_practice
 
 Write the command in the line below and press enter:
-./can_rent_control_outperform_decontrol_a_welfare_analysis
+./rent_control_bad_in_theory_not_always_in_practice
 
 At the very top of the Fortran code there is a module titled "Global_Vars". At the top of this module you will see eight variables, which we describe below how to set for each simulation.
 
@@ -79,3 +79,4 @@ Experiments 1, 2, 3, and 4
         is_counterfactual=1
 
         
+
