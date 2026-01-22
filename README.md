@@ -1,4 +1,4 @@
-Replication code for "Can Rent Control Outperform Decontrol? A Welfare Analysis" by Shahar Rotberg and Lin Zhang
+Replication code for "Rent Control? Bad in Theory, Not Always in Practice" by Shahar Rotberg and Lin Zhang
 
 The "code" folder contains the Fortran code that runs the quantitative experiments. Please see the text file "readme.txt" in this folder for detailed instructions on how to compile and run the code.
 
