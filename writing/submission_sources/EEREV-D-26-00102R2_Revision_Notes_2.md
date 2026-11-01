@@ -50,6 +50,13 @@ While checking every reported number against the simulation output files, we fou
 - **Figures 1 and 2.** Now supplied as vector artwork with the same content; the previous Figure 1 was a low-resolution image.
 - **LaTeX.** Minor fixes so that the source compiles without errors; these do not change any content.
 
+## Changes to follow the Guide for Authors
+
+- Acknowledgements moved from the footnote to the title into a separate section before the references.
+- Funding statement added: this research did not receive any specific grant.
+- Data availability statement added, citing the supplementary replication files.
+- Appendix equations numbered (A.1)-(A.4).
+
 Sincerely,
 
 Shahar Rotberg, on behalf of both authors
