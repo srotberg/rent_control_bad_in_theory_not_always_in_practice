@@ -13,7 +13,7 @@ The paper builds a quantitative life-cycle model of the Toronto housing market w
 - `code/`: the Fortran source for the model, which produces every simulation result in the paper, and instructions for running it (`code/readme.txt`).
 - `data/`: the data and Stata scripts behind the calibration targets and the data moments in Tables 1-4 and Figure 2.
 - `outputs/`: the output file of every simulation, including the six that the paper reports.
-- `plots/`: the Python script that draws Figure 2, and the figure it produces.
+- `plots/`: the Python scripts that draw Figures 1 and 2, and the figures they produce.
 
 The package is about 18 MB. Section 6 lists every file.
 
@@ -41,7 +41,7 @@ All data files included in this package may be redistributed.
 
 - **Model (Fortran).** gfortran with OpenMP; no other libraries. The code compiles with GNU Fortran 13.3 on Linux (Ubuntu 24.04) using the command in `code/readme.txt`. The paper's simulations were run on a multi-core workstation.
 - **Data scripts (Stata).** The `.do` files use standard Stata commands (`svy`, `xtile`, `egen`). They need the microdata files described in Section 2.
-- **Figure 2 (Python).** Python 3 with `matplotlib` and `openpyxl` (tested with Python 3.13, matplotlib 3.10, openpyxl 3.1).
+- **Figures (Python).** Python 3 with `matplotlib`; Figure 2 also needs `openpyxl` (tested with Python 3.13, matplotlib 3.10, openpyxl 3.1).
 
 **Run times.** Each output file records its run time on its second line (`hours to finish simulaion`). For the simulations reported in the paper:
 
@@ -54,13 +54,13 @@ All data files included in this package may be redistributed.
 | Experiment 4 (one discount value) | 168 hours (about 7 days) |
 | Experiment 4 with income conditioning | 155 hours (about 6.5 days) |
 
-The full search over the Experiment 4 discount took between 1.5 and 7 days per grid point. Figure 2 and the Stata scripts each run in under a minute.
+The full search over the Experiment 4 discount took between 1.5 and 7 days per grid point. The figure scripts and the Stata scripts each run in under a minute.
 
 ## 4. Instructions
 
 1. **Simulations.** Follow `code/readme.txt`. Run the benchmark first, then the counterfactuals in the same folder, because every counterfactual reads the benchmark's `.dat` files. Each run writes `outputs<simulation name>.txt`; the six that the paper uses are listed in Section 5.
 2. **Tables 2-6.** Read the values from the output files as described in Section 5.
-3. **Figure 2.** From the package root, run `python plots/figure_2_homeownership_and_LTV.py`. It reads `data/2016_Census_vetted.xlsx`, `data/2019_SFS.xlsx` and the benchmark output file, and writes `plots/Figure_2_homeownership_and_LTV.png` and `.tiff`.
+3. **Figures.** Run `python plots/figure_1_rent_path_diagram.py` for Figure 1. For Figure 2, run `python plots/figure_2_homeownership_and_LTV.py`. It reads `data/2016_Census_vetted.xlsx`, `data/2019_SFS.xlsx` and the benchmark output file, and writes `plots/Figure_2_homeownership_and_LTV.png` and `.tiff`.
 4. **Data moments.** Each Stata script loads its microdata with a `use` command near the top, preceded by a `cd` or `log using` line with the authors' local paths; change those paths to where the microdata are stored, then run the script. The results are the values reported in `2016_Census_vetted.xlsx` and `2019_SFS.xlsx`.
 
 ## 5. From output files to tables and figures
@@ -126,7 +126,7 @@ Each output file is a list of lines of the form `name value`. In what follows, "
 
 Values in the paper are rounded to two decimals; a few cells differ from the output files by 0.01 because of rounding.
 
-**Figure 1.** Conceptual diagram drawn by the authors; no data or code.
+**Figure 1.** Conceptual diagram; drawn by `plots/figure_1_rent_path_diagram.py` and uses no data.
 
 **Figure 2.** `plots/figure_2_homeownership_and_LTV.py`. Data: `2016_Census_vetted.xlsx` (sheet `homeownership_housholds_szie`) and `2019_SFS.xlsx` (sheet `LTV by Age Group`). Model: lines `homeownership_age1` to `homeownership_age60` (ages 26-85) and `LTV_age_group1` to `LTV_age_group12` in the benchmark output.
 
@@ -204,8 +204,11 @@ Values in the paper are rounded to two decimals; a few cells differ from the out
 
 **plots/**
 
-- `plots/Figure_2_homeownership_and_LTV.png` (270 KB). Figure 2 (300 dpi), produced by the script above.
-- `plots/Figure_2_homeownership_and_LTV.tiff` (1.4 MB). Figure 2 (600 dpi TIFF), produced by the script above.
+- `plots/Figure_1_rent_path_diagram.eps` (38 KB). Figure 1 (vector EPS), produced by `figure_1_rent_path_diagram.py`.
+- `plots/Figure_1_rent_path_diagram.pdf` (15 KB). Figure 1 (vector PDF), produced by `figure_1_rent_path_diagram.py`.
+- `plots/Figure_2_homeownership_and_LTV.png` (270 KB). Figure 2 (300 dpi), produced by `figure_2_homeownership_and_LTV.py`.
+- `plots/Figure_2_homeownership_and_LTV.tiff` (1.4 MB). Figure 2 (600 dpi TIFF), produced by `figure_2_homeownership_and_LTV.py`.
+- `plots/figure_1_rent_path_diagram.py` (4 KB). Python: draws Figure 1 (conceptual diagram, no data).
 - `plots/figure_2_homeownership_and_LTV.py` (5 KB). Python: draws Figure 2 from data/ and the benchmark output file.
 
 The GitHub repository also contains `writing/`, the LaTeX source of the paper; it is not part of the replication package.
