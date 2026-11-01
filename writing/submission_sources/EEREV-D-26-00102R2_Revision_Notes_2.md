@@ -34,9 +34,11 @@ Thank you for the conditional acceptance of our paper. We are grateful to you, t
 - `code/`: the Fortran source that produces every simulation result, with instructions.
 - `data/`: the data and Stata scripts behind the calibration targets and data moments.
 - `outputs/`: the output file of every simulation, including the six reported in the paper.
-- `plots/`: the Python script that draws Figure 2.
+- `plots/`: the Python scripts that draw Figures 1 and 2.
 
-All data files in the package may be redistributed. Some calibration targets come from confidential 2016 Census microdata; the package contains the vetted statistics computed from those data and the scripts that produced them, and the ReadMe explains how researchers can obtain access to the microdata.
+All data files in the package may be redistributed.
+
+**Request for a partial data exemption.** Several calibration targets and data moments (in Tables 2-4 and Figure 2) are computed from the confidential 2016 Census of Population microdata held by Statistics Canada, which we are not permitted to redistribute. We therefore ask the Editor to grant a partial data exemption for these microdata. In their place, the package provides the statistics we computed from them, vetted for release, together with the Stata scripts that produced them; researchers who obtain access to the microdata from Statistics Canada can rerun these scripts. The 2019 Survey of Financial Security microdata are distributed by Statistics Canada and are likewise not included; the statistics we computed from them, and the scripts, are. All other data and all code are included.
 
 ## Corrections made while preparing the replication files
 
@@ -44,6 +46,7 @@ While checking every reported number against the simulation output files, we fou
 
 - **Table 5.** Five cells now match the output files: Experiment 2 free-market rent (5.76 to 5.74) and homeownership (-1.08 to -1.02 p.p.); Experiment 3 homelessness (70.50 to 70.47); Experiment 4 controlled initial rent (-39.02 to -39.20) and homeownership (1.12 to 1.17 p.p.).
 - **Figure 2.** The model lines were drawn from an earlier run of the benchmark; they are now drawn from the benchmark simulation reported in the paper. The patterns are unchanged, except that the model's homeownership rate after age 66 is now higher than in the data, so the sentence describing panel (a) in Section 4.3 now reads "the model over-predicts homeownership among middle-aged and older households and under-predicts it for young cohorts."
+- **Figure 1.** Now supplied as vector artwork with the same content; the previous file was a low-resolution image.
 - **LaTeX.** Minor fixes so that the source compiles without errors; these do not change any content.
 
 Sincerely,
