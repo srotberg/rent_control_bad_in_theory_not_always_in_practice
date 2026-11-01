@@ -1,10 +1,15 @@
+* -----------------------------------------------------------------------------
+* Set datadir to the folder that holds this script's input microdata file; the
+* Stata log is written there too. "." means the current working directory.
+global datadir "."
+* -----------------------------------------------------------------------------
 
 clear 
 set more off
 
-log using "\\file-storage-st\project-workspace-espace-de-projet\CMHC-10448\Shared-Workspace-Espace d'équipe\Lin Zhang\Rent setting\log_prop_renter_control", replace
+log using "$datadir/log_prop_renter_control", replace
 
-use "\\file-storage-st\project-workspace-espace-de-projet\CMHC-10448\Shared-Workspace-Espace d'équipe\Lin Zhang\Rent setting\Census_2016.dta"
+use "$datadir/Census_2016.dta"
 
 bysort HHINC: drop if HHINC<=0
 

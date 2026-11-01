@@ -1,8 +1,13 @@
+* -----------------------------------------------------------------------------
+* Set datadir to the folder that holds this script's input microdata file; the
+* Stata log is written there too. "." means the current working directory.
+global datadir "."
+* -----------------------------------------------------------------------------
 clear
 
 local year=2016
 
-local path="G:\My Drive\Academic\can_rent_control_outperform_decontrol_a_welfare_analysis\data\census_"+"`year'"
+local path="$datadir"
 
 cd "`path'"
 

@@ -1,10 +1,15 @@
+* -----------------------------------------------------------------------------
+* Set datadir to the folder that holds this script's input microdata file; the
+* Stata log is written there too. "." means the current working directory.
+global datadir "."
+* -----------------------------------------------------------------------------
 
 clear
 set more off
 
-log using "C:\Users\lzhang\OneDrive - CMHC-SCHL\Workingpaper\Rent setting\Data Analysis\log_SFS_2019", replace
+log using "$datadir/log_SFS_2019", replace
 
-use "C:\Users\lzhang\OneDrive - CMHC-SCHL\Workingpaper\Rent setting\Data\SFS_2019.dta"
+use "$datadir/SFS_2019.dta"
 
 *-----------------------------------------------------------------*;
 *--------Loan to Value by Age of Family Major Income Earner-------*;

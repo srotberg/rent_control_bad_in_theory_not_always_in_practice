@@ -33,9 +33,19 @@ All data files included in this package may be redistributed.
 | 5-year variable mortgage rates and 10-year bond yields, 2002-2017 | Mortgage interest rate premium (Table 1) | Yes: `data/bond_yields_mortgage_rates.csv` |
 | Published estimates | Parameters cited in Table 1 (e.g., Guvenen et al. 2023; Gruber and Martin 2003) | Values set in the Fortran code; references in the paper |
 
-**Census microdata.** The statistics in `data/2016_Census_vetted.xlsx` were computed from 2016 Census microdata with the three Census scripts listed above, and vetted. The microdata file the scripts read (`Census_2016.dta`) is not included; the scripts are included so the computations can be checked and rerun with access to the microdata, which is administered by Statistics Canada.
+**How the data were used to build the final data sets.** The model reads no data files: every parameter is set in the Fortran code. Data enter the paper only through the externally assigned parameters (Table 1), the calibration targets (Table 2), and the data columns of Tables 3-4 and Figure 2. The final data sets behind these numbers are the statistics in `2016_Census_vetted.xlsx`, `2019_SFS.xlsx`, `CMHC_RMS.csv`, `bond_yields_mortgage_rates.csv` and `WHO_death_rates_Canada.xlsx`, all included. The two spreadsheets were built from intermediate microdata with the Stata scripts below. The scripts print their results to a Stata log, and the results are recorded in the spreadsheets.
 
-**SFS microdata.** The 2019 SFS microdata file (`SFS_2019.dta`) is distributed by Statistics Canada and is not included. The statistics computed from it are in `data/2019_SFS.xlsx`.
+| Script | Reads (intermediate data) | Results recorded in |
+|---|---|---|
+| `Census_2016.do` | `Census_2016.dta` (2016 Census microdata; not included) | `2016_Census_vetted.xlsx`: homeownership and household size by age, income by age, Gini, controlled vs. uncontrolled renters |
+| `proportions_of_renters_market_and_quintiles_2016.do` | `Census_2016.dta` | `2016_Census_vetted.xlsx`, sheet `rent_control` (Table 4, data row) |
+| `rent_to_income_cdf_2016.do` | `Census_2016.dta` | `2016_Census_vetted.xlsx`, sheet `rent_to_income_cdf` |
+| `SFS_2019.do` | `SFS_2019.dta` (2019 SFS microdata; not included) | `2019_SFS.xlsx` |
+| `net_worth_to_GDP.do` | `SFS_2019.dta` | Net worth to GDP (Table 3) |
+| `premium_and_discrimination.do` | `census_pumf_clean_2016.dta` (included) | Controlled-rent entry premium and discrimination tests (Appendix A) |
+| `computations_fraction_controlled_new_and_old.do` | `census_pumf_clean_2016.dta` (included) | Shares of new and old rental units |
+
+**Microdata not included.** The statistics in `2016_Census_vetted.xlsx` were computed from 2016 Census microdata and vetted. That microdata file (`Census_2016.dta`) and the 2019 SFS microdata file (`SFS_2019.dta`) are intermediate data sets and are not included. Both are Statistics Canada files, and access to them is administered by Statistics Canada. The scripts that use them are included. The authors will cooperate fully with any researcher who requests these files or details of the computations for the purpose of replication (contact: shahar.rotberg@gmail.com).
 
 ## 3. Computational requirements
 
@@ -61,7 +71,7 @@ The full search over the Experiment 4 discount took between 1.5 and 7 days per g
 1. **Simulations.** Follow `code/readme.txt`. Run the benchmark first, then the counterfactuals in the same folder, because every counterfactual reads the benchmark's `.dat` files. Each run writes `outputs<simulation name>.txt`; the six that the paper uses are listed in Section 5.
 2. **Tables 2-6.** Read the values from the output files as described in Section 5.
 3. **Figures.** Run `python plots/figure_1_rent_path_diagram.py` for Figure 1. For Figure 2, run `python plots/figure_2_homeownership_and_LTV.py`. It reads `data/2016_Census_vetted.xlsx`, `data/2019_SFS.xlsx` and the benchmark output file, and writes `plots/Figure_2_homeownership_and_LTV.pdf` and `.eps`.
-4. **Data moments.** Each Stata script loads its microdata with a `use` command near the top, preceded by a `cd` or `log using` line with the authors' local paths; change those paths to where the microdata are stored, then run the script. The results are the values reported in `2016_Census_vetted.xlsx` and `2019_SFS.xlsx`.
+4. **Data moments.** At the top of each Stata script, set `global datadir` to the folder that holds the script's input microdata file (the Stata log is written there too). The default `"."` is the current working directory: running `premium_and_discrimination.do` or `computations_fraction_controlled_new_and_old.do` from `data/` works as is, because `census_pumf_clean_2016.dta` is there. The results are the values recorded in `2016_Census_vetted.xlsx` and `2019_SFS.xlsx` (Section 2).
 
 ## 5. From output files to tables and figures
 
@@ -138,77 +148,92 @@ Values in the paper are rounded to two decimals; a few cells differ from the out
 
 ## 6. List of all files
 
+Each entry gives the file's format, size and purpose. File formats:
+
+| Extension | Format |
+|---|---|
+| `.f90` | Fortran 90 source code (plain text) |
+| `.do` | Stata do-file (plain text) |
+| `.dta` | Stata dataset (`.dta` format 114; readable by Stata 10 or later, R and Python) |
+| `.xlsx` | Microsoft Excel workbook |
+| `.csv` | Comma-separated text (UTF-8) |
+| `.txt` in `outputs/` | Plain text written by the model: one statistic per line, as `name value` |
+| `.txt` in `code/` | Plain-text instructions |
+| `.py` | Python 3 script |
+| `.pdf`, `.eps` in `plots/` | Vector figure files |
+| `.pdf` in `data/` | PDF document |
+
 **code/**
 
-- `code/readme.txt` (5 KB). How to compile and run the model and which switches select each simulation.
-- `code/rent_control_bad_in_theory_not_always_in_practice_Rotberg_Zhang_v11.f90` (1.1 MB). Fortran source for the model; produces every simulation (benchmark and counterfactuals).
+- `code/readme.txt` (plain text, 5 KB). How to compile and run the model and which switches select each simulation.
+- `code/rent_control_bad_in_theory_not_always_in_practice_Rotberg_Zhang_v11.f90` (Fortran 90 source, 1.1 MB). Fortran source for the model; produces every simulation (benchmark and counterfactuals).
 
 **data/**
 
-- `data/2016_Census_Hierarchical_PUMF_User_Guide.pdf` (3.3 MB). Statistics Canada user guide for the 2016 Census Hierarchical PUMF.
-- `data/2016_Census_vetted.xlsx` (18 KB). Vetted statistics computed from 2016 Census microdata (Toronto CMA): rent control shares by income quintile, rent-to-income distribution, income and Gini, homeownership and household size by age.
-- `data/2019_SFS.xlsx` (23 KB). Statistics computed from the 2019 Survey of Financial Security: LTV by age group, mortgage debt to house value, wealth distribution, bequests.
-- `data/CMHC_RMS.csv` (4 KB). CMHC Rental Market Survey: Toronto average rents by bedroom type, 1990-2024.
-- `data/Census_2016.do` (16 KB). Stata: homeownership by age, household size, income quintiles, Gini, income taxes, controlled vs. uncontrolled renters (reads the 2016 Census microdata file `Census_2016.dta`, not included; results in `2016_Census_vetted.xlsx`).
-- `data/SFS_2019.do` (3 KB). Stata: LTV by age, mortgage debt, house values, wealth shares, share of owners with a mortgage (2019 SFS microdata; results in `2019_SFS.xlsx`).
-- `data/WHO_death_rates_Canada.xlsx` (16 KB). WHO life-table death rates for Canada; used to compute bequests (`2019_SFS.xlsx`, sheet "Wealth Bequest").
-- `data/bond_yields_mortgage_rates.csv` (31 KB). 5-year variable mortgage rates and 10-year bond yields, 2002-2017; average spread gives the mortgage premium in Table 1.
-- `data/census_pumf_clean_2016.dta` (9.6 MB). 2016 Census Hierarchical Public Use Microdata File (cleaned), Stata format.
-- `data/computations_fraction_controlled_new_and_old.do` (1 KB). Stata (uses `census_pumf_clean_2016.dta`): shares of new and old rental units, condo vs. single-family stock.
-- `data/net_worth_to_GDP.do` (0 KB). Stata: aggregate net worth to GDP (2019 SFS microdata).
-- `data/premium_and_discrimination.do` (2 KB). Stata (uses `census_pumf_clean_2016.dta`): controlled-rent entry premium and age/income discrimination (Appendix A).
-- `data/proportions_of_renters_market_and_quintiles_2016.do` (1 KB). Stata: share of households in controlled and free-market rentals by income quintile (Table 4, data row).
-- `data/rent_to_income_cdf_2016.do` (2 KB). Stata: distribution of renters' rent-to-income ratios (Tables 2 and 3).
+- `data/2016_Census_Hierarchical_PUMF_User_Guide.pdf` (PDF document, 3.3 MB). Statistics Canada user guide for the 2016 Census Hierarchical PUMF.
+- `data/2016_Census_vetted.xlsx` (Excel workbook, 18 KB). Vetted statistics computed from 2016 Census microdata (Toronto CMA): rent control shares by income quintile, rent-to-income distribution, income and Gini, homeownership and household size by age.
+- `data/2019_SFS.xlsx` (Excel workbook, 23 KB). Statistics computed from the 2019 Survey of Financial Security: LTV by age group, mortgage debt to house value, wealth distribution, bequests.
+- `data/CMHC_RMS.csv` (CSV text, 4 KB). CMHC Rental Market Survey: Toronto average rents by bedroom type, 1990-2024.
+- `data/Census_2016.do` (Stata do-file, 16 KB). Stata: homeownership by age, household size, income quintiles, Gini, income taxes, controlled vs. uncontrolled renters (reads the 2016 Census microdata file `Census_2016.dta`, not included; results in `2016_Census_vetted.xlsx`).
+- `data/SFS_2019.do` (Stata do-file, 3 KB). Stata: LTV by age, mortgage debt, house values, wealth shares, share of owners with a mortgage (2019 SFS microdata; results in `2019_SFS.xlsx`).
+- `data/WHO_death_rates_Canada.xlsx` (Excel workbook, 16 KB). WHO life-table death rates for Canada; used to compute bequests (`2019_SFS.xlsx`, sheet "Wealth Bequest").
+- `data/bond_yields_mortgage_rates.csv` (CSV text, 31 KB). 5-year variable mortgage rates and 10-year bond yields, 2002-2017; average spread gives the mortgage premium in Table 1.
+- `data/census_pumf_clean_2016.dta` (Stata dataset, 9.6 MB). 2016 Census Hierarchical Public Use Microdata File (cleaned), Stata format.
+- `data/computations_fraction_controlled_new_and_old.do` (Stata do-file, 2 KB). Stata (uses `census_pumf_clean_2016.dta`): shares of new and old rental units, condo vs. single-family stock.
+- `data/net_worth_to_GDP.do` (Stata do-file, 1 KB). Stata: aggregate net worth to GDP (2019 SFS microdata).
+- `data/premium_and_discrimination.do` (Stata do-file, 2 KB). Stata (uses `census_pumf_clean_2016.dta`): controlled-rent entry premium and age/income discrimination (Appendix A).
+- `data/proportions_of_renters_market_and_quintiles_2016.do` (Stata do-file, 1 KB). Stata: share of households in controlled and free-market rentals by income quintile (Table 4, data row).
+- `data/rent_to_income_cdf_2016.do` (Stata do-file, 2 KB). Stata: distribution of renters' rent-to-income ratios (Tables 2 and 3).
 
 **outputs/**
 
-- `outputs/outputs0_control_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (58 KB). Experiment 1: decontrol with income tax cuts (Tables 5-6, row 1).
-- `outputs/outputs0_control_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top_higher_elasticity.txt` (58 KB). Additional simulation from an earlier revision, not reported in the final paper (higher rental supply elasticity).
-- `outputs/outputs0_control_GE_counter_marginal_pi_lump_sum_bottom_renters.txt` (58 KB). Additional simulation from an earlier revision, not reported in the final paper (transfers to bottom-quintile renters).
-- `outputs/outputs0_control_GE_counter_marginal_pi_lump_sum_renters.txt` (58 KB). Experiment 2: decontrol with transfers to renters and the homeless (Tables 5-6, row 2).
-- `outputs/outputs0_control_GE_counter_marginal_pi_lump_sum_renters_higher_elasticity.txt` (58 KB). Additional simulation from an earlier revision, not reported in the final paper (higher rental supply elasticity).
-- `outputs/outputs0_control_GE_counter_marginal_pi_lump_sum_to_all_by_income_and_age.txt` (58 KB). Additional simulation from an earlier revision, not reported in the final paper (transfers to all households by income and age).
-- `outputs/outputs0_control_GE_counter_marginal_pi_lump_sum_two_bottom_renters.txt` (58 KB). Additional simulation from an earlier revision, not reported in the final paper (transfers to bottom-two-quintile renters).
-- `outputs/outputs0_control_GE_counter_marginal_pi_lump_sum_young_pi_full_tax.txt` (58 KB). Experiment 3: decontrol, full profit tax, transfers to newborns (Tables 5-6, row 3).
-- `outputs/outputs0_control_beq_constant_counter_marginal_pi_inc_tax_reduction_pi_to_top_sr.txt` (58 KB). Additional simulation from an earlier revision, not reported in the final paper (short run; bequests held fixed).
-- `outputs/outputs0_control_beq_constant_counter_marginal_pi_inc_tax_reduction_pi_to_top_sr_fixed_stocks.txt` (58 KB). Additional simulation from an earlier revision, not reported in the final paper (housing stocks held fixed; short run; bequests held fixed).
-- `outputs/outputs0_control_beq_constant_counter_marginal_pi_inc_tax_reduction_pi_to_top_sr_fixed_stocks_relative_to_unit_control.txt` (58 KB). Additional simulation from an earlier revision, not reported in the final paper (measured against the unit-control economy; housing stocks held fixed; short run; bequests held fixed).
-- `outputs/outputs0_control_beq_constant_counter_marginal_pi_inc_tax_reduction_pi_to_top_sr_relative_to_unit_control.txt` (58 KB). Additional simulation from an earlier revision, not reported in the final paper (measured against the unit-control economy; short run; bequests held fixed).
-- `outputs/outputs0_control_beq_constant_counter_marginal_pi_lump_sum_renters_sr.txt` (58 KB). Additional simulation from an earlier revision, not reported in the final paper (short run; bequests held fixed).
-- `outputs/outputs0_control_beq_constant_counter_marginal_pi_lump_sum_renters_sr_fixed_stocks.txt` (58 KB). Additional simulation from an earlier revision, not reported in the final paper (housing stocks held fixed; short run; bequests held fixed).
-- `outputs/outputs0_control_beq_constant_counter_marginal_pi_lump_sum_renters_sr_fixed_stocks_relative_to_unit_control.txt` (58 KB). Additional simulation from an earlier revision, not reported in the final paper (measured against the unit-control economy; housing stocks held fixed; short run; bequests held fixed).
-- `outputs/outputs0_control_beq_constant_counter_marginal_pi_lump_sum_renters_sr_relative_to_unit_control.txt` (58 KB). Additional simulation from an earlier revision, not reported in the final paper (measured against the unit-control economy; short run; bequests held fixed).
-- `outputs/outputs0_control_beq_constant_counter_marginal_pi_lump_sum_young_pi_full_tax_sr.txt` (58 KB). Additional simulation from an earlier revision, not reported in the final paper (short run; bequests held fixed).
-- `outputs/outputs0_control_beq_constant_counter_marginal_pi_lump_sum_young_pi_full_tax_sr_fixed_stocks.txt` (58 KB). Additional simulation from an earlier revision, not reported in the final paper (housing stocks held fixed; short run; bequests held fixed).
-- `outputs/outputs0_control_beq_constant_counter_marginal_pi_lump_sum_young_pi_full_tax_sr_fixed_stocks_relative_to_unit_control.txt` (58 KB). Additional simulation from an earlier revision, not reported in the final paper (measured against the unit-control economy; housing stocks held fixed; short run; bequests held fixed).
-- `outputs/outputs0_control_beq_constant_counter_marginal_pi_lump_sum_young_pi_full_tax_sr_relative_to_unit_control.txt` (58 KB). Additional simulation from an earlier revision, not reported in the final paper (measured against the unit-control economy; short run; bequests held fixed).
-- `outputs/outputs0_control_rents_and_hp_constant_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (58 KB). Additional simulation from an earlier revision, not reported in the final paper (rents and house prices held at benchmark values).
-- `outputs/outputs0_control_rents_and_hp_constant_counter_marginal_pi_lump_sum_renters.txt` (58 KB). Additional simulation from an earlier revision, not reported in the final paper (rents and house prices held at benchmark values).
-- `outputs/outputs0_control_rents_and_hp_constant_counter_marginal_pi_lump_sum_young_pi_full_tax.txt` (58 KB). Additional simulation from an earlier revision, not reported in the final paper (rents and house prices held at benchmark values).
-- `outputs/outputs16_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (58 KB). Experiment 4 grid point (discount label 16); used to choose the welfare-maximizing discount.
-- `outputs/outputs24_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (58 KB). Experiment 4 grid point (discount label 24); used to choose the welfare-maximizing discount.
-- `outputs/outputs25_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (58 KB). Experiment 4 grid point (discount label 25); used to choose the welfare-maximizing discount.
-- `outputs/outputs26_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (58 KB). Experiment 4 grid point (discount label 26); used to choose the welfare-maximizing discount.
-- `outputs/outputs28_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (58 KB). Experiment 4: optimal unit control, discount_in_unit_control=0.27 (Tables 4-6).
-- `outputs/outputs28_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top_controlled_rentals_to_low_income_only.txt` (58 KB). Experiment 4 with controlled units for low-income renters only (2.57% welfare gain, footnote in Section 5.1).
-- `outputs/outputs29_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (58 KB). Experiment 4 grid point (discount label 29); used to choose the welfare-maximizing discount.
-- `outputs/outputs30_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (58 KB). Experiment 4 grid point (discount label 30); used to choose the welfare-maximizing discount.
-- `outputs/outputs31_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (58 KB). Experiment 4 grid point (discount label 31); used to choose the welfare-maximizing discount.
-- `outputs/outputs32_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (58 KB). Experiment 4 grid point (discount label 32); used to choose the welfare-maximizing discount.
-- `outputs/outputs_0_control_sorting_benchmark_marginal_profits_higher_elasticity.txt` (58 KB). Additional simulation from an earlier revision, not reported in the final paper (higher rental supply elasticity).
-- `outputs/outputs_25_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (58 KB). Separate run of a discount grid point (not used in the paper); the space the code wrote into the file name is replaced by an underscore.
-- `outputs/outputs_28_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (58 KB). Separate run of a discount grid point (not used in the paper); the space the code wrote into the file name is replaced by an underscore.
-- `outputs/outputs_31_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (58 KB). Separate run of a discount grid point (not used in the paper); the space the code wrote into the file name is replaced by an underscore.
-- `outputs/outputs_control_sorting_benchmark_marginal_profits.txt` (58 KB). Benchmark (tenancy control): Tables 2-4 and Figure 2 (model); baseline for Tables 5-6.
-- `outputs/outputs_control_sorting_benchmark_marginal_profits_higher_elasticity.txt` (58 KB). Additional simulation from an earlier revision, not reported in the final paper (higher rental supply elasticity).
+- `outputs/outputs0_control_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (model output, text, 58 KB). Experiment 1: decontrol with income tax cuts (Tables 5-6, row 1).
+- `outputs/outputs0_control_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top_higher_elasticity.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (higher rental supply elasticity).
+- `outputs/outputs0_control_GE_counter_marginal_pi_lump_sum_bottom_renters.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (transfers to bottom-quintile renters).
+- `outputs/outputs0_control_GE_counter_marginal_pi_lump_sum_renters.txt` (model output, text, 58 KB). Experiment 2: decontrol with transfers to renters and the homeless (Tables 5-6, row 2).
+- `outputs/outputs0_control_GE_counter_marginal_pi_lump_sum_renters_higher_elasticity.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (higher rental supply elasticity).
+- `outputs/outputs0_control_GE_counter_marginal_pi_lump_sum_to_all_by_income_and_age.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (transfers to all households by income and age).
+- `outputs/outputs0_control_GE_counter_marginal_pi_lump_sum_two_bottom_renters.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (transfers to bottom-two-quintile renters).
+- `outputs/outputs0_control_GE_counter_marginal_pi_lump_sum_young_pi_full_tax.txt` (model output, text, 58 KB). Experiment 3: decontrol, full profit tax, transfers to newborns (Tables 5-6, row 3).
+- `outputs/outputs0_control_beq_constant_counter_marginal_pi_inc_tax_reduction_pi_to_top_sr.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (short run; bequests held fixed).
+- `outputs/outputs0_control_beq_constant_counter_marginal_pi_inc_tax_reduction_pi_to_top_sr_fixed_stocks.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (housing stocks held fixed; short run; bequests held fixed).
+- `outputs/outputs0_control_beq_constant_counter_marginal_pi_inc_tax_reduction_pi_to_top_sr_fixed_stocks_relative_to_unit_control.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (measured against the unit-control economy; housing stocks held fixed; short run; bequests held fixed).
+- `outputs/outputs0_control_beq_constant_counter_marginal_pi_inc_tax_reduction_pi_to_top_sr_relative_to_unit_control.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (measured against the unit-control economy; short run; bequests held fixed).
+- `outputs/outputs0_control_beq_constant_counter_marginal_pi_lump_sum_renters_sr.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (short run; bequests held fixed).
+- `outputs/outputs0_control_beq_constant_counter_marginal_pi_lump_sum_renters_sr_fixed_stocks.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (housing stocks held fixed; short run; bequests held fixed).
+- `outputs/outputs0_control_beq_constant_counter_marginal_pi_lump_sum_renters_sr_fixed_stocks_relative_to_unit_control.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (measured against the unit-control economy; housing stocks held fixed; short run; bequests held fixed).
+- `outputs/outputs0_control_beq_constant_counter_marginal_pi_lump_sum_renters_sr_relative_to_unit_control.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (measured against the unit-control economy; short run; bequests held fixed).
+- `outputs/outputs0_control_beq_constant_counter_marginal_pi_lump_sum_young_pi_full_tax_sr.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (short run; bequests held fixed).
+- `outputs/outputs0_control_beq_constant_counter_marginal_pi_lump_sum_young_pi_full_tax_sr_fixed_stocks.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (housing stocks held fixed; short run; bequests held fixed).
+- `outputs/outputs0_control_beq_constant_counter_marginal_pi_lump_sum_young_pi_full_tax_sr_fixed_stocks_relative_to_unit_control.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (measured against the unit-control economy; housing stocks held fixed; short run; bequests held fixed).
+- `outputs/outputs0_control_beq_constant_counter_marginal_pi_lump_sum_young_pi_full_tax_sr_relative_to_unit_control.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (measured against the unit-control economy; short run; bequests held fixed).
+- `outputs/outputs0_control_rents_and_hp_constant_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (rents and house prices held at benchmark values).
+- `outputs/outputs0_control_rents_and_hp_constant_counter_marginal_pi_lump_sum_renters.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (rents and house prices held at benchmark values).
+- `outputs/outputs0_control_rents_and_hp_constant_counter_marginal_pi_lump_sum_young_pi_full_tax.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (rents and house prices held at benchmark values).
+- `outputs/outputs16_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (model output, text, 58 KB). Experiment 4 grid point (discount label 16); used to choose the welfare-maximizing discount.
+- `outputs/outputs24_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (model output, text, 58 KB). Experiment 4 grid point (discount label 24); used to choose the welfare-maximizing discount.
+- `outputs/outputs25_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (model output, text, 58 KB). Experiment 4 grid point (discount label 25); used to choose the welfare-maximizing discount.
+- `outputs/outputs26_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (model output, text, 58 KB). Experiment 4 grid point (discount label 26); used to choose the welfare-maximizing discount.
+- `outputs/outputs28_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (model output, text, 58 KB). Experiment 4: optimal unit control, discount_in_unit_control=0.27 (Tables 4-6).
+- `outputs/outputs28_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top_controlled_rentals_to_low_income_only.txt` (model output, text, 58 KB). Experiment 4 with controlled units for low-income renters only (2.57% welfare gain, footnote in Section 5.1).
+- `outputs/outputs29_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (model output, text, 58 KB). Experiment 4 grid point (discount label 29); used to choose the welfare-maximizing discount.
+- `outputs/outputs30_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (model output, text, 58 KB). Experiment 4 grid point (discount label 30); used to choose the welfare-maximizing discount.
+- `outputs/outputs31_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (model output, text, 58 KB). Experiment 4 grid point (discount label 31); used to choose the welfare-maximizing discount.
+- `outputs/outputs32_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (model output, text, 58 KB). Experiment 4 grid point (discount label 32); used to choose the welfare-maximizing discount.
+- `outputs/outputs_0_control_sorting_benchmark_marginal_profits_higher_elasticity.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (higher rental supply elasticity).
+- `outputs/outputs_25_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (model output, text, 58 KB). Separate run of a discount grid point (not used in the paper); the space the code wrote into the file name is replaced by an underscore.
+- `outputs/outputs_28_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (model output, text, 58 KB). Separate run of a discount grid point (not used in the paper); the space the code wrote into the file name is replaced by an underscore.
+- `outputs/outputs_31_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (model output, text, 58 KB). Separate run of a discount grid point (not used in the paper); the space the code wrote into the file name is replaced by an underscore.
+- `outputs/outputs_control_sorting_benchmark_marginal_profits.txt` (model output, text, 58 KB). Benchmark (tenancy control): Tables 2-4 and Figure 2 (model); baseline for Tables 5-6.
+- `outputs/outputs_control_sorting_benchmark_marginal_profits_higher_elasticity.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (higher rental supply elasticity).
 
 **plots/**
 
-- `plots/Figure_1_rent_path_diagram.eps` (41 KB). Figure 1 (vector EPS), produced by `figure_1_rent_path_diagram.py`.
-- `plots/Figure_1_rent_path_diagram.pdf` (16 KB). Figure 1 (vector PDF), produced by `figure_1_rent_path_diagram.py`.
-- `plots/Figure_2_homeownership_and_LTV.eps` (52 KB). Figure 2 (vector EPS), produced by `figure_2_homeownership_and_LTV.py`.
-- `plots/Figure_2_homeownership_and_LTV.pdf` (15 KB). Figure 2 (vector PDF), produced by `figure_2_homeownership_and_LTV.py`.
-- `plots/figure_1_rent_path_diagram.py` (4 KB). Python: draws Figure 1 (conceptual diagram, no data).
-- `plots/figure_2_homeownership_and_LTV.py` (5 KB). Python: draws Figure 2 from data/ and the benchmark output file.
+- `plots/Figure_1_rent_path_diagram.eps` (EPS figure, 41 KB). Figure 1 (vector EPS), produced by `figure_1_rent_path_diagram.py`.
+- `plots/Figure_1_rent_path_diagram.pdf` (PDF figure, 16 KB). Figure 1 (vector PDF), produced by `figure_1_rent_path_diagram.py`.
+- `plots/Figure_2_homeownership_and_LTV.eps` (EPS figure, 52 KB). Figure 2 (vector EPS), produced by `figure_2_homeownership_and_LTV.py`.
+- `plots/Figure_2_homeownership_and_LTV.pdf` (PDF figure, 15 KB). Figure 2 (vector PDF), produced by `figure_2_homeownership_and_LTV.py`.
+- `plots/figure_1_rent_path_diagram.py` (Python script, 4 KB). Python: draws Figure 1 (conceptual diagram, no data).
+- `plots/figure_2_homeownership_and_LTV.py` (Python script, 5 KB). Python: draws Figure 2 from data/ and the benchmark output file.
 
 The GitHub repository also contains `writing/`, the LaTeX source of the paper; it is not part of the replication package.

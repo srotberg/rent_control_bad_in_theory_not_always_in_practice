@@ -14,7 +14,7 @@ Thank you for the conditional acceptance of our paper. We are grateful to you, t
 - **Labels.** Every file name includes the manuscript number and states what the file is: `EEREV-D-26-00102R2_manuscript`, `_appendix`, `_references`, `_Table_1` to `_Table_6`, `_Figure_1`, `_Figure_2`, `_ReadMe`.
 - **Figures.** Each figure file carries the figure number used in the article: `EEREV-D-26-00102R2_Figure_1.eps` and `EEREV-D-26-00102R2_Figure_2.eps`. Following Elsevier's artwork instructions, both are vector EPS files with embedded Arial-compatible fonts, sized for full page width (190 mm), where all lettering prints at 7 pt or larger.
 - **Underscores.** No file name contains spaces.
-- **ReadMe.** The replication zip contains `EEREV-D-26-00102R2_ReadMe.pdf`. It lists every file in the package and explains the data sources and their availability, the software required, run times, how to run the code, and which output file produces each number in Tables 2-6 and Figure 2.
+- **ReadMe.** The replication zip contains `EEREV-D-26-00102R2_ReadMe.pdf`. It lists every file in the package with its purpose and format, and explains the data sources and how they were used, the software required, run times, how to run the code, and which output file produces each number in Tables 2-6 and Figure 2.
 - **Size.** The replication files total about 18 MB, below the 100 MB limit, so we upload them directly. The same files are also available at <https://github.com/srotberg/rent_control_bad_in_theory_not_always_in_practice>, which is cited in the paper's first footnote.
 - **Two zip folders.** `EEREV-D-26-00102R2_Source_files.zip` and `EEREV-D-26-00102R2_Replication_files.zip`.
 
@@ -39,7 +39,7 @@ Thank you for the conditional acceptance of our paper. We are grateful to you, t
 
 All data files in the package may be redistributed.
 
-**Census and SFS microdata.** Several calibration targets and data moments (in Tables 2-4 and Figure 2) were computed from 2016 Census of Population microdata, and the resulting statistics were vetted. The package contains these vetted statistics and the Stata scripts that produced them, but not the microdata file itself. Likewise, the statistics we computed from the 2019 Survey of Financial Security microdata, and the scripts, are included, but not the microdata file; both microdata sources are Statistics Canada files. We ask the Editor to accept the vetted statistics and scripts in place of these two microdata files. All other data and all code are included.
+**Data, following the replication policy for simulation papers.** The package contains the data sets used to run the final models (the statistics used as calibration targets and data moments) and all programs. Some of these statistics were computed from 2016 Census of Population and 2019 Survey of Financial Security microdata, which are Statistics Canada files; the Census statistics were vetted. As the policy allows for intermediate data, these two microdata files are not included. The ReadMe describes how they and the Stata scripts, which are included, were used to produce the final data sets, and explains how the microdata can be obtained. We will cooperate fully with any researcher who requests them for replication.
 
 ## Corrections made while preparing the replication files
 

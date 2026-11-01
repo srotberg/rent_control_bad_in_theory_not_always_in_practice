@@ -21,6 +21,6 @@ Upload exactly these four files. Nothing else in this repository needs to be upl
 - **Manuscript PDF**: the final paper, compiled from the source files.
 - **Source files zip**: the manuscript `.tex`, the appendix `.tex`, one `.tex` file per table (`_Table_1` to `_Table_6`), the bibliography (`.bib`, compiled `.bbl`, and the `aer.bst` style), Figures 1 and 2 as vector EPS (the artwork) and vector PDF (so the `.tex` compiles directly with pdfLaTeX), and the compiled PDF.
 - **Replication files zip**: `EEREV-D-26-00102R2_ReadMe.pdf`, `code/`, `data/`, `outputs/`, `plots/`.
-- **Revision Notes 2**: point-by-point response to the editor's letter, the request that the vetted Census statistics and SFS statistics be accepted in place of the two microdata files, and the list of corrections made while preparing the files.
+- **Revision Notes 2**: point-by-point response to the editor's letter, how the package meets the replication policy for simulation papers, and the list of corrections made while preparing the files.
 
 The editable text of the revision notes is in `writing/submission_sources/`.
