@@ -19,9 +19,9 @@ Inputs (paths relative to the replication package root):
 Usage (from any folder):
     python figure_2_homeownership_and_LTV.py [output_directory]
 
-Writes Figure_2_homeownership_and_LTV.png (300 dpi) and
-Figure_2_homeownership_and_LTV.tiff (600 dpi) to output_directory
-(default: the folder containing this script).
+Writes Figure_2_homeownership_and_LTV.pdf and Figure_2_homeownership_and_LTV.eps
+(vector, fonts embedded) to output_directory (default: the folder containing this
+script). Intended for full page width (190 mm).
 Requires Python 3 with matplotlib and openpyxl
 (tested with Python 3.13, matplotlib 3.10, openpyxl 3.1).
 """
@@ -34,6 +34,17 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import openpyxl
+
+# Elsevier artwork guidelines: Arial/Helvetica-type fonts, embedded; lettering at least 7 pt
+# when printed. Liberation Sans is metrically identical to Arial; if it is not installed,
+# matplotlib falls back to its default font.
+matplotlib.rcParams.update({
+    "pdf.fonttype": 42,
+    "ps.fonttype": 42,
+    "font.family": "Liberation Sans",
+    "font.size": 12,
+    "legend.framealpha": 1.0,  # EPS has no transparency
+})
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CENSUS_XLSX = os.path.join(ROOT, "data", "2016_Census_vetted.xlsx")
@@ -77,32 +88,32 @@ def make_figure(out_dir):
     ltv_data = read_sfs_ltv()
     ltv_model = read_model_series("LTV_age_group", len(AGE_GROUPS))
 
-    plt.rcParams.update({"font.size": 12})
-    fig, (ax_a, ax_b) = plt.subplots(1, 2, figsize=(12, 4.5))
+    # 10 in wide, printed at 190 mm: every label is at least 10 pt * 0.75 = 7.5 pt.
+    fig, (ax_a, ax_b) = plt.subplots(1, 2, figsize=(10, 4.2))
 
     ax_a.plot(AGES, homeownership_data, label="Data", linewidth=1.8)
     ax_a.plot(AGES, homeownership_model, label="Model", linewidth=1.8)
-    ax_a.set_title("Panel a: Homeownership by age", fontsize=16)
-    ax_a.set_xlabel("Age", fontsize=14)
-    ax_a.set_ylabel("Percentage", fontsize=14)
+    ax_a.set_title("Panel a: Homeownership by age", fontsize=14)
+    ax_a.set_xlabel("Age", fontsize=13)
+    ax_a.set_ylabel("Percentage", fontsize=13)
     ax_a.legend()
-    ax_a.grid(True, alpha=0.4)
+    ax_a.grid(True, color="0.85", linewidth=0.8)  # solid light grey: EPS has no transparency
 
     ax_b.plot(AGE_GROUPS, ltv_data, label="Data", linewidth=1.8)
     ax_b.plot(AGE_GROUPS, ltv_model, label="Model", linewidth=1.8)
-    ax_b.set_title("Panel b: LTV by age group", fontsize=16)
-    ax_b.set_xlabel("Age group", fontsize=14)
-    ax_b.set_ylabel("Percentage", fontsize=14)
+    ax_b.set_title("Panel b: LTV by age group", fontsize=14)
+    ax_b.set_xlabel("Age group", fontsize=13)
+    ax_b.set_ylabel("Percentage", fontsize=13)
     ax_b.legend()
-    ax_b.grid(True, alpha=0.4)
-    ax_b.tick_params(axis="x", labelsize=9.5)
+    ax_b.grid(True, color="0.85", linewidth=0.8)
+    ax_b.tick_params(axis="x", labelsize=10, rotation=45)
 
     fig.tight_layout()
     base = os.path.join(out_dir, "Figure_2_homeownership_and_LTV")
-    fig.savefig(base + ".png", dpi=300)
-    fig.savefig(base + ".tiff", dpi=600, pil_kwargs={"compression": "tiff_lzw"})
+    fig.savefig(base + ".pdf")
+    fig.savefig(base + ".eps")
     plt.close(fig)
-    print("Wrote", base + ".png", "and", base + ".tiff")
+    print("Wrote", base + ".pdf", "and", base + ".eps")
 
 
 if __name__ == "__main__":

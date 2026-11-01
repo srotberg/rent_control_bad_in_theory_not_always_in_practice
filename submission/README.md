@@ -19,7 +19,7 @@ Upload exactly these four files. Nothing else in this repository needs to be upl
 ## What is in each file
 
 - **Manuscript PDF**: the final paper, compiled from the source files.
-- **Source files zip**: the manuscript `.tex` (tables included), the appendix `.tex`, the bibliography (`.bib` and compiled `.bbl`), Figure 1 (EPS, vector) and Figure 2 (TIFF, 600 dpi), plus PDF/PNG copies of the figures so the `.tex` compiles directly, and the compiled PDF.
+- **Source files zip**: the manuscript `.tex` (tables included), the appendix `.tex`, the bibliography (`.bib` and compiled `.bbl`), Figures 1 and 2 as vector EPS (the artwork) and vector PDF (so the `.tex` compiles directly with pdfLaTeX), and the compiled PDF.
 - **Replication files zip**: `EEREV-D-26-00102R2_ReadMe.pdf`, `code/`, `data/`, `outputs/`, `plots/`.
 - **Revision Notes 2**: point-by-point response to the editor's letter, the request for a partial data exemption for the confidential Census microdata, and the list of corrections made while preparing the files.
 

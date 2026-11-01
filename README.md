@@ -41,7 +41,7 @@ All data files included in this package may be redistributed.
 
 - **Model (Fortran).** gfortran with OpenMP; no other libraries. The code compiles with GNU Fortran 13.3 on Linux (Ubuntu 24.04) using the command in `code/readme.txt`. The paper's simulations were run on a multi-core workstation.
 - **Data scripts (Stata).** The `.do` files use standard Stata commands (`svy`, `xtile`, `egen`). They need the microdata files described in Section 2.
-- **Figures (Python).** Python 3 with `matplotlib`; Figure 2 also needs `openpyxl` (tested with Python 3.13, matplotlib 3.10, openpyxl 3.1).
+- **Figures (Python).** Python 3 with `matplotlib`; Figure 2 also needs `openpyxl` (tested with Python 3.13, matplotlib 3.10, openpyxl 3.1). The scripts use the Liberation Sans font (metrically identical to Arial) if it is installed.
 
 **Run times.** Each output file records its run time on its second line (`hours to finish simulaion`). For the simulations reported in the paper:
 
@@ -60,7 +60,7 @@ The full search over the Experiment 4 discount took between 1.5 and 7 days per g
 
 1. **Simulations.** Follow `code/readme.txt`. Run the benchmark first, then the counterfactuals in the same folder, because every counterfactual reads the benchmark's `.dat` files. Each run writes `outputs<simulation name>.txt`; the six that the paper uses are listed in Section 5.
 2. **Tables 2-6.** Read the values from the output files as described in Section 5.
-3. **Figures.** Run `python plots/figure_1_rent_path_diagram.py` for Figure 1. For Figure 2, run `python plots/figure_2_homeownership_and_LTV.py`. It reads `data/2016_Census_vetted.xlsx`, `data/2019_SFS.xlsx` and the benchmark output file, and writes `plots/Figure_2_homeownership_and_LTV.png` and `.tiff`.
+3. **Figures.** Run `python plots/figure_1_rent_path_diagram.py` for Figure 1. For Figure 2, run `python plots/figure_2_homeownership_and_LTV.py`. It reads `data/2016_Census_vetted.xlsx`, `data/2019_SFS.xlsx` and the benchmark output file, and writes `plots/Figure_2_homeownership_and_LTV.pdf` and `.eps`.
 4. **Data moments.** Each Stata script loads its microdata with a `use` command near the top, preceded by a `cd` or `log using` line with the authors' local paths; change those paths to where the microdata are stored, then run the script. The results are the values reported in `2016_Census_vetted.xlsx` and `2019_SFS.xlsx`.
 
 ## 5. From output files to tables and figures
@@ -204,10 +204,10 @@ Values in the paper are rounded to two decimals; a few cells differ from the out
 
 **plots/**
 
-- `plots/Figure_1_rent_path_diagram.eps` (38 KB). Figure 1 (vector EPS), produced by `figure_1_rent_path_diagram.py`.
-- `plots/Figure_1_rent_path_diagram.pdf` (15 KB). Figure 1 (vector PDF), produced by `figure_1_rent_path_diagram.py`.
-- `plots/Figure_2_homeownership_and_LTV.png` (270 KB). Figure 2 (300 dpi), produced by `figure_2_homeownership_and_LTV.py`.
-- `plots/Figure_2_homeownership_and_LTV.tiff` (1.4 MB). Figure 2 (600 dpi TIFF), produced by `figure_2_homeownership_and_LTV.py`.
+- `plots/Figure_1_rent_path_diagram.eps` (41 KB). Figure 1 (vector EPS), produced by `figure_1_rent_path_diagram.py`.
+- `plots/Figure_1_rent_path_diagram.pdf` (16 KB). Figure 1 (vector PDF), produced by `figure_1_rent_path_diagram.py`.
+- `plots/Figure_2_homeownership_and_LTV.eps` (52 KB). Figure 2 (vector EPS), produced by `figure_2_homeownership_and_LTV.py`.
+- `plots/Figure_2_homeownership_and_LTV.pdf` (15 KB). Figure 2 (vector PDF), produced by `figure_2_homeownership_and_LTV.py`.
 - `plots/figure_1_rent_path_diagram.py` (4 KB). Python: draws Figure 1 (conceptual diagram, no data).
 - `plots/figure_2_homeownership_and_LTV.py` (5 KB). Python: draws Figure 2 from data/ and the benchmark output file.
 

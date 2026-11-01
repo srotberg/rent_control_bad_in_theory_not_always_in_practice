@@ -12,7 +12,8 @@ Usage:
 
 Writes Figure_1_rent_path_diagram.pdf and Figure_1_rent_path_diagram.eps (vector, fonts
 embedded) to output_directory (default: the folder containing this script).
-Requires Python 3 with matplotlib (tested with Python 3.13, matplotlib 3.10).
+Intended for full page width (190 mm). Requires Python 3 with matplotlib
+(tested with Python 3.13, matplotlib 3.10).
 """
 
 import math
@@ -25,12 +26,20 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.patches import FancyArrowPatch
 
+# Elsevier artwork guidelines: Arial/Helvetica-type fonts, embedded; lettering at least 7 pt
+# when printed. Liberation Sans is metrically identical to Arial; if it is not installed,
+# matplotlib falls back to its default font.
 matplotlib.rcParams.update({
     "pdf.fonttype": 42,          # embed TrueType fonts
     "ps.fonttype": 42,
-    "mathtext.fontset": "dejavusans",
-    "font.family": "DejaVu Sans",  # bundled with matplotlib; embeds cleanly in PDF and EPS
-    "font.size": 12,
+    "font.family": "Liberation Sans",
+    "mathtext.fontset": "custom",
+    "mathtext.rm": "Liberation Sans",
+    "mathtext.it": "Liberation Sans:italic",
+    "mathtext.bf": "Liberation Sans:bold",
+    "mathtext.cal": "Liberation Sans",  # unused; set so matplotlib does not look for a cursive font
+    "mathtext.sf": "Liberation Sans",
+    "font.size": 13,             # prints at about 9.7 pt at full page width (190 mm)
 })
 
 BLUE = "#1aa7e0"
