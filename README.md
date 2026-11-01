@@ -70,7 +70,7 @@ The full search over the Experiment 4 discount took between 1.5 and 7 days per g
 
 1. **Simulations.** Follow `code/readme.txt`. Run the benchmark first, then the counterfactuals in the same folder, because every counterfactual reads the benchmark's `.dat` files. Each run writes `outputs<simulation name>.txt`; the six that the paper uses are listed in Section 5.
 2. **Tables 2-6.** Read the values from the output files as described in Section 5.
-3. **Figures.** Run `python plots/figure_1_rent_path_diagram.py` for Figure 1. For Figure 2, run `python plots/figure_2_homeownership_and_LTV.py`. It reads `data/2016_Census_vetted.xlsx`, `data/2019_SFS.xlsx` and the benchmark output file, and writes `plots/Figure_2_homeownership_and_LTV.pdf` and `.eps`.
+3. **Figures.** Run `python plots/figure_1_rent_path_diagram.py` for Figure 1. For Figure 2, run `python plots/figure_2_homeownership_and_LTV.py`. It reads `data/2016_Census_vetted.xlsx`, `data/2019_SFS.xlsx` and the benchmark output file, and writes its two panels as `plots/Figure_2a_homeownership_by_age` and `plots/Figure_2b_LTV_by_age_group` (`.pdf` and `.eps`).
 4. **Data moments.** At the top of each Stata script, set `global datadir` to the folder that holds the script's input microdata file (the Stata log is written there too). The default `"."` is the current working directory: running `premium_and_discrimination.do` or `computations_fraction_controlled_new_and_old.do` from `data/` works as is, because `census_pumf_clean_2016.dta` is there. The results are the values recorded in `2016_Census_vetted.xlsx` and `2019_SFS.xlsx` (Section 2).
 
 ## 5. From output files to tables and figures
@@ -231,8 +231,10 @@ Each entry gives the file's format, size and purpose. File formats:
 
 - `plots/Figure_1_rent_path_diagram.eps` (EPS figure, 41 KB). Figure 1 (vector EPS), produced by `figure_1_rent_path_diagram.py`.
 - `plots/Figure_1_rent_path_diagram.pdf` (PDF figure, 16 KB). Figure 1 (vector PDF), produced by `figure_1_rent_path_diagram.py`.
-- `plots/Figure_2_homeownership_and_LTV.eps` (EPS figure, 52 KB). Figure 2 (vector EPS), produced by `figure_2_homeownership_and_LTV.py`.
-- `plots/Figure_2_homeownership_and_LTV.pdf` (PDF figure, 15 KB). Figure 2 (vector PDF), produced by `figure_2_homeownership_and_LTV.py`.
+- `plots/Figure_2a_homeownership_by_age.eps` (EPS figure, 37 KB). Figure 2, panel (a) (vector EPS), produced by `figure_2_homeownership_and_LTV.py`.
+- `plots/Figure_2a_homeownership_by_age.pdf` (PDF figure, 13 KB). Figure 2, panel (a) (vector PDF), produced by `figure_2_homeownership_and_LTV.py`.
+- `plots/Figure_2b_LTV_by_age_group.eps` (EPS figure, 37 KB). Figure 2, panel (b) (vector EPS), produced by `figure_2_homeownership_and_LTV.py`.
+- `plots/Figure_2b_LTV_by_age_group.pdf` (PDF figure, 12 KB). Figure 2, panel (b) (vector PDF), produced by `figure_2_homeownership_and_LTV.py`.
 - `plots/figure_1_rent_path_diagram.py` (Python script, 4 KB). Python: draws Figure 1 (conceptual diagram, no data).
 - `plots/figure_2_homeownership_and_LTV.py` (Python script, 5 KB). Python: draws Figure 2 from data/ and the benchmark output file.
 

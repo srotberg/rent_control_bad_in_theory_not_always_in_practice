@@ -11,8 +11,8 @@ Thank you for the conditional acceptance of our paper. We are grateful to you, t
 
 ## 1. Preparing the files for production
 
-- **Labels.** Every file name includes the manuscript number and states what the file is: `EEREV-D-26-00102R2_manuscript`, `_appendix`, `_references`, `_Table_1` to `_Table_6`, `_Figure_1`, `_Figure_2`, `_ReadMe`.
-- **Figures.** Each figure file carries the figure number used in the article: `EEREV-D-26-00102R2_Figure_1.eps` and `EEREV-D-26-00102R2_Figure_2.eps`. Following Elsevier's artwork instructions, both are vector EPS files with embedded Arial-compatible fonts, sized for full page width (190 mm), where all lettering prints at 7 pt or larger.
+- **Labels.** Every file name includes the manuscript number and states what the file is: `EEREV-D-26-00102R2_manuscript`, `_appendix`, `_references`, `_Table_1` to `_Table_6`, `_Figure_1`, `_Figure_2a`, `_Figure_2b`, `_ReadMe`, `_highlights`.
+- **Figures.** Each figure file carries the figure number used in the article: `EEREV-D-26-00102R2_Figure_1.eps`, and the two panels of Figure 2 as `EEREV-D-26-00102R2_Figure_2a.eps` and `EEREV-D-26-00102R2_Figure_2b.eps` (one graph per file, as the Guide for Authors asks). Following Elsevier's artwork instructions, all are vector EPS files with embedded Arial-compatible fonts; Figure 1 is sized for full page width (190 mm) and each panel of Figure 2 for half page width, so that all lettering prints at 7 pt or larger.
 - **Underscores.** No file name contains spaces.
 - **ReadMe.** The replication zip contains `EEREV-D-26-00102R2_ReadMe.pdf`. It lists every file in the package with its purpose and format, and explains the data sources and how they were used, the software required, run times, how to run the code, and which output file produces each number in Tables 2-6 and Figure 2.
 - **Size.** The replication files total about 18 MB, below the 100 MB limit, so we upload them directly. The same files are also available at <https://github.com/srotberg/rent_control_bad_in_theory_not_always_in_practice>, which is cited in the paper's first footnote.
@@ -27,7 +27,7 @@ Thank you for the conditional acceptance of our paper. We are grateful to you, t
 - `EEREV-D-26-00102R2_Table_1.tex` to `EEREV-D-26-00102R2_Table_6.tex`: one file per table, numbered as in the article.
 - `EEREV-D-26-00102R2_references.bib`, `EEREV-D-26-00102R2_manuscript.bbl` and `aer.bst`: the bibliography, its compiled version, and the AER bibliography style.
 - `EEREV-D-26-00102R2_manuscript.pdf`: the compiled manuscript.
-- `EEREV-D-26-00102R2_Figure_1.eps` and `EEREV-D-26-00102R2_Figure_2.eps`: artwork (vector EPS). Vector PDF copies of the same two figures are included so that the LaTeX source compiles directly with pdfLaTeX.
+- `EEREV-D-26-00102R2_Figure_1.eps`, `EEREV-D-26-00102R2_Figure_2a.eps` and `EEREV-D-26-00102R2_Figure_2b.eps`: artwork (vector EPS). Vector PDF copies of the same files are included so that the LaTeX source compiles directly with pdfLaTeX.
 
 **Replication files** (`EEREV-D-26-00102R2_Replication_files.zip`, supplementary material for online publication):
 
@@ -56,6 +56,10 @@ While checking every reported number against the simulation output files, we fou
 - Funding statement added: this research did not receive any specific grant.
 - Data availability statement added, citing the supplementary replication files.
 - Appendix equations numbered (A.1)-(A.4).
+- Full postal address, including the country, added to each affiliation.
+- Declaration of generative AI use added before the references, with a note in each figure caption.
+- Figure 2 supplied as two files, one per panel.
+- Highlights supplied as a separate file, `EEREV-D-26-00102R2_highlights.docx`.
 
 Sincerely,
 

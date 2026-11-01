@@ -19,9 +19,10 @@ Inputs (paths relative to the replication package root):
 Usage (from any folder):
     python figure_2_homeownership_and_LTV.py [output_directory]
 
-Writes Figure_2_homeownership_and_LTV.pdf and Figure_2_homeownership_and_LTV.eps
-(vector, fonts embedded) to output_directory (default: the folder containing this
-script). Intended for full page width (190 mm).
+Writes each panel as its own file, as the EER Guide for Authors asks (one graph per
+file): Figure_2a_homeownership_by_age.pdf/.eps and Figure_2b_LTV_by_age_group.pdf/.eps
+(vector, fonts embedded) in output_directory (default: the folder containing this
+script). Each panel is intended for half page width (95 mm), side by side.
 Requires Python 3 with matplotlib and openpyxl
 (tested with Python 3.13, matplotlib 3.10, openpyxl 3.1).
 """
@@ -82,15 +83,23 @@ def read_model_series(prefix, n):
     return [100 * values[i] for i in range(1, n + 1)]
 
 
+def save(fig, out_dir, name):
+    base = os.path.join(out_dir, name)
+    fig.tight_layout()
+    fig.savefig(base + ".pdf")
+    fig.savefig(base + ".eps")
+    plt.close(fig)
+    print("Wrote", base + ".pdf", "and", base + ".eps")
+
+
 def make_figure(out_dir):
     homeownership_data = read_census_homeownership()
     homeownership_model = read_model_series("homeownership_age", len(AGES))
     ltv_data = read_sfs_ltv()
     ltv_model = read_model_series("LTV_age_group", len(AGE_GROUPS))
 
-    # 10 in wide, printed at 190 mm: every label is at least 10 pt * 0.75 = 7.5 pt.
-    fig, (ax_a, ax_b) = plt.subplots(1, 2, figsize=(10, 4.2))
-
+    # Each panel is 5 in wide, printed at 95 mm: every label is at least 10 pt * 0.75 = 7.5 pt.
+    fig, ax_a = plt.subplots(figsize=(5, 4.2))
     ax_a.plot(AGES, homeownership_data, label="Data", linewidth=1.8)
     ax_a.plot(AGES, homeownership_model, label="Model", linewidth=1.8)
     ax_a.set_title("Panel a: Homeownership by age", fontsize=14)
@@ -98,7 +107,9 @@ def make_figure(out_dir):
     ax_a.set_ylabel("Percentage", fontsize=13)
     ax_a.legend()
     ax_a.grid(True, color="0.85", linewidth=0.8)  # solid light grey: EPS has no transparency
+    save(fig, out_dir, "Figure_2a_homeownership_by_age")
 
+    fig, ax_b = plt.subplots(figsize=(5, 4.2))
     ax_b.plot(AGE_GROUPS, ltv_data, label="Data", linewidth=1.8)
     ax_b.plot(AGE_GROUPS, ltv_model, label="Model", linewidth=1.8)
     ax_b.set_title("Panel b: LTV by age group", fontsize=14)
@@ -107,13 +118,7 @@ def make_figure(out_dir):
     ax_b.legend()
     ax_b.grid(True, color="0.85", linewidth=0.8)
     ax_b.tick_params(axis="x", labelsize=10, rotation=45)
-
-    fig.tight_layout()
-    base = os.path.join(out_dir, "Figure_2_homeownership_and_LTV")
-    fig.savefig(base + ".pdf")
-    fig.savefig(base + ".eps")
-    plt.close(fig)
-    print("Wrote", base + ".pdf", "and", base + ".eps")
+    save(fig, out_dir, "Figure_2b_LTV_by_age_group")
 
 
 if __name__ == "__main__":

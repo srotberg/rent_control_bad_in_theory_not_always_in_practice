@@ -165,7 +165,7 @@
 
 \title{\vspace{-1.8cm}Rent Control? Bad in Theory, Not Always in Practice}
 
-\author{Shahar Rotberg\footnote{Canada Mortgage and Housing Corporation. Corresponding author contact: \url{shahar.rotberg@gmail.com}. Website: \url{https://www.shaharrotberg.com}. Shahar Rotberg did this work on his personal equipment and time. He exclusively owns the code that was used to solve the model in this paper.} \and Lin Zhang\footnote{Canada Mortgage and Housing Corporation. Contact: \url{lzhang@cmhc-schl.gc.ca}. The opinions expressed herein do not necessarily represent the views of CMHC.}}
+\author{Shahar Rotberg\footnote{Canada Mortgage and Housing Corporation, 700 Montreal Road, Ottawa, Ontario K1A 0P7, Canada. Corresponding author contact: \url{shahar.rotberg@gmail.com}. Website: \url{https://www.shaharrotberg.com}. Shahar Rotberg did this work on his personal equipment and time. He exclusively owns the code that was used to solve the model in this paper.} \and Lin Zhang\footnote{Canada Mortgage and Housing Corporation, 700 Montreal Road, Ottawa, Ontario K1A 0P7, Canada. Contact: \url{lzhang@cmhc-schl.gc.ca}. The opinions expressed herein do not necessarily represent the views of CMHC.}}
 
 \pagestyle{plain}
 
@@ -838,6 +838,9 @@ This research did not receive any specific grant from funding agencies in the pu
 \section*{Data availability}
 The data, code, and simulation output needed to replicate the results are available as supplementary material to this article and on GitHub at \url{https://github.com/srotberg/rent_control_bad_in_theory_not_always_in_practice}.
 
+\section*{Declaration of generative AI and AI-assisted technologies in the manuscript preparation process}
+During the preparation of this work the authors used Claude (Anthropic) to check reported results against the simulation output, prepare the replication files, and redraw Figures 1 and 2 from the underlying data and code. After using this tool, the authors reviewed and edited the content as needed and take full responsibility for the content of the published article.
+
 \bibliographystyle{aer}
 \bibliography{reference_files/bib}
 
@@ -909,7 +912,7 @@ The data, code, and simulation output needed to replicate the results are availa
     \includegraphics[width=\textwidth]{figures/path_of_rent_diagram.pdf}
     \vspace{-1.3cm}
     \begin{fignote2}{1.0\textwidth}
-    \textit{Notes:} The downward-sloping blue line shows how rents decline over time for tenants in tenancy-controlled units, starting from the initial rent $\tilde{p}_{r,0}$ and averaging to $\overline{\tilde{p}}_{r,0}$. The horizontal red line represents the free-market rent, $p_{r,1}$. Free-market rents remain constant regardless of tenancy duration. Initially, controlled tenants pay more, but over time they benefit from lower rents. This ``entry premium'' deters short-term tenants, who prefer lower upfront costs, from choosing controlled units, while long-term tenants are willing to pay it for improved affordability later.
+    \textit{Notes:} The downward-sloping blue line shows how rents decline over time for tenants in tenancy-controlled units, starting from the initial rent $\tilde{p}_{r,0}$ and averaging to $\overline{\tilde{p}}_{r,0}$. The horizontal red line represents the free-market rent, $p_{r,1}$. Free-market rents remain constant regardless of tenancy duration. Initially, controlled tenants pay more, but over time they benefit from lower rents. This ``entry premium'' deters short-term tenants, who prefer lower upfront costs, from choosing controlled units, while long-term tenants are willing to pay it for improved affordability later. The figure was drawn with Python code written with the help of Claude (Anthropic), a generative AI tool.
    \end{fignote2}
 \end{figure}
 
@@ -918,10 +921,11 @@ The data, code, and simulation output needed to replicate the results are availa
     \caption{Lifecycle statistics}
     \vspace{-0.2cm}
     \label{fig:life_cycle}
-    \includegraphics[width=\textwidth]{figures/homeownership_and_LTV.pdf}
+    \includegraphics[width=0.49\textwidth]{figures/homeownership_by_age.pdf}\hfill
+    \includegraphics[width=0.49\textwidth]{figures/LTV_by_age_group.pdf}
     \vspace{-0.45cm}
     \begin{fignote2}{1\textwidth}
-      \textit{Notes:} In Figure \ref{fig:life_cycle}, the two panels illustrate the model's performance on lifecycle statistics compared to the data. Panel (a) displays the average homeownership rate for each age cohort, while panel (b) presents the average loan-to-value (LTV) ratios for homeowners across 12 age groups, as the 2019 SFS provides household maintainers' ages in 5-year ranges. Model outputs are depicted in orange, while data are represented in blue. We source homeownership rates by age for Toronto CMA from the 2016 Census, and obtain data on the average LTV ratios from the 2019 SFS.
+      \textit{Notes:} In Figure \ref{fig:life_cycle}, the two panels illustrate the model's performance on lifecycle statistics compared to the data. Panel (a) displays the average homeownership rate for each age cohort, while panel (b) presents the average loan-to-value (LTV) ratios for homeowners across 12 age groups, as the 2019 SFS provides household maintainers' ages in 5-year ranges. Model outputs are depicted in orange, while data are represented in blue. We source homeownership rates by age for Toronto CMA from the 2016 Census, and obtain data on the average LTV ratios from the 2019 SFS. The figure was drawn from these data and the benchmark model output with Python code written with the help of Claude (Anthropic), a generative AI tool.
     \end{fignote2}
 \end{figure}
 
