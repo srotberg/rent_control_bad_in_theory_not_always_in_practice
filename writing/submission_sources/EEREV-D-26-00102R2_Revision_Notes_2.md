@@ -11,7 +11,7 @@ Thank you for the conditional acceptance of our paper. We are grateful to you, t
 
 ## 1. Preparing the files for production
 
-- **Labels.** Every file name includes the manuscript number and states what the file is: `EEREV-D-26-00102R2_manuscript`, `_appendix`, `_references`, `_Figure_1`, `_Figure_2`, `_ReadMe`.
+- **Labels.** Every file name includes the manuscript number and states what the file is: `EEREV-D-26-00102R2_manuscript`, `_appendix`, `_references`, `_Table_1` to `_Table_6`, `_Figure_1`, `_Figure_2`, `_ReadMe`.
 - **Figures.** Each figure file carries the figure number used in the article: `EEREV-D-26-00102R2_Figure_1.eps` and `EEREV-D-26-00102R2_Figure_2.eps`. Following Elsevier's artwork instructions, both are vector EPS files with embedded Arial-compatible fonts, sized for full page width (190 mm), where all lettering prints at 7 pt or larger.
 - **Underscores.** No file name contains spaces.
 - **ReadMe.** The replication zip contains `EEREV-D-26-00102R2_ReadMe.pdf`. It lists every file in the package and explains the data sources and their availability, the software required, run times, how to run the code, and which output file produces each number in Tables 2-6 and Figure 2.
@@ -22,9 +22,10 @@ Thank you for the conditional acceptance of our paper. We are grateful to you, t
 
 **Manuscript and LaTeX source files** (`EEREV-D-26-00102R2_Source_files.zip`):
 
-- `EEREV-D-26-00102R2_manuscript.tex`: the manuscript, with all tables included in the file.
-- `EEREV-D-26-00102R2_appendix.tex`: the appendix, read by the manuscript file.
-- `EEREV-D-26-00102R2_references.bib` and `EEREV-D-26-00102R2_manuscript.bbl`: the bibliography (AER style) and its compiled version.
+- `EEREV-D-26-00102R2_manuscript.tex`: the manuscript. It reads the appendix, each table and each figure from the separate files below.
+- `EEREV-D-26-00102R2_appendix.tex`: the appendix.
+- `EEREV-D-26-00102R2_Table_1.tex` to `EEREV-D-26-00102R2_Table_6.tex`: one file per table, numbered as in the article.
+- `EEREV-D-26-00102R2_references.bib`, `EEREV-D-26-00102R2_manuscript.bbl` and `aer.bst`: the bibliography, its compiled version, and the AER bibliography style.
 - `EEREV-D-26-00102R2_manuscript.pdf`: the compiled manuscript.
 - `EEREV-D-26-00102R2_Figure_1.eps` and `EEREV-D-26-00102R2_Figure_2.eps`: artwork (vector EPS). Vector PDF copies of the same two figures are included so that the LaTeX source compiles directly with pdfLaTeX.
 
