@@ -25,7 +25,7 @@ All data files included in this package may be redistributed.
 
 | Source | Used for | In this package |
 |---|---|---|
-| 2016 Census of Population, confidential microdata (Statistics Canada) | Toronto CMA moments: homeownership by age, household size, income quintiles, Gini, income taxes, rent-to-income distribution, shares of renters in controlled units | Vetted results only: `data/2016_Census_vetted.xlsx`. Scripts: `Census_2016.do`, `proportions_of_renters_market_and_quintiles_2016.do`, `rent_to_income_cdf_2016.do` |
+| 2016 Census of Population microdata (Statistics Canada) | Toronto CMA moments: homeownership by age, household size, income quintiles, Gini, income taxes, rent-to-income distribution, shares of renters in controlled units | Vetted results only: `data/2016_Census_vetted.xlsx`. Scripts: `Census_2016.do`, `proportions_of_renters_market_and_quintiles_2016.do`, `rent_to_income_cdf_2016.do` |
 | 2016 Census Hierarchical Public Use Microdata File (Statistics Canada) | Controlled-rent entry premium, discrimination tests, shares of new and old rental units (Appendix A) | Yes: `data/census_pumf_clean_2016.dta` and the user guide. Scripts: `premium_and_discrimination.do`, `computations_fraction_controlled_new_and_old.do` |
 | 2019 Survey of Financial Security (Statistics Canada) | LTV by age, mortgage debt to house value, share of owners with a mortgage, wealth distribution, net worth to GDP, bequests | Results: `data/2019_SFS.xlsx`. Scripts: `SFS_2019.do`, `net_worth_to_GDP.do` |
 | CMHC Rental Market Survey | Toronto average rents by bedroom type | Yes: `data/CMHC_RMS.csv` |
@@ -33,7 +33,7 @@ All data files included in this package may be redistributed.
 | 5-year variable mortgage rates and 10-year bond yields, 2002-2017 | Mortgage interest rate premium (Table 1) | Yes: `data/bond_yields_mortgage_rates.csv` |
 | Published estimates | Parameters cited in Table 1 (e.g., Guvenen et al. 2023; Gruber and Martin 2003) | Values set in the Fortran code; references in the paper |
 
-**Confidential Census microdata.** The authors computed the statistics in `data/2016_Census_vetted.xlsx` at the Canada Mortgage and Housing Corporation from the confidential 2016 Census microdata, using the three Census scripts listed above; the results were vetted for release. The microdata file (`Census_2016.dta`) is confidential and is not included. Researchers can apply to Statistics Canada for access; the scripts are included so the computations can be rerun by anyone with access.
+**Census microdata.** The statistics in `data/2016_Census_vetted.xlsx` were computed from 2016 Census microdata with the three Census scripts listed above, and vetted. The microdata file the scripts read (`Census_2016.dta`) is not included; the scripts are included so the computations can be checked and rerun with access to the microdata, which is administered by Statistics Canada.
 
 **SFS microdata.** The 2019 SFS microdata file (`SFS_2019.dta`) is distributed by Statistics Canada and is not included. The statistics computed from it are in `data/2019_SFS.xlsx`.
 
@@ -146,10 +146,10 @@ Values in the paper are rounded to two decimals; a few cells differ from the out
 **data/**
 
 - `data/2016_Census_Hierarchical_PUMF_User_Guide.pdf` (3.3 MB). Statistics Canada user guide for the 2016 Census Hierarchical PUMF.
-- `data/2016_Census_vetted.xlsx` (18 KB). Vetted statistics from the confidential 2016 Census microdata (Toronto CMA): rent control shares by income quintile, rent-to-income distribution, income and Gini, homeownership and household size by age.
+- `data/2016_Census_vetted.xlsx` (18 KB). Vetted statistics computed from 2016 Census microdata (Toronto CMA): rent control shares by income quintile, rent-to-income distribution, income and Gini, homeownership and household size by age.
 - `data/2019_SFS.xlsx` (23 KB). Statistics computed from the 2019 Survey of Financial Security: LTV by age group, mortgage debt to house value, wealth distribution, bequests.
 - `data/CMHC_RMS.csv` (4 KB). CMHC Rental Market Survey: Toronto average rents by bedroom type, 1990-2024.
-- `data/Census_2016.do` (16 KB). Stata: homeownership by age, household size, income quintiles, Gini, income taxes, controlled vs. uncontrolled renters (confidential 2016 Census microdata; results in `2016_Census_vetted.xlsx`).
+- `data/Census_2016.do` (16 KB). Stata: homeownership by age, household size, income quintiles, Gini, income taxes, controlled vs. uncontrolled renters (reads the 2016 Census microdata file `Census_2016.dta`, not included; results in `2016_Census_vetted.xlsx`).
 - `data/SFS_2019.do` (3 KB). Stata: LTV by age, mortgage debt, house values, wealth shares, share of owners with a mortgage (2019 SFS microdata; results in `2019_SFS.xlsx`).
 - `data/WHO_death_rates_Canada.xlsx` (16 KB). WHO life-table death rates for Canada; used to compute bequests (`2019_SFS.xlsx`, sheet "Wealth Bequest").
 - `data/bond_yields_mortgage_rates.csv` (31 KB). 5-year variable mortgage rates and 10-year bond yields, 2002-2017; average spread gives the mortgage premium in Table 1.

@@ -38,7 +38,7 @@ Thank you for the conditional acceptance of our paper. We are grateful to you, t
 
 All data files in the package may be redistributed.
 
-**Request for a partial data exemption.** Several calibration targets and data moments (in Tables 2-4 and Figure 2) are computed from the confidential 2016 Census of Population microdata held by Statistics Canada, which we are not permitted to redistribute. We therefore ask the Editor to grant a partial data exemption for these microdata. In their place, the package provides the statistics we computed from them, vetted for release, together with the Stata scripts that produced them; researchers who obtain access to the microdata from Statistics Canada can rerun these scripts. The 2019 Survey of Financial Security microdata are distributed by Statistics Canada and are likewise not included; the statistics we computed from them, and the scripts, are. All other data and all code are included.
+**Census and SFS microdata.** Several calibration targets and data moments (in Tables 2-4 and Figure 2) were computed from 2016 Census of Population microdata, and the resulting statistics were vetted. The package contains these vetted statistics and the Stata scripts that produced them, but not the microdata file itself. Likewise, the statistics we computed from the 2019 Survey of Financial Security microdata, and the scripts, are included, but not the microdata file; both microdata sources are Statistics Canada files. We ask the Editor to accept the vetted statistics and scripts in place of these two microdata files. All other data and all code are included.
 
 ## Corrections made while preparing the replication files
 
