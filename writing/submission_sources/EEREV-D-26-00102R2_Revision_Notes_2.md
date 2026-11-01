@@ -7,11 +7,11 @@ Dear Professor Pappa,
 
 Thank you for the conditional acceptance of our paper. We are grateful to you, the Associate Editor and the referees. This note responds point by point to the items in your letter.
 
-**Our submission now includes the manuscript, the figure source files and the replication files.**
+**Our paper now includes manuscript, figure source files and replication files.** I used Claude (Anthropic) to prepare these files.
 
 ## 1. Preparing the files for production
 
-- **Labels.** Every file name includes the manuscript number and states what the file is: `EEREV-D-26-00102R2_manuscript`, `_appendix`, `_references`, `_Table_1` to `_Table_6`, `_Figure_1`, `_Figure_2a`, `_Figure_2b`, `_ReadMe`, `_highlights`.
+- **Labels.** Every file name includes the manuscript number and states what the file is: `EEREV-D-26-00102R2_manuscript`, `_appendix`, `_references`, `_Table_1` to `_Table_6`, `_references_style_aer`, `_Figure_1`, `_Figure_2a`, `_Figure_2b`, `_ReadMe`, `_highlights`.
 - **Figures.** Each figure file carries the figure number used in the article: `EEREV-D-26-00102R2_Figure_1.eps`, and the two panels of Figure 2 as `EEREV-D-26-00102R2_Figure_2a.eps` and `EEREV-D-26-00102R2_Figure_2b.eps` (one graph per file, as the Guide for Authors asks). Following Elsevier's artwork instructions, all are vector EPS files with embedded Arial-compatible fonts; Figure 1 is sized for full page width (190 mm) and each panel of Figure 2 for half page width, so that all lettering prints at 7 pt or larger.
 - **Underscores.** No file name contains spaces.
 - **ReadMe.** The replication zip contains `EEREV-D-26-00102R2_ReadMe.pdf`. It lists every file in the package with its purpose and format, and explains the data sources and how they were used, the software required, run times, how to run the code, and which output file produces each number in Tables 2-6 and Figure 2.
@@ -25,7 +25,7 @@ Thank you for the conditional acceptance of our paper. We are grateful to you, t
 - `EEREV-D-26-00102R2_manuscript.tex`: the manuscript. It reads the appendix, each table and each figure from the separate files below.
 - `EEREV-D-26-00102R2_appendix.tex`: the appendix.
 - `EEREV-D-26-00102R2_Table_1.tex` to `EEREV-D-26-00102R2_Table_6.tex`: one file per table, numbered as in the article.
-- `EEREV-D-26-00102R2_references.bib`, `EEREV-D-26-00102R2_manuscript.bbl` and `aer.bst`: the bibliography, its compiled version, and the AER bibliography style.
+- `EEREV-D-26-00102R2_references.bib`, `EEREV-D-26-00102R2_manuscript.bbl` and `EEREV-D-26-00102R2_references_style_aer.bst`: the bibliography, its compiled version, and the AER bibliography style.
 - `EEREV-D-26-00102R2_manuscript.pdf`: the compiled manuscript.
 - `EEREV-D-26-00102R2_Figure_1.eps`, `EEREV-D-26-00102R2_Figure_2a.eps` and `EEREV-D-26-00102R2_Figure_2b.eps`: artwork (vector EPS). Vector PDF copies of the same files are included so that the LaTeX source compiles directly with pdfLaTeX.
 
@@ -39,7 +39,7 @@ Thank you for the conditional acceptance of our paper. We are grateful to you, t
 
 All data files in the package may be redistributed.
 
-**Data, following the replication policy for simulation papers.** The package contains the data sets used to run the final models (the statistics used as calibration targets and data moments) and all programs. Some of these statistics were computed from 2016 Census of Population and 2019 Survey of Financial Security microdata, which are Statistics Canada files; the Census statistics were vetted. As the policy allows for intermediate data, these two microdata files are not included. The ReadMe describes how they and the Stata scripts, which are included, were used to produce the final data sets, and explains how the microdata can be obtained. We will cooperate fully with any researcher who requests them for replication.
+**Data.** All data used in the paper are vetted and public, and are included in the replication files together with all code. The ReadMe describes how the data sets were constructed, as the replication policy asks.
 
 ## Corrections made while preparing the replication files
 
@@ -52,11 +52,11 @@ While checking every reported number against the simulation output files, we fou
 
 ## Changes to follow the Guide for Authors
 
-- Acknowledgements moved from the footnote to the title into a separate section before the references.
+- Acknowledgments moved from the footnote to the title into a separate section before the references.
 - Funding statement added: this research did not receive any specific grant.
 - Data availability statement added, citing the supplementary replication files.
 - Appendix equations numbered (A.1)-(A.4).
-- Full postal address, including the country, added to each affiliation.
+- Affiliation given with a lowercase superscript letter and its full postal address, including the country, below the author names.
 - Declaration of generative AI use added before the references, with a note in each figure caption.
 - Figure 2 supplied as two files, one per panel.
 - Highlights supplied as a separate file, `EEREV-D-26-00102R2_highlights.docx`.

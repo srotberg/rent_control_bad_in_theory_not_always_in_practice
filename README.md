@@ -21,13 +21,13 @@ The paper's tables are typed from the simulation output files; Section 5 explain
 
 ## 2. Data availability and provenance
 
-All data files included in this package may be redistributed.
+All data files in this package are vetted and public, and may be redistributed.
 
 | Source | Used for | In this package |
 |---|---|---|
-| 2016 Census of Population microdata (Statistics Canada) | Toronto CMA moments: homeownership by age, household size, income quintiles, Gini, income taxes, rent-to-income distribution, shares of renters in controlled units | Vetted results only: `data/2016_Census_vetted.xlsx`. Scripts: `Census_2016.do`, `proportions_of_renters_market_and_quintiles_2016.do`, `rent_to_income_cdf_2016.do` |
+| 2016 Census of Population microdata (Statistics Canada) | Toronto CMA moments: homeownership by age, household size, income quintiles, Gini, income taxes, rent-to-income distribution, shares of renters in controlled units | Vetted statistics: `data/2016_Census_vetted.xlsx`. Scripts: `Census_2016.do`, `proportions_of_renters_market_and_quintiles_2016.do`, `rent_to_income_cdf_2016.do` |
 | 2016 Census Hierarchical Public Use Microdata File (Statistics Canada) | Controlled-rent entry premium, discrimination tests, shares of new and old rental units (Appendix A) | Yes: `data/census_pumf_clean_2016.dta` and the user guide. Scripts: `premium_and_discrimination.do`, `computations_fraction_controlled_new_and_old.do` |
-| 2019 Survey of Financial Security (Statistics Canada) | LTV by age, mortgage debt to house value, share of owners with a mortgage, wealth distribution, net worth to GDP, bequests | Results: `data/2019_SFS.xlsx`. Scripts: `SFS_2019.do`, `net_worth_to_GDP.do` |
+| 2019 Survey of Financial Security (Statistics Canada) | LTV by age, mortgage debt to house value, share of owners with a mortgage, wealth distribution, net worth to GDP, bequests | Statistics: `data/2019_SFS.xlsx`. Scripts: `SFS_2019.do`, `net_worth_to_GDP.do` |
 | CMHC Rental Market Survey | Toronto average rents by bedroom type | Yes: `data/CMHC_RMS.csv` |
 | World Health Organization life tables for Canada | Death rates used to compute bequests | Yes: `data/WHO_death_rates_Canada.xlsx` (source URL inside the file) |
 | 5-year variable mortgage rates and 10-year bond yields, 2002-2017 | Mortgage interest rate premium (Table 1) | Yes: `data/bond_yields_mortgage_rates.csv` |
@@ -45,7 +45,7 @@ All data files included in this package may be redistributed.
 | `premium_and_discrimination.do` | `census_pumf_clean_2016.dta` (included) | Controlled-rent entry premium and discrimination tests (Appendix A) |
 | `computations_fraction_controlled_new_and_old.do` | `census_pumf_clean_2016.dta` (included) | Shares of new and old rental units |
 
-**Microdata not included.** The statistics in `2016_Census_vetted.xlsx` were computed from 2016 Census microdata and vetted. That microdata file (`Census_2016.dta`) and the 2019 SFS microdata file (`SFS_2019.dta`) are intermediate data sets and are not included. Both are Statistics Canada files, and access to them is administered by Statistics Canada. The scripts that use them are included. The authors will cooperate fully with any researcher who requests these files or details of the computations for the purpose of replication (contact: shahar.rotberg@gmail.com).
+**Intermediate data.** The statistics in `2016_Census_vetted.xlsx` were computed from 2016 Census microdata and vetted; those in `2019_SFS.xlsx` were computed from the 2019 SFS microdata. The Stata scripts that read these microdata files (`Census_2016.dta`, `SFS_2019.dta`) are included; the microdata files themselves are Statistics Canada files, available from Statistics Canada. As the replication policy asks, the authors will cooperate fully with any researcher who requests details of these computations (contact: shahar.rotberg@gmail.com).
 
 ## 3. Computational requirements
 
