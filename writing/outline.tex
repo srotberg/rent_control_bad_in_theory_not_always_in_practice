@@ -1,0 +1,169 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{amssymb} % For checkmark
+\usepackage{pifont}  % For better checkmark options
+
+\titleformat{\section}{\large\bfseries}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection.}{0.5em}{}
+\titleformat{\subsubsection}{\normalsize\itshape}{\thesubsubsection.}{0.5em}{}
+
+\newcommand{\cmark}{ding{51}} % checkmark
+\newcommand{\xmark}{\ding{55}} % xmark
+
+\begin{document}
+
+Glaeser and Luttmer (2003) show that rent control misallocates housing, while Fallis and Smith (1984) develop models where rent control leads to Pareto-inferior outcomes. Arnott (1995), however, speculates verbally that under certain market failures — such as limited access to long-term leases or asymmetric information — rent control may improve welfare.
+
+Despite a large empirical literature, modern rent control policies have not been rigorously evaluated through a comprehensive welfare lens. As a result, economists still struggle to reconcile the widespread political appeal of rent control with the discipline’s long-standing skepticism. 
+
+The long-standing skepticism of the economics profession toward rent control stems from the standard Econ 101 welfare analysis, which assumes the ideal conditions of the Fundamental Theorems of Welfare Economics and a perfect redistribution from landlords to tenants. However, these conditions rarely hold in practice. Modern rent control policies reflect far more institutional complexity. They often include exemptions that create parallel free and controlled markets, operate under frictions such as information asymmetries and minimum housing size constraints, coexist with other redistributive mechanisms, and impose distinct rent-setting rules. A credible welfare analysis must account for these real-world features.
+
+Several fundamental questions remain unresolved:
+
+\begin{itemize}[leftmargin=*]
+ \item Does rent decontrol or free market always improve welfare?
+
+ \item Can commonly used rent control policies—unit control and tenancy control—enhance welfare, and under what conditions?
+
+ \item How do unit control and tenancy control differ in their welfare implications?
+\end{itemize}
+
+ 
+\begin{itemize}[leftmargin=*]
+    \item Puzzle: Textbook economics says rent control reduces welfare due to misallocation.\footnote{The central insight of this paper—that standard welfare analyses implicitly rely on strong redistribution assumptions—applies beyond rent control, such as the minimum wage. We focus on rent control because Rent control is often held up as a canonical example of a policy that causes misallocation and reduces welfare. Showing that this conclusion breaks down under realistic redistribution assumptions is more surprising and impactful in this context than in minimum wage debates, where the inefficiencies are already more contested. As well, we want to explore how the type of rent control matters for outcomes.}
+    \item Hidden assumption: Governments can perfectly redistribute landlord profits.
+    \item Contribution:
+    \begin{itemize}
+        \item Relax this assumption and show rent control can improve welfare even in a frictionless model.
+        \item Build a full model with frictions: rent volatility and minimum rental size.
+        \item Compare unit control vs. tenancy control.
+    \end{itemize}
+    \item Preview of results:
+    \begin{itemize}
+        \item Decontrol is only optimal under perfect redistribution.
+        \item Rent control dominates under limited/no redistribution.
+        \item Unit control is better under equal transfers; tenancy control is more robust without redistribution.
+    \end{itemize}
+\end{itemize}
+
+\section{Skeleton Model: Core Logic Without Frictions}
+
+\subsection{Setup}
+\begin{itemize}[leftmargin=*]
+    \item OLG model, no frictions, agents differ by age and productivity.
+\end{itemize}
+
+\subsection{Rent Control Regimes}
+\begin{itemize}[leftmargin=*]
+    \item Tenancy Control: Discount tied to tenant’s duration.
+    \item Unit Control: Discount tied to unit regardless of tenant.
+    \item Partial equilibrium: They yield same welfare to newborns.
+\end{itemize}
+
+\subsection{Redistribution Assumptions}
+\begin{itemize}[leftmargin=*]
+    \item Three regimes:
+    \begin{itemize}
+        \item 100\% of profits to poorest-youngest.
+        \item 100\% equal lump-sum transfers.
+        \item 0\% redistribution (landlords keep profits).
+    \end{itemize}
+\end{itemize}
+
+\subsection{Calibration}
+\begin{itemize}[leftmargin=*]
+    \item Simple calibration to match stylized rental statistics.
+\end{itemize}
+
+\subsection{Results}
+\begin{itemize}[leftmargin=*]
+    \item Report welfare rankings.
+    \item GE effects matter: Unit control inflates market rents more.
+    \item Include table summarizing rankings.
+\end{itemize}
+
+\section{Full Model With Frictions}
+
+\subsection{Added Frictions}
+\begin{itemize}[leftmargin=*]
+    \item Rent volatility.
+    \item Minimum rental size constraint.
+\end{itemize}
+
+\subsection{Model and Calibration}
+\begin{itemize}[leftmargin=*]
+    \item Describe changes in decision problems and equilibrium.
+    \item Recalibrate to match detailed housing market data.
+\end{itemize}
+
+\subsection{Performance}
+\begin{itemize}[leftmargin=*]
+    \item Show model matches rent levels, housing consumption, tenure length.
+\end{itemize}
+
+\subsection{Simulation Results}
+\begin{itemize}[leftmargin=*]
+    \item Repeat redistribution × policy matrix.
+    \item New welfare rankings.
+    \item Frictions can reverse decontrol dominance even under ideal redistribution.
+\end{itemize}
+
+\section{Comparing Rent Control Designs: Unit vs. Tenancy Control}
+
+\subsection{No Redistribution Case}
+\begin{itemize}[leftmargin=*]
+    \item Cleanest way to isolate design effects.
+\end{itemize}
+
+\subsection{Mechanism}
+\begin{itemize}[leftmargin=*]
+    \item Unit Control: deeper discounts $\rightarrow$ hoarding $\rightarrow$ higher market rents.
+    \item Tenancy Control: encourages turnover $\rightarrow$ lower market rents.
+\end{itemize}
+
+\subsection{Simulation Results}
+\begin{itemize}[leftmargin=*]
+    \item Tenancy control dominates in GE despite equivalence in partial equilibrium.
+\end{itemize}
+
+\section{Policy Implications}
+\begin{itemize}[leftmargin=*]
+    \item Decontrol only works with highly effective redistribution—rare in practice.
+    \item Unit control helps under partial redistribution.
+    \item Tenancy control more robust when redistribution is limited.
+    \item Rent control design matters more than presence alone.
+\end{itemize}
+
+\section{Conclusion}
+\begin{itemize}[leftmargin=*]
+    \item Textbook case against rent control breaks down under realistic constraints.
+    \item Well-designed rent control often improves welfare.
+    \item Focus should shift to **how** to design rent control—not whether to have it.
+\end{itemize}
+
+\begin{table}[ht]
+\centering
+\caption{Welfare Ranking of Rent Control Regimes in Skeleton and Full Models}
+\begin{tabular}{llccc}
+\toprule
+\textbf{Model} & \textbf{Regime} & \textbf{100\% to Poorest} & \textbf{100\% Equal} & \textbf{0\% Redistribution} \\
+\midrule
+\multirow{3}{*}{Skeleton} 
+  & Decontrol        & \checkmark~\textbf{First}     & \textbf{Second}      & \textbf{Third} \\
+  & Tenancy Control  & \textbf{Second}              & \textbf{Third}       & \checkmark~\textbf{First} \\
+  & Unit Control     & \textbf{Third}               & \checkmark~\textbf{First}  & \textbf{Second} \\
+\midrule
+\multirow{3}{*}{Full} 
+  & Decontrol        & \checkmark~\textbf{First}     & \textbf{Third}       & \textbf{Third} \\
+  & Tenancy Control  & \textbf{Third}               & \textbf{Second}      & \checkmark~\textbf{First} \\
+  & Unit Control     & \textbf{Second}              & \checkmark~\textbf{First}  & \textbf{Second} \\
+\bottomrule
+\end{tabular}
+\label{tab:welfare_rankings}
+\end{table}
+
+\end{document}

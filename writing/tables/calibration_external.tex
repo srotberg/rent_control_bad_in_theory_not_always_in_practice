@@ -1,0 +1,55 @@
+\begin{table}[p]
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{center}
+  %\caption{\centreing Assigned parameter values}
+  %\label{tab:calibration}
+\begin{tabular}{clcl}\toprule
+\textbf{Parameter} & \textbf{Description} & \textbf{Value} & \textbf{Source}\\
+\midrule
+\multicolumn{4}{l}{\textit{\textbf{(i) Externally assigned non-housing parameters}}}\\
+\midrule
+\multicolumn{4}{l}{\textit{\textbf{(a) Demographics and preferences}}}\\
+$J$ & Lifespan & $60$ & Age range: 26--85 \\
+$J_{R}$ & Retirement age & $41$  & Retirement age: 66 \\
+$\sigma$ & Risk aversion & 2 & Standard\\
+$\{\xi_j\}_{j=1}^{J}$ & Equivalent household size scaling & Varies & Census (2016)\\
+\multicolumn{4}{l}{\textit{\textbf{(b) Labor productivity}}}\\
+$\rho_{e}$ & Labor productivity shock persistence & 0.9 & \citet{gkkoc} \\
+$\rho_{\chi}$ & Inter-generational labor fixed-effect persistence  & 0.5 & \citet{gkkoc} \\
+$\sigma_{\chi}$ & Inter-generational labor fixed-effect volatility & 0.301 & \citet{gkkoc} \\
+$F(e'|e,b=1)$ & Homeless greater labor state persistence  & $1.2\times F(e'|e,b=0)$ & \citet{az-2024} \\
+$\{\zeta_j\}_{j=1}^{J_R}$ & Lifecycle labor productivity & Varies & Census (2016) \\
+$y_{R}(\chi,e)$ & Pension &  Varies & \citet{OECD-pension}\\
+\multicolumn{4}{l}{\textit{\textbf{(c) Taxes and interest rate}}}\\
+$\nu$ & Percent of capital income that is taxable & $50\%$ & Canada's tax code \\
+$\tau_{c}$ & Non-housing consumption tax rate & $13\%$ & Ontario's HST \\
+$\psi$ & Progressivity of labor income taxation & 0.9275 & Census (2016) \\
+$r$ & Interest rate & 2.77\% & \citet{bruneau-etal-2018} \\
+\midrule
+\multicolumn{4}{l}{\textit{\textbf{(ii) Externally assigned housing parameters}}}\\
+\midrule
+$\theta_b$ & Cost to city per homeless household & 82.3\% of $\overline{y}_{\ell}$ & Homelessness Hub \& City of Toronto (2021) \\
+$\delta$ & Depreciation rate of housing & 0.6\% & \citet{rosenthal-2014} \\
+$\tau_p$ & Property tax rate & 0.44\% & City of Toronto \& Altus Group \\
+$\tau_{b}$ & Owners' buying cost & 2\% & \citet{gm-2003} \\
+$\tau_{s}$ & Owners' selling cost & 6\% & \citet{gm-2003} \\
+$\tau_{r}$ & Renters' moving cost & 2.3\% of $\overline{y}_{\ell}$ & See text \\
+$\varsigma_2$ & Convexity of construction costs & 2.12 & \citet{piaxao-2021} \\
+$\overline{h}_{c}$ & Maximum housing size for controlled renters & $0.61\times \overline{h}_{r,f}$ & See text \\
+$\theta_1$ & Rental management cost level & $3.65\times 10^{-5}$ & RMS (2006) \& TREB (2006) \& Census (2006) \\
+$\theta_2$ & Convexity of rental management costs & 4.12 & See text \\
+$\tilde{p}_{r,0}$ & Initial controlled rent & $\frac{\tilde{p}_{r,0}}{p_{r,1}}=1.059$ & Census (2016) \& \citet{zhang-gou} \\ 
+\midrule
+\multicolumn{4}{l}{\textit{\textbf{(iii) Externally assigned mortgage parameters}}}\\
+\midrule
+$\lambda_{1}(p_h h)$ & Max. LTV ratio & [80\%,90\%,95\%] & Canada's banking regulations \\
+$\lambda_{2}$ & Max. PTI ratio & 39\% & Canada's banking regulations \\
+$\omega$ & Mortgage origination cost & 0.68\% of $\overline{y}_{\ell}$ & Census (2016) \& CMHC \\
+$\upsilon$ & Avg. fraction of mortgage paid each period & 1.7\% & \citet{kkk-2021} \\
+$\Delta_{m}$ & Mortgage interest rate premium & 0.19\% & Spread between mortgage and bond rates \\
+\bottomrule
+\end{tabular}
+\end{center}
+\normalsize
+\end{table}

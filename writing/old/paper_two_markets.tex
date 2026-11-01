@@ -1,0 +1,711 @@
+\documentclass[parskip=full]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Basic includes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{array}
+\usepackage{makecell}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{verbatim}
+\usepackage{mathrsfs}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{bm}
+%\usepackage[capposition=top]{floatrow}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{cancel}
+\usepackage{ulem}
+\usepackage[labelfont=bf]{caption}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{natbib}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{rotating}
+\usepackage{pdflscape}
+\usepackage[title]{appendix}
+\usepackage{footmisc}
+\usepackage{bigdelim}
+\usepackage{tabularx}
+\usepackage{xspace}
+\newcommand{\A}{\ensuremath{\mathcal{A}}\xspace}
+\newcommand{\B}{\ensuremath{\mathcal{B}}\xspace}
+\newcommand\pa[1]{\ensuremath{\left(#1\right)}}
+\usepackage{epigraph}
+\usepackage{setspace}
+%\onehalfspacing
+\setstretch{1.5}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Microtype
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
+% activate={true,nocompatibility} - activate protrusion and expansion
+% final - enable microtype; use ``draft'' to disable
+%tracking=true, kerning=true, spacing=true - activate these techniques
+% factor=1100 - add 10% to the protrusion amount (default is 1000)
+% stretch=10, shrink=10 - reduce stretchability/shrinkability (default is 20/20)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Hyperref setup
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{url}
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\UrlOrds}
+\makeatother
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks,%
+  citecolor=black,%
+  filecolor=black,%
+  linkcolor=blue,%
+  urlcolor=black
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Font setup
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{mathpazo} % math & rm
+\linespread{1.5}        % Palatino needs more leading (space between lines)
+\usepackage{parskip}
+\usepackage[scaled]{helvet} % ss
+\usepackage{courier} % tt
+\usepackage{natbib}
+
+\usepackage{filecontents}
+
+\normalfont
+\usepackage[T1]{fontenc}
+
+\usepackage{titlesec}
+\titleformat{\section}
+{\normalfont\fontsize{12}{17}\bfseries}
+{\thesection}
+{1em}
+{}
+
+\titleformat{\subsection}
+{\normalfont\fontsize{11}{16}\bfseries}
+{\thesubsection}
+{1em}
+{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% macros
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcommand{\indicator}[1]{\mathbbm{1}_{\left\{ {#1} \right\} }}
+\newcommand{\resultsloc}{../code/python/output/}
+\newcommand{\subfigwidth}{0.475\textwidth}
+\newcommand{\subfigwidthtwo}{0.375\textwidth}
+\newcommand{\figwidth}{0.6\textwidth}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\setlength\epigraphwidth{0.9\textwidth}
+\setlength\epigraphrule{0pt}
+\renewcommand{\epigraphflush}{center}
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\epigraph}{\@epitext{#1}}{\itshape\@epitext{#1}}{}{}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Page and paragraph settings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\parskip}{0.0pc} \setlength{\parindent}{0.25in}
+\setlength{\topmargin}{-3pc}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0pc} \setlength{\evensidemargin}{0pc}
+\setlength{\textwidth}{6.5in}
+%\renewcommand{\footnotelayout}{\setstretch{1.2}}
+\makeatletter
+\@fpsep\textheight
+\makeatother
+
+\newenvironment{fignote}{\begin{quote}\footnotesize}{\end{quote}}
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\renewcommand{\baselinestretch}{1.5}
+
+% Formats the notes at the bottom of tables and figures.
+\newenvironment{fignote2}[1]
+{
+\par
+\medskip
+\begin{minipage}{#1}
+\footnotesize
+}
+{
+\end{minipage}
+}
+
+% Formats the notes at the bottom of tables and figures.
+\newenvironment{fignote3}[1]
+{
+%\par
+\begin{minipage}{#1}
+\footnotesize
+}
+{
+\end{minipage}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\author{
+  Shahar Rotberg\footnote{University of Toronto. Contact: \url{shahar.rotberg@mail.utoronto.ca}.} \and Lin Zhang\footnote{CMHC. Contact: \url{lzhang@cmhc-schl.gc.ca}. We thank Joseph B. Steinberg for kindly letting us use his high-powered computer for this paper.}
+}
+
+\title{\vspace{-1.8cm}Out of Rent Control: A General Equilibrium Analysis}
+
+\pagestyle{plain}
+
+\begin{document}
+
+\maketitle
+
+\setstretch{1.275}
+\begin{abstract}
+\onehalfspacing
+\noindent Does rent control improve housing affordability and societal welfare? To answer these questions, we use a general equilibrium model with endogenous housing and rental markets, households sorting into rental markets, and tenure duration choice. We discipline the model with data from Toronto where rental markets are partly controlled and partly deregulated, and examine the consequences of additional rent deregulation. In the long run, deregulation would reduce average housing affordability, but raise welfare by reducing rents for young households with low incomes and assets. Results also largely hold along the transition. No degree of regulation is optimal in the long run.
+\\[1.5ex]
+% words=100
+
+\noindent \textbf{JEL Classification:} E17; R31; R52. 
+
+\noindent \textbf{Keywords:} General equilibrium, rent control, housing markets.
+\end{abstract}
+\setstretch{1.5}
+
+\section{Introduction}
+
+Despite its unpopularity among economists, rent control has been adopted in many major cities. It has evolved from rent freeze to exemptions to tenancy deregulation \citep{arnott-1995,arnott-2003}. Economists have provided equilibrium analyses on rent freeze and rent control with exemptions \citep[among many others]{hayek-1929,fs-1946,fallis-1985}. However, the economic profession has yet to provide an analysis of tenancy deregulation, which controls rents of tenants while they remain in the same unit but allows landlords to reset rents when tenants change.
+
+This paper aims to fill this gap by modelling tenancy deregulation in a general equilibrium model with heterogeneous households. For simplicity, in the remainder of the paper we refer to tenancy deregulation as rent control and to the uncontrolled rental market as the free market. In the model, rent-controlled and free markets operate simultaneously. We calibrate the model to data from Toronto where part of the rental market under rent control and part is free, and use the model to explore rent control's impact on housing affordability and societal welfare, and its distributional consequences for different households.
+
+Households in our model face mandatory retirement after a certain age, and working-age households supply labor inelastically. Households choose whether to rent or to own. Renters choose whether to rent in the rent-controlled market or the free market. Controlled rents decrease over time in real terms, and thus the rents new tenants pay in the rent-controlled market are higher than the rents they would initially pay in the free market. A consequence of this is that higher-income households sort into the free rental market, as they stay only a short time in their unit before buying a home, and thus do not benefit from rent control. This assumption is strongly supported by data from Toronto.\footnote{The data indicate that there is sorting in the rental market; higher-income households tend to sort into the deregulated market. 2016 Toronto Census data show that the average household income of renters who rent in the deregulated market is 20\% higher than the average household income of renters who rent in the rent-controlled market. Moreover, the average rental unit in the deregulated market in Toronto is 24\% better than the average rental unit in the regulated market \citep{zhang-gou} along dimensions such as location, size, quality, etc. Our model replicates these facts quite closely.} Rental housing is supplied by a competitive rental company with convex marginal costs. We model the rental housing supply after Toronto's rental market structure, where new construction is not subject to rent control but old construction rent-controlled. This means that, at the margin, the rental housing supply depends on the free market rent, not the rent in the rent-controlled market. Households who choose to own a house have access to long-term mortgage contracts, pay property taxes, ongoing maintenance costs, and mortgage payments on their mortgage debt, and enjoy an exogenous appreciation of their house in the form of a dividend paid annually.\footnote{Mortgage interest payments cannot be deducted from taxable income because this policy does not exist in Canada.} A competitive housing construction sector with convex marginal costs supplies new housing, which are added to the depreciated housing stock. The government imposes proportional property taxes and progressive taxes on labor and capital incomes. With its proceeds, the government pays social security benefits to retired households, lump sum transfers to all households, and provides a public good that does not enter household utility. 
+
+We calibrate the model to match moments in the data for Toronto, where we estimate that 12.4\% of the market is deregulated and the rest is under rent control. There is one moment that we target in our calibration, which significantly affects the value of one crucial parameter in our model, which in turn matters for the results of our counterfactual simulations. This moment is the fraction of renters that spend over 30\% of their income on rent. We estimate this data point using data from the 2016 wave of the Census. We use this statistic to calibrate the smallest dwelling available for rent, which in turn affects the degree to which changes in rents arising from changes in policy affect low-income households' non-housing consumption and their marginal utility. Since low-income households have the highest marginal utilities, changes in their welfare can substantially affect overall societal welfare. In section \ref{subsection:non_targeted_statistics} we show that the model performs well on important aggregate, life-cycle, and housing tenure statistics that we do not target in our calibration.
+
+Using our calibrated model, we explore the implications of rent control for equilibrium rents, house prices, societal welfare. We define societal welfare as the ex-ante expected utility of a newborn household \citep{conesa-et-al,gkkoc}. In all of our experiments we keep the tax system constant and restore fiscal balance using lump sum transfers. In our first two experiments we compare long-run stationary equilibria, while in our last experiment we compute the transition dynamics from one long-run equilibrium to another long-run equilibrium. 
+
+Our first experiment highlights the impacts of deregulating rental markets. We simulate our model under two extreme cases: universal rent control and universal free rental markets. We find that the main tension rent deregulation brings about is that between average housing affordability and housing affordability early in life. Rent deregulation would reduce initial rents paid by tenants when moving into a rental unit by 6.8\%, but raise the average rent in the economy by 3.7\%. The latter would result in a 0.86\% increase in the quantity of rental housing supplied. Although the homeownership rate would increase by 0.35 percentage points (p.p.), the overall demand for rental housing would also increase. This is because when markets are rent-controlled, renters end up staying longer in units that are smaller and switch less to bigger rental units as their income rises. The lower rents paid by tenants moving into a new unit mostly benefit low-income, low-asset young households. Because these households have the highest marginal utilities, their large welfare gains would also raise societal welfare by 0.74\%. Homeownership would also rise because staying longer as a renter is less beneficial when rental markets are deregulated. Given that homeownership and rental demand would both rise, house prices would increase by 1.1\% to clear the housing market. As a result, property tax revenue would increase, enabling the government to provide lump sum transfers to households equal to 0.04\% of the average labor income.
+
+Our model shows that the impact of rent deregulation on welfare would be unequally distributed across households. Newborn households with the lowest labor productivity would gain substantially, because early in life, when their income and assets are low, their rents would be lower. This would increase their disposable income for non-housing consumption during years in which they have little resources, and thus raise their welfare. Newborn households with low-to-mid-productivities, on the other hand, put more value on average rents than the rents early in life, and thus would lose. This is because they stay long enough in the same rent-controlled unit to benefit from rent control, but have higher incomes early in life such that the decline in rents early in life affects their non-housing consumption less significantly. Newborn households with high productivities would gain. Because they have higher incomes, they tend to become homeowners quickly, and thus, do not stay long enough in the same rent-controlled unit to benefit from rent control. Therefore, they prefer lower initial rents over lower average rents. 
+
+Lastly, we measure the various sources of welfare gains. Since the impact on equilibrium rents is largest and affects low-income households the most, rents would have a first order impact on welfare, but as we discussed above, the welfare impact would be heterogeneous. The lump sum transfers would have a second order effect on welfare because they would benefit low-income renters who have the highest marginal utilities. The welfare effect of the lump sum transfers, in contrast to the rent effect on welfare, would be positive across the board. The increase in house prices would have a third order effect on welfare because it would mostly impact high income households whose marginal utilities are lowest. This effect would be negative across the board because it would causes households to delay their homeownership and reduce their house size once they buy.
+
+In our second experiment we search for the optimal degree of rent control. To do so, we increase and decrease the share of rental housing that is mandated by the government to be under rent control and compute welfare under each case in the long-run equilibrium. Our model shows that no degree of rent control is optimal, implying that full rent deregulation is welfare-maximizing. Why? This is because as the rent-controlled market share declines, sorting of households into rental markets implies that equilibrium rents in the rent-controlled market must increase in order to shift more renters to the free market. Since lower-income renters tend to stay longer in their rental units and benefit more from rent control, they would end up paying higher equilibrium rents the lower the share of the rent-controlled market gets. Since low-income renters have the highest marginal utilities, this negative effect on them would also substantially negatively impact overall welfare. 
+
+In our third experiment, we compute the cost of transitioning from the benchmark equilibrium to the long-run equilibrium with full rent deregulation, or the optimal long-run equilibrium. Rents would rapidly decline upon implementation, resulting in welfare rising immediately and remaining positive almost all along the transition path. The main reason for the instantaneous reduction in rent is that renters who live in large rental units and who were previously protected by rent control, would no longer find it optimal to remain in those large units. This would cause overall rental housing demand to decline, rents to decrease, and low-income, high marginal utility newborn renters to benefit substantially even upon implementation, raising also the ex-ante expected welfare of newborns.
+
+Our examination here builds on the efforts by others to model and study rent controls. Some prominent economists such as \citet{hayek-1929} and \citet{fs-1946} study how rent freeze negatively affects rental supply, while economics textbooks analyze its deadweight loss impact. \citet{fallis-1985} provide a microeconomic model of rent control with exemptions. Their model includes uncontrolled and controlled markets interacting with each other and predicts that uncontrolled rents are higher than controlled ones. As shown in \citet{diamond-2019}, empirical studies have moved ahead of theoretical modelling in studying tenancy deregulation with exemptions or partial rent control and thereby require the equilibrium analysis of partial rent control, especially in order to understand who the winners and losers are. We model partial rent control in a general equilibrium model with heterogeneous households and examine how rent control affects housing affordability and the welfare of different households.
+
+The work in this paper is related to \citet{fmn-2022}, who use a general equilibrium model with heterogeneous households, to conduct several affordability policy experiments. They evaluate the impacts on affordability of different programs such as rent vouchers, rent subsidies, and rent control. They consider affordable rental units in New York City as rent-controlled units and use a lottery system to assign these units to households. Conceptually, these rent-controlled units are equivalent to a sub-segment of social and affordable housing in Canada. In our model, rent-controlled units are those subject to rent control laws; households in the model access rental units through a sorting mechanism, which means that high-income households optimally sort into rental units in the free market. This sorting mechanism is realistic due to the visible nature of rent control in reality, which oftentimes states that a unit is under rent control only if it was built before a certain year. Since the year of construction is readily available information for households in reality, they can know ahead of time whether they will be living in a unit that is under rent control or not. We focus on the distributional impact of rent control and the feedback effects between the rent-controlled market and free market. 
+
+Our work provides policy implications for transitioning out of rent controls. While most of studies are focused on the misallocation of resources due to rent controls \citep{gl-2003}, to the best of our knowledge there are no theoretical studies on the transition out of rent control. \citet{sims-2007} empirically evaluates the effects of rent control on rental prices and rental supply using the sudden stop of rent control in Massachusetts, USA. Similarly to what we show with our model, he also finds that rent deregulation increases average rents. In contrast to \citet{sims-2007}, however, because we use a model framework, we are able to provide a welfare analysis and a full analysis of the transition out of rent control. Contrary to common beliefs, our model shows that rent control hurts young, low-income renters rather than help them, and that the cost of transitioning from rent control to rent deregulation, which some fear would be large, would actually be minimal. 
+
+The paper is organized as follows. Section \ref{sec:insitutional_background} provides institutional background of rent control in Toronto. Section \ref{sec:model} lays out the model environment. Section \ref{sec:calibration} presents model calibration the non-targeted statistics. Section \ref{section:experiments} presents models results and transitions from rent control to no control, and section \ref{sec:conclusion} concludes. 
+
+\section{Institutional background on rent control in Toronto, Canada}\label{sec:insitutional_background}
+Historically, rent controls in Canada were adopted at both provincial and federal levels. Canada introduced rent controls in 1944 during World War II as part of the National Housing Act. This "first-generation" of rent control froze nominal rents, and was inspired by the rent freeze that was adopted in European countries as a war-time measure during World War I, to protect veterans from evictions and rent increases. Whereas the rent freeze seemed justified during the war, maintaining it after the war started to negatively affect rental supply, labor mobility, and property maintenance \citep{arnott-1995}. Moreover, the "first-generation" of rent controls, largely studied in economics textbooks, was opposed by economists and landlords due to the widespread belief that it had resulted in significant deadweight losses. As a result, the Ontario provincial government repealed the "first-generation" of rent controls in 1949. The fact that the Ontario government deregulated its rental markets is real-world evidence against the common belief that rent controls belong to a set of policies that are impossible to remove once adopted. 
+
+In the wake of the oil crisis in the 1970's, the government of Ontario re-introduced rent controls in 1975 as part of the Residential Premises Rent Review Act. These new controls, classified as "second-generation" rent controls, differed significantly from "first-generation" rent controls because they had more flexible provisions allowing some mild nominal rent increases based on mandated guidelines. These controls also exempted luxury accommodation, government owned buildings, social housing, and private rental units built after January 1976. Under rent controls, only one rent increase was allowed each year in an amount that was not to exceed the rent increase set by government guidelines. Increases beyond the statutory percentage were granted in cases major increases in the cost of supplying rental housing, financial losses of landlords, or required capital expenditures. 
+
+Since 1975, the Ontario rent control system has been evolving with two major changes. The first major change consisted of intermittent exemptions. The Residential Rent Regulation Act in 1985 removed exemptions for previously exempted units and newly built units. Under this new change, both new buildings and buildings constructed after 1976 were subject to rent controls. In 1992, rent control with exemptions for new construction was again restored by the Rent Control Act, which exempted all rental buildings built after November 1, 1991. In 2018, the newly elected Ontario government enacted new legislation that only exempted buildings built, or first occupied, after November 15, 2018.
+
+The second major change of the Ontario rent control system came in 1998, and was marked by tenancy deregulation as part of the Ontario Tenant Protection Act. According this Act, landlords, whose units were not exempted in Ontario, were allowed to increase rents by more than prescribed by the rent increase guidelines, but only when a signing a new contract with a new tenant. Otherwise, they were compelled to follow the rent increase guidelines. The 1998 Act was considered as a relaxation of the previous rent control because landlords were allowed to reset rents after a change of tenants. Unlike exemptions, no changes have been made to tenancy deregulation since that time. This type of rent control is sometimes referred to as tenancy rent control, partial rent control, or "third-generation" rent control \citep{arnott-2003}. During the writing of this paper, this Ontario rent control system is still in place, and it is this system that is the focus of our paper. 
+
+\section{Model}\label{sec:model}
+
+The model economy features overlapping generations of finitely-lived households, a competitive rental company that operates units in a rent-controlled market and units in a free rental market, a competitive housing construction company, and a government. Households in each cohort are heterogeneous in labor market productivity, housing tenure, the type of rental market they are renting in (controlled or free), years they have lived in the same rental unit, housing wealth, and financial wealth. Before retirement, households work in the labor market and after retirement they receive social security benefits from the government, which depend on their average lifetime labor income. As in many other models in the housing literature, the interest rate, $r$, is exogenous \citep{sommeretal-2013,arslanetal-2015,sommersullivan-2017,kaplanetal-2019}; The economy is modelled as a small open economy, which seems reasonable in the case of a city as we model here. Homeowners pay proportional property taxes and maintenance costs each period, and mortgage debt is modelled with many of the features of long-term contracts. Housing and rental housing are supplied by competitive companies with convex costs. By levying taxes on income and property, the government finances social security benefits to retired households, lump sum transfers, and public goods, which do not enter households' utility.
+
+\subsection{Demographics}\label{subsection:demographics}
+
+Households are born at age $j=1$, retire from the labor force at age $j=R$, and live to $J$ years. Households do not face mortality risk before age $J$, but after age $J$ they die with certainty. Households do not care about their children, and thus in this set up, optimally households die without assets. This means that newborn households begin their lives as assetless renters.
+
+Similarly to \citet{sommersullivan-2017}, households have the following preferences:
+\begin{equation*}
+    u(c,h)=\frac{\left(c^{1-\gamma} h^{\gamma}\right)^{1-\sigma}}{1-\sigma},
+\end{equation*}
+
+\noindent where $c$ represents non-housing consumption, $h$ denotes housing services consumption, $\gamma$ is the household's utility weight on the consumption of shelter services, and $\sigma$ is the household's constant relative risk aversion. Households discount the future at a rate of $\beta$. %Non-housing consumption is taxed at a rate $\tau_{c}$. 
+
+\subsection{Endowments}
+
+We denote financial wealth by $a\in \mathcal{A}=\mathbb{R}_+$, tenure by $o \in \mathcal{O}=\{0,1\}$, the type of rental market a renter chooses to rent in $f \in \mathcal{F}=\{0,1\}$, years lived in the same rental unit by $\iota \in \mathcal{I}=\mathbb{N}$, house size by $h\in \mathcal{H}=\mathbb{R}_{++}$, and mortgage debt by $m\in \mathcal{M}=\mathbb{R}_+$. Households are endowed with a stochastic labor market productivity, $e \in\mathcal{E} = \mathbb{R}_{++}$. $\Psi_{j}(a,o,f,\iota,h,m,e)$ is the measure of age-$j$ households over endowments, and we use $\mathcal{S}=\mathcal{A}\times\mathcal{O}\times\mathcal{F}\times\mathcal{I}\times\mathcal{H}\times\mathcal{M}\times\mathcal{E}$ to denote a household's state space. To simplify on notation, we mostly use $s$ to denote a household's state $(a,o,f,\iota,h,m,e)$.
+
+Newborn households' labor market productivities are drawn from a conditional distribution \\ $\hat{F}(e^{\mbox{child}}|e^{\mbox{parents}})$, and then follow a Markov process $F(e'|e)$ until mandatory retirement. Labor market productivity also has a deterministic life-cycle component, $\zeta_j$, that increases with age; a household of age $j$ with labor market productivity $e$ supplies $e\zeta_j$ efficiency units of labor. Lastly, each household receives a lump sum transfer $T$ from the government each period, which we set to zero in the benchmark.
+
+\subsection{Labor and capital incomes}\label{subsection:income}
+
+Working-age households supply labor inelastically, and earn an exogenous wage, $W$, for each unit of labor they supply. A working-age household whose age is $j$ and labor market productivity is $e$, earns labor income that is given by $y_{\ell,j}(e)=We\zeta_j(e)$. Instead of labor income, retired households receive social security transfers, $y_{R}(e)$, that depend on their expected labor income conditional on their labor productivity at retirement. Households that retire with high productivities are more likely to have enjoyed high productivities throughout their lives, and thus receive larger social security transfers. Households also earn capital income $y_{k}(a)=ar$ on their financial assets, $a$, where $r$ is the rate of return on financial assets. We define taxable income as
+
+\begin{equation*}\label{eq:taxable_labor_income}
+  y^{x}_{j}(e,a) =y_{\ell,j}(e)+\nu y_{k}(a),
+\end{equation*}
+
+\noindent where, $\nu$ is the fraction of capital income that is taxable. Then, following \citet{hsv-2020}, we define income taxes to be progressive as follows:
+
+\begin{equation}\label{eq:income_tax}
+  y^{\tau}_{j}(e,a) = y^{x}_{j}(e,a)-\tau_{\ell}y^{x}_{j}(e,a)^{\psi},
+\end{equation}
+
+\noindent where $\tau_{\ell}$ determines the average level of taxation in the economy and $\psi$ affects the degree of progressivity in the tax system.
+
+\subsection{Housing}\label{subsection:housing_choice}
+
+Households can choose to rent or own a house, $o \in \mathcal{O}=\{0,1\}$, and the size of their unit, $h$. As is common in the literature, the smallest housing unit available for rent is $\underline{h}_{r}>0$, and the smallest dwelling available for purchase is $\underline{h}_{o}>0$ \citep{gervais,sommeretal-2013,sommersullivan-2017,kaplanetal-2019}. A household that chooses to own a house of size $h$ pays the purchase price $p h$. Buying and selling a house entail one-time proportional transaction costs, $\tau_{b} p h$ and $\tau_{s} p h$, respectively. If instead the household decides to rent, we follow \citet{fallis-1985}, and allow them to choose whether to rent in the rent-controlled market or the free rental market, where $f \in \{0,1\}$, $f=0$ denotes a choice to rent in the controlled rental market, and $f=1$ represents a choice to rent in the free rental market. If the household chooses to rent in the free rental market, their rent is $p^{r}_{1}h$. On the other hand, if they choose to rent in the rent-controlled market, the longer they stay in their unit, the cheaper their real rent becomes, and thus the cost of renting is a function of the number of years a renter has lived in the same unit, $\frac{p^{r}_{0}}{(1+\kappa)^{\iota}} h$. $p^{r}_{0}$ is rental price upon entering a new rental unit in the rent-controlled market, $\kappa$ determines the rate at which rent control reduces real rents over time, and $\iota$ is the number of years a renter has lived in the same unit. Each period, housing is taxed at a rate $\tau_{p}$ and depreciates in value at a rate $\delta_h$. Real house prices in Toronto have risen rapidly over the years, implying that the rent-to-price ratio is rather low. Thus, to account for the true price of renting relative to owning, homeowners in the model receive each period a none-taxable capital gain of $g_{h}ph$, where $g_{h}$ is the real growth in house prices observed in the data.\footnote{In Canada, capital gains from principal residences are fully non-taxable.}
+
+\subsection{Mortgages}\label{subsection:morgtages}
+
+Mortgages are modelled with many features of long-term debt, such as origination costs, prepayment penalties, and borrowing restrictions that apply only at mortgage origination. We set the interest rate on mortgage debt to $r_{m}=r+\Delta r$, where $r$ is the return on financial wealth, and $\Delta r$ is the interest premium paid on mortgage debt \citep{sommeretal-2013,sommersullivan-2017,kaplanetal-2019}. Homeowners can originate mortgage debt, $m$, which is subject to a fixed cost, $\omega_{1}$, to originate. At the time of origination only, the loan to value ratio (LTV) cannot exceed a certain fraction $\lambda_{m,1}(ph)$, described as follows:
+
+\begin{equation}\label{eq:LTV}
+m \leq \lambda_{m,1}(ph) p h.
+\end{equation}
+
+\noindent $\lambda_{m,1}(ph)<1$ and depends on the value of the house at purchase. Mortgage debt at origination is also limited by a gross debt servicing (GDS) ratio: 
+
+\begin{equation}\label{eq:GDS}
+\frac{\tau_{p}ph+(r_{m}+\upsilon_{3})m}{y_{\ell,j}(e)+y_{k}(a)} \leq \lambda_{m,2}\left(\frac{m}{ph}\right).
+\end{equation}
+
+\noindent $\upsilon_{3}$ is the average fraction of debt a household pays over the life of a mortgage, and $\lambda_{m,2}\left(\frac{m}{ph}\right)$ is the maximum GDS ratio allowed, which depends on the LTV ratio. The GDS constraint (\ref{eq:GDS}) says that, for a homeowner who takes out a mortgage $m>0$, property taxes, interest payments, and the average fraction of the principal paid, cannot exceed a fraction, $\lambda_{m,2}\left(\frac{m}{ph}\right)$, of their pre-tax income from all sources. Each period, owners who have a mortgage, $m>0$, must pay a fraction $\upsilon_{1}$ of this debt, and are allowed to pay up to a fraction $\upsilon_{2}>\upsilon_{1}$ of this debt without a penalty. Any amount paid above $\upsilon_{2}m$ is subject to a prepayment penalty as follows: 
+
+\begin{equation}\label{eq:prepayment_penalty}
+\tau_{pp}=\omega_{2}\mbox{max}\left\{(1-\upsilon_{2})\mbox{max}\{m,0\}-\mbox{max}\left\{m',0\right\},0\right\}
+\end{equation}
+
+\noindent If an owner does not pay at least $\upsilon_{1}m$, so that $m'>(1-\upsilon_{1})m$, the homeowner is considered to have originated a new mortgage, and thus must pay the origination cost, $\omega_{1}$, as well as satisfy borrowing constraints (\ref{eq:LTV})-(\ref{eq:GDS}). Once mortgage debt is below a certain threshold relative to the value of the house, $m \leq \upsilon_{4}ph$, the homeowner must completely repay the remainder of its debt by the end of the period, and is not subject to prepayment penalties. Mortgage debt is non-portable and retired households cannot originate new debt, but can carry on existing debt as detailed above. Because households in Canada are not allowed to deduct their mortgage interest payments or property taxes from their taxable income, they cannot do so in the model either.
+
+\subsection{Dynamic program}\label{subsection:household_optimization}
+Given its state variables, a household chooses how much to save ($a'$), whether to own or rent ($o' \in \left\{0,1\right\}$), whether to rent in the rent-controlled market or the free rental market ($f' \in \left\{0,1\right\}$), whether to remain in their rental unit one period longer ($\iota'$), how much housing to consume ($h$), and how much mortgage debt to take on ($m'$). The dynamic program that represents this problem in a stationary equilibrium is
+
+\begin{align}
+  \label{eq:vf}
+  V_{j}(s)=\max_{c,a',o',f',\iota',h',m'}\ \biggl\{u\left(c,h\right)+
+  \beta \mathbb{E}\biggl[V_{j+1}(s'|e)\biggl]\biggr\}
+\end{align}
+subject to
+\begin{flalign}
+  \begin{split} \label{eq:bc}
+  & c+a'+(1-o')\left[(1-f')\frac{p^{r}_{0}}{(1+\kappa)^{\iota'-1}}h'+f'p^{r}_{1}h'\right]+o'(ph'-m')+o\left(ph\left(\tau_{p}+\delta_{h}\right)+r_{m}m\right) + \\ & \quad \indicator{(o'=1\land o=0)\vee\left(o'=1 \land o=1 \land h' \neq h\right)}\tau_{b}ph' +\indicator{(o'=0\land o=1)\vee\left(o'=1 \land o=1 \land h'\neq h\right)}\tau_{s}ph+\\ & \quad \omega_{1}\indicator{\left(m'>(1-\upsilon_{1})m\right)\vee \left((m'>0) \land (m\leq\upsilon_{4}ph)\right)}+\tau_{pp}\indicator{(m'<(1-\upsilon_{2})m)\land \left(m>\upsilon_{4}ph\right)} = \\ & \quad  y_{\ell,j}(e)+y_{k}(a)-y^{\tau}_{j}(e,a)+a+o(ph-m)+og_{h}ph+ T   
+  \end{split} \\
+  & c \geq 0 \label{eq:consumption}\\
+  & a' \geq 0 \label{eq:financial_wealth}\\
+  & o' \in \{0,1\} \label{eq:tenure}\\
+  & f' \in \{0,1\} \hspace{0.2cm} \mbox{if} \hspace{0.2cm} o'=0 \label{eq:rental_market_type} \\
+  & h' \geq \underline{h}_{r} \hspace{0.2cm} \mbox{if} \hspace{0.2cm} o'=0 \label{eq:min_housing_renter}\\
+  & h' \geq \underline{h}_{o} \hspace{0.2cm} \mbox{if} \hspace{0.2cm} o'=1  \label{eq:min_housing_owner}\\
+  & \lambda_{m,1}(ph') p h'\geq m'\geq 0 \hspace{0.2cm} \mbox{if} \hspace{0.2cm} \indicator{\left(m'>(1-\upsilon_{1})m\right)\vee \left((m'>0) \land (m>\upsilon_{4}ph)\right)}=1 \hspace{0.2cm} \mbox{and} \hspace{0.2cm} j\leq R\label{eq:LTV_1}\\
+  & \frac{\tau_{p}ph'+(r_{m}+\upsilon_{3})m'}{y_{\ell,j}(e)+y_{k}(a)} \leq \lambda_{m,2}\left(\frac{m}{ph}\right) \hspace{0.2cm} \mbox{if} \hspace{0.2cm} \indicator{\left(m'>(1-\upsilon_{1})m\right)\vee \left((m'>0) \land (m\leq\upsilon_{4}ph)\right)}=1 \hspace{0.2cm} \mbox{and} \hspace{0.2cm} j\leq R\label{eq:GDS_1} \\
+  &\tau_{pp}=\omega_{2}\mbox{max}\left\{(1-\upsilon_{2})\mbox{max}\{m,0\}-\mbox{max}\left\{m',0\right\},0\right\} \hspace{0.2cm} \mbox{if}  \hspace{0.2cm}\indicator{(m'<(1-\upsilon_{2})m)\land \left(m>\upsilon_{4}ph\right)}=1\label{eq:prepayment_penalty_1}\\
+  & m'=0 \hspace{0.2cm} \mbox{if} \hspace{0.2cm} o'=0. \label{eq:mortgage_debt_renter}
+\end{flalign}
+
+\noindent The household's utility is made of two components. The first is the flow utility from non-housing consumption and housing services consumption. The second is the household's expected continuation value based on its choices discounted by the household's discount factor, $\beta$.\footnote{We include labor market productivity shocks for retired households as well as non-retired households in our formulation of the dynamic program for notational brevity. Writing the dynamic program this way allows me to use a single equation to represent both retired and non-retired households' problems.} 
+
+Equation \ref{eq:bc} represents the household's budget constraint. The left-hand side contains expenditures: consumption; saving; the cost of renting a unit in the rent controlled market as a function of the years lived in the same rental unit; the cost of renting in the free rental market; the purchase price of a house using a mortgage for a homeowner; property taxes, maintenance costs, and mortgage interest costs for a household starting the period as a homeowner; buying costs for a household starting the period as a renter and that chooses to become a homeowner or for a household starting the period as a homeowner that decides to purchase a different property; selling costs for a household starting as an owner and that decides to move to a different unit; origination costs for owners who take on new mortgage, or do not pay at the minimum payment required on their existing debt; and prepayment penalty for owners with a mortgage who pay more than $\upsilon_{2}$ of their debt and whose debt is above a fraction $\upsilon_{4}$ of their house value. The right-hand side contains resources available to spend: after-tax labor and capital incomes; non-housing financial wealth; housing equity for a household that begins the period as an owner; capital gains from housing for owners; and a lump sum transfer. 
+
+Constraints \ref{eq:consumption} and \ref{eq:financial_wealth} restrict households to have positive consumption and savings. Constraint \ref{eq:tenure} says that the tenure choice can take the value $1$ for owners, or $0$ for renters. Constraint \ref{eq:rental_market_type} says that a renter has a choice between renting in the free rental market, $f=1$, and renting in the rent-controlled market, $f'=0$. Constraints \ref{eq:min_housing_renter} and \ref{eq:min_housing_owner} require renters and owners to consume at least $\underline{h}_{r}$ and $\underline{h}_{o}$ units of housing, respectively. Constraints \ref{eq:LTV_1} and \ref{eq:GDS_1} require working-age owners who originate new mortgage debt to satisfy the LTV and GDS ratio requirements. Constraint \ref{eq:prepayment_penalty_1} details the prepayment penalty for owners that pay more of their debt than they are allowed without penalty. Constraint \ref{eq:mortgage_debt_renter} says that renters must have no mortgage debt. I denote the policy functions for consumption, savings, tenure, rental market choice, years living in the same unit, housing, and mortgage debt by $c_{j}(s)$, $a'_{j}(s)$, $o'_{j}(s)$, $f'_{j}(s)$, $\iota'_{j}(s)$, $h'_{j}(s)$, and $m'_{j}(s)$ respectively.
+
+\subsection{Rental company}
+
+We use the rental company structure in \citet{garrigaeetal-2009}. For each unit, $x_{i}=1$, of rental housing, the rental company obtains average rent, $\overline{p}^{r}_{i}$, pays property taxes, $\tau_{p}h$, and incurs depreciation costs, $\delta_{h}h$, where $i=0$ represents the controlled rental market, and $i=1$ denotes the free rental market. Like homeowners, the rental company also receives a non-taxable capital gain, $g_{h}p$, each period on each unit. Because rents do not change with tenancy duration in the free rental market, $\overline{p}^{r}_{1}=p^{r}_{1}$. To supply a total of $X'=\sum^{1}_{i=0} X'_{i}$ units of rental housing, the rental company also incurs management costs equal to $c_{m}X'^{\theta}$, where $c_{m}$ determines the average cost to manage the stock of rental housing $X'$ and $\theta$ determines how quickly the marginal cost of supplying rental housing rises with the amount of rental housing supplied. The rental company must supply at least $\mbox{min}\{\chi,X'\}$ in the controlled market, with $\chi \geq 0$. This means that if the total supply of rental housing is $X'<\chi$, the market is completely under control. The rental company can, without friction, buy housing at the housing price, $p$, and each period decides how much housing to supply in the rent-controlled market, $X'_{0}$, and how much housing to supply in the free rental market $X'_{1}$. Thus, the rental company has the following problem:
+
+%Because the rent-to-price ratio in Toronto is quite low, it does not cover the flow of operating costs, which would imply a net loss to the rental company. To fix that, we add another parameter, $g_{p}$, which exogenously accounts for the real growth in house prices in Toronto, and thus guarantees that the rental company has an incentive to supply rental housing.
+
+\begin{align}\label{eq:rental_company_problem}
+V(X)=\underset{X'_{0},X'_{1}} {\text{$\mbox{max} $}}\left\{\sum_{i=0}^{i} \overline{p}^{r}_{i}X'_{i}-c_{m}X'^{\theta}-p X'+p(1-\delta_{h}-\tau_{p}+g_{p})X+\frac{1}{1+r}V(X')\right\}.
+\end{align}
+subject to
+\begin{align}
+& X'_{0} \geq \mbox{min}\{\chi,X'\} \label{eq:supply_restriction} \\
+& X'_{1} \geq 0 \label{eq:supply_positive} \\
+& X'=\sum^{1}_{i=0} X'_{i} \label{eq:total_supply} 
+\end{align}
+
+\noindent Equation \ref{eq:supply_restriction} says that the rental supply in the controlled market must be at least $\mbox{min}\{\chi,X'\}$. Equation \ref{eq:supply_positive} says that rental housing supply in the free market cannot be negative. Equation \ref{eq:total_supply} says that total rental housing supply is the sum of the rental supply in the rent-controlled and the free markets. In reality, policymakers tend to require older buildings to be under rent control, but exempt newer construction.\footnote{This is also how rent control is done in Toronto.} This means that the marginal revenue of the rental company is determined by the free market rent, and thus the total rental supply is given by the following inverse supply equation:
+
+\begin{align}
+\overline{p}^{r}_{1}(X')=c_{m}\theta X'^{\theta-1}+p-\left\{\frac{1-\delta_{h}-\tau_p+g_{p}}{1+r}\right\}p.\label{eq:rental_price}
+\end{align}
+
+\noindent In equilibrium, when $X'\geq \chi$ $X'_{0}=\chi$ and $X'_{1}=X'-\chi$. If $X'<\chi$ or if regulation requires all rental units to be under rent control, $\overline{p}^{r}_{0}$ replaces $\overline{p}^{r}_{1}$ in equation \ref{eq:rental_price}, $X_{0}=X'$, and $X_{1}=0$.
+
+\subsection{Housing construction company}
+
+Following \citet{rotberg-2022}, housing is supplied endogenously by a construction sector, which allows us to account for the impact of policy changes on the supply of housing, and thus housing prices and rents. The law of motion for housing is $H'=(1-\delta_h)H + I$, where $I$ denotes the construction sector's investment in new housing stock. For its production of $I$ new units of housing, the construction company receives payments equal to $pI$, but incurs an increasing marginal cost, as captured by the following production technology:
+
+\begin{equation*}
+TC(I)=c_{1}\left(\frac{1}{\frac{1}{\epsilon}+1}\right)I^{\frac{1}{\epsilon}+1}\label{eq:total_cost_structure},
+\end{equation*}
+
+\noindent where $c_1$ scales up or down the cost of producing new housing and $\epsilon$ represents the price elasticity of housing investment. The problem of the construction company is to choose investment to maximize profits:
+
+\begin{equation*}
+\label{eq:construction_company_profits}
+\underset{I} {\text{$\mbox{max} $}}{\left\{p I-TC(I)\right\}},
+\end{equation*}
+
+\noindent and the solution to this problem gives the following relationship between housing investment and the price of housing:
+
+\begin{equation}
+\label{eq:construction_company_first_order_condition}
+I=\left(\frac{p}{c_{1}}\right)^{\epsilon}.
+\end{equation}
+
+\subsection{Aggregation}\label{subsection:aggregation}
+
+We require that the government's budget balance in all our experiments and in the benchmark. The government's budget constraint,
+\begin{align}\label{eq:gbc}
+  G + \sum_{j=R}^J \int_\mathcal{S} y_{R}(s) \mathrm{d}\Psi(s) + \sum_{j=1}^J \int_\mathcal{S} T \mathrm{d}\Psi(s) = \sum_{j=1}^J \int_\mathcal{S}y^{\tau}_{j}(s) \mathrm{d}\Psi(s)+\tau_p p H,
+\end{align}
+
+\noindent states that the government's expenditures on public goods, social security benefit payments, and lump sum transfers must equal to tax revenues from income and property. When we calibrate the model to the current tax code in Toronto we set the lump sum transfer $T$ to 0 and choose the consumption level of public goods, $G$, to ensure that this constraint holds. In our experiments, we keep $G$ constant, and adjust $T$ to clear the budget constraint. Note that $S=A\times O \times F \times I \times H \times M \times E$ denotes a typical subset of the state space $\mathcal{S}$, $\mathcal{A}$, $\mathcal{O}$, $\mathcal{F}$ $\mathcal{I}$, $\mathcal{H}$, $\mathcal{M}$, and $\mathcal{E}$, respectively.
+
+The overall demand for housing must equal to the overall supply of housing:
+
+\begin{equation}
+\label{eq:housing_clearing_condition}
+  \sum_{j=1}^J \int_\mathcal{S} h_{j}(s) \mathrm{d}\Psi(s) = H',
+\end{equation}
+
+\noindent and the overall demand for rental housing in each rental market must equal to the overall supply of rental housing in each market:
+
+\begin{equation}
+\label{eq:rental_housing_clearing_condition}
+  \sum_{j=1}^J \int_\mathcal{S} (1-o'_{j}(s))\indicator{f'_{j}(s)=i}h_{j}(s) \mathrm{d}\Psi(s) = X'_{i} \quad i \in \{0,1\}.
+\end{equation}
+
+The distributions of households evolve according to the laws of motion,
+\begin{align}
+\Psi_{j+1}(S) &=\int_{\mathcal{S}} F(E,e)M_{j}(s)\mathrm{d}\Psi_{j}(s),\ j=1,\ldots,J-1\label{eq:lom1}
+\end{align}
+\begin{align}
+\Psi_{1}(a=0,o=0,f=0,\iota=0,h=\underline{h}_{r},m=0,e) &=\int_{\mathcal{S}}\tilde{F}(E,e) \mathrm{d}\Psi_{J}(s),\label{eq:lom2}
+\end{align}
+
+\noindent where,
+
+\begin{align}
+    M_{j}(s) = \indicator{[a'_{j}(s)\in A] \land [o'_{j}(s)\in O] \land [f'_{j}(s)\in F] \land [\iota'_{j}(s)\in I] \land [h'_{j}(s) \in H] \land [m'_{j}(s) \in M]}.\notag
+\end{align}
+
+\subsection{Equilibrium}
+A stationary equilibrium in the model is a sequence of aggregate prices and quantities, $\left\{H',I,\{X'_{i},\overline{p}^{r}_{i}\}^{1}_{i=0},p\right\}$, a sequence of value and policy functions, $\biggl\{V_{j}(\cdot),c_{j}(\cdot),a'_{j}(\cdot),o'_{j}(\cdot),f'_{j}(\cdot)\iota'_{j}(\cdot),h'_{j}(\cdot),m'_{j}(\cdot)\biggl\}_{j=1}^J$, and a sequence of measures, $\left\{\Psi_{j}(\cdot)\right\}_{j=1}^J$, that:
+\begin{enumerate}
+%\item all nominal prices rise at the rate of $i$, but real prices remain fixed;
+\item solve the household's dynamic problem (\ref{eq:vf}) subject to constraints (\ref{eq:bc})-(\ref{eq:mortgage_debt_renter});
+\item solve the rental company's problem (\ref{eq:rental_company_problem}), subject to (\ref{eq:supply_restriction})-(\ref{eq:total_supply});
+\item satisfy the construction company's first-order condition, (\ref{eq:construction_company_first_order_condition});
+\item satisfy the government's budget constraint, (\ref{eq:gbc});
+\item clear the housing market,
+(\ref{eq:housing_clearing_condition});
+\item clear the rental housing markets,
+(\ref{eq:rental_housing_clearing_condition});
+%\item satisfy the average declared house price as described in
+%(\ref{eq:average_declared_price});
+\item and satisfy the laws of motion for the distribution of households, (\ref{eq:lom1})--(\ref{eq:lom2}).
+\end{enumerate}
+
+\section{Calibration}\label{sec:calibration}
+
+\subsection{Assigned parameter values}
+Calibration follows two steps. First, we exogenously assign values to certain parameters that have been estimated in the literature. Second, we internally calibrate the values of the remaining parameters by picking their values so that the model generates certain statistics as observed in the data. Table \ref{tab:calibration} lists the parameter values, which we break into several groups. A model period corresponds to 1 year in the data.
+
+\subsection{Demographics and preferences}
+Households start their lives at age 26, retire at age 66, and live to age 85, implying that lifespan $J=60$ and retirement age $R=41$. We set households' relative risk aversion $\sigma=2$. The discount factor, $\beta$, and the share of housing services in utility, $\gamma$, are determined in the second stage of our calibration procedure.
+
+\subsection{Labor market productivity}
+Labor market productivity of households and inter-generational labor market productivity follow AR(1) processes,
+\begin{equation*}
+  \log e' = \rho_{e} \log e + \epsilon_{e},\quad \epsilon_{e}\sim N(0,\sigma_{e}),
+\end{equation*}
+\begin{equation*}
+\log e^{\text{child}} = \hat{\rho}_{e} \log e^{\text{parent}} + \hat{\epsilon}_{e},\quad \hat{\epsilon}_{e}\sim N(0,\hat{\sigma}_{e}).
+\end{equation*}
+We set the intra-generational persistence, $\rho_{e}=0.852$, and the variance, $\sigma_{e}=0.376$, based on our own estimates using linked household-level micro-data for the 2011 and 2016 waves of the Census.\footnote{Because we use Census data from 2011 and 2016, our estimates are for a period of 5 years. Therefore, we end up estimating $\rho_{e,5}$ and $\sigma_{e,5}$. Using backward substitution one can show that $\rho_{e}$ is $\rho_{e,5}$ raised to the power of 1/5 and that $\sigma_{e}$ is $\sigma_{e,5}$ divided by square root of 5.} The inter-generational persistence, $\hat{\rho}_{e}$ is set to $0.199$ and the variance, $\hat{\sigma_{e}}=1.09$, based on estimates for Canada from \citet{corak-heisz-1999}. Using 2016 Census data, we set the deterministic life-cycle component of labor market productivity to 
+\begin{equation*}
+\zeta_j = \begin{cases}
+1+1.48 \frac{j}{R-10} &\text{if $j\leq R-10$}\\
+\zeta_{R-10}-\left(j-\left[R-10\right]\right) (1.48-1.04) \frac{j}{10} &\text{if $R \geq j>R-10$}.
+\end{cases}
+\end{equation*}
+
+\noindent This formulation reflects the data, which shows that real income is 148\% higher for households aged 55 than those aged 26, and real income of households aged 65 is only 104\% higher than real income of households aged 26. We approximate retirement benefits, $\{y_{R}(e)\}_{e\in \mathcal{E}}$, using the OECD's estimates of the replacement rate of gross individual earnings as a function of average lifetime income relative to the average income in the economy \citep{OECD-pension}.
+
+\subsection{Taxes and interest rate}
+The portion of capital income that is taxable, $
+\nu$, is set to 50\% as in Canada's tax code. Using micro-data for Toronto from the 2016 Census, we estimate $\psi$ in equation (\ref{eq:income_tax}), and set $\psi=0.928$ to our point estimate of $\psi$. We choose $\tau_{\ell}$, which determines the average level of taxation, in the second stage of our calibration. The interest rate, $r$, is set to 2.77\% as estimated for Canada by \citet{bruneau-etal-2018}. 
+
+%We set the consumption tax rate to 13\%, which is the Harmonized Sales Tax (HST) in Ontario.
+
+\subsection{Housing}
+
+We set the rate at which real rents decrease for renters remaining in the same unit in the rent-controlled market, $\kappa$, to equal to 2.70\%. We estimate this using Census data from 2001-2016 on the share of the rent-controlled market and Rental Market Survey (RMS) data for 1992-2021 on the turnover rate of renters and average real growth of average rents. The exogenous capital gain from housing, $g_{p}$, is set to 4.46\% based on estimates from Multiple Listing Service (MLS) data from 2006-2016, which show that real house prices in Toronto rose by about 4.46\% annually. The property tax rate, $\tau_p$, is set to 0.67\% based on 2016 data from over 20 municipalities in Toronto, and the housing depreciation rate is chosen to equal 2\% as estimated by \citet{hardingetal-2007}. Buying costs, $\tau_{b}$, are set to 2.5\% of the purchase price and selling costs, $\tau_{s}$, are set to 7\% based on estimates by \citet{gm-2003}. We choose $\epsilon$ to equal 0.35 to align with the \citet{cmhc-report-2018} estimate of the elasticity of the housing supply in Toronto. Lastly, we set the free market rent, $p^{r}_{1}$, to 5.85\% of the benchmark equilibrium's housing price to be consistent with our estimate of the rent-to-price ratio in both the rent-controlled and free markets, which we obtain using data for 2016 from the Canadian Real Estate Association.
+
+\subsection{Mortgages}
+
+Based on banking regulations in Canada, we set the maximum ratio of mortgage debt to house value, $\lambda_{m,1}(ph)$, as follows:
+
+\begin{equation*}
+\lambda_{m,1}(ph) = \begin{cases}
+0.8 &\text{if $ph\geq \$1M$}\\
+0.9 &\text{if $\$500K\leq ph< \$1M$}\\
+0.95 &\text{if $ph < \$500K$}.
+\end{cases}
+\end{equation*}
+
+\noindent The above equation says that homeowners with a house that has a model-equivalent value above \$1M can borrow only up to 80\% of its value. Owners purchasing a home with a model-equivalent value between \$500,000-\$1M can borrow up to 90\% of the house value, and owners with a house value below \$500,000 can get a loan of up to 95\% of the house value. 
+
+The maximum GDS ratio, $\lambda_{m,2}\left(\frac{m}{ph}\right)$ takes the following form:
+
+\begin{equation*}
+\lambda_{m,2}\left(\frac{m}{ph}\right) = \begin{cases}
+0.39 &\text{if $\frac{m}{ph}>0.8$}\\
+0.47 &\text{if $\frac{m}{ph}\leq 0.8$}.
+\end{cases}
+\end{equation*}
+
+\noindent This equation says that for mortgages with a LTV ratio above 80\% the maximum GDS ratio is 39\%, and that the maximum GDS ratio for mortgages with a LTV below 80\% is 47\%, which we have learned from Mortgage Advisors working for big lenders in Canada that this is oftentimes the limit in cases of lower-risk mortgage loans. 
+
+The fixed mortgage origination cost, $\omega_{1}$, includes the cost of appraisals ($\approx \$500$) and lawyer fees ($\approx \$1,200$), which we estimate at around \$1,700 or the equivalent of 2.28\% of the average household income in Toronto. The prepayment penalty, $\omega_{2}$, is set to 3 months' interest as is common in mortgage contracts in Canada. The fraction a homeowner must pay each period, $\upsilon_{1}$, to avoid the cost of originating a new loan is set to 2.9\%, a choice which we explain shortly below. The threshold for prepayment penalty, $\upsilon_{2}$, is set to $\upsilon_{1}$ plus 15\% of the total debt, 15\% of the required payment $\upsilon_{1}$, and 15\% of interest payments, which adds up to 18.8\%.\footnote{Standard mortgage contracts in Canada normally allow prepayments of 15\% of the principal and regular payments without penalty.} The average fraction of a mortgage paid each year, $\upsilon_{3}$, which is used in inequality (\ref{eq:GDS}), is set to 3.33\% to reflect a 30-year amortization period, a common amortization period in the mortgage industry in Canada. The debt to house value ratio below which a homeowner must fully settle their debt, $\upsilon_{4}$, is set to 40.3\% assuming that the debt at origination was 95\% of the house value.\footnote{About 40\% of a mortgage loan amortized over 30 years is paid in the last 5 years.} The combination of $\upsilon_{1}$ and $\upsilon_{4}$ minimizes the sum of squared distances between the outstanding debt of a household making regular payments in the model each period, and the outstanding debt of a 30-year mortgage of a household making regular payments in reality. The interest rate premium on mortgage debt, $\Delta r_{m}$, is set to 0.19\%, which we set based on the average spread in 2002-2022 between the 5-year variable rate on mortgages and the return on a 10-year government bond.
+
+\subsection{Internally calibrated parameters}
+
+We now turn to internally calibrating our model. After assigning the parameter values listed above, there are seven parameters that still must be calibrated: the rate of time preference, $\beta$; the utility weight on the consumption of housing services, $\gamma$; the smallest dwelling for purchase, $\underline{h}_{o}$; the average level of income taxation, $\tau_{\ell}$; the convexity of managing rental housing, $\theta$; the rent a tenant pays in the first year upon entering a rental unit under rent control, $p^{r}_{0}$; and the smallest housing unit, $\underline{h}_{r}$.\footnote{The scalar for construction costs, $c_{1}$, is chosen such that housing supply is exactly equal to housing demand in the benchmark equilibrium. In counterfactual simulations $c_{1}$ is held fixed at its benchmark level. The rental management cost, $c_{m}$, is chosen to equate the supply of rental housing with the demand for rental housing in the benchmark. In counterfactual simulations it is held fixed at its benchmark level.}
+
+We jointly calibrate all these parameters to match the following moments in Toronto data: the percentage of aggregate mortgage debt in aggregate gross housing wealth, which is 24.3\% according to the 2016 wave of the Survey of Financial Security (SFS). The percentage of aggregate renters' income that renters spend on rent, which is 24.3\% and comes from 2016 Census. The homeownership rate, which is equal to 66.5\% according to the 2016 Census. The average labor income tax rate, which is 19.9\% and comes the 2016 Census. The elasticity of rental housing supply, which we estimate to be 0.2 using data from the 2006 and 2011 Census and MLS. The free rental market share in the total rental market, which is 12.4\% and comes from the 1991-2016 waves of the Census. The percentage of renters spending over 30\% of their gross income on rent, which comes from the 2016 Census and is equal to 37.5\%.
+
+Roughly speaking, $\beta$ controls the aggregate mortgage debt to aggregate gross housing value ratio, $\gamma$ determines mostly the fraction of aggregate renters' income renters spend on rent, $\underline{h}_{o}$ mainly affects the homeownership rate, $\tau_{\ell}$ determines the average income tax rate, $\theta$ determines the elasticity of rental housing supply, $p^{r}_{0}$ determines the share of the free market, and $\underline{h}_{r}$ controls the percentage of renters spending over 30\% of their gross income on rent.
+
+\subsection{Non-targeted statistics}\label{subsection:non_targeted_statistics}
+
+\paragraph{Aggregate statistics} In table \ref{tab:aggregate_non_targreted_statistics} we show the performance of our model on aggregate dimensions not targeted in our calibration. The model produces a reasonable although somewhat higher average owned-house value to average household income ratio relative to the data, but predicts a slightly lower percentage of homeowners with a mortgage compared to the data. We do not have an estimate for Toronto's average value of a rental unit to the average value of an owner-occupied housing unit ratio. However, we can compare our model's estimate to \citet{chatterjee-eyigungor-2015}'s estimate for the U.S., and we find that our model is somewhat lower than their estimate. Using RMS data from 2016 through 2021, we estimate that the average tenure duration in the same rental unit ranges between 6.3 and 11.5 years, whereas our model produces an estimate that is equal to the lower bound of this estimate. Free market rent relative to the average rent in rent-controlled units in our model is quite similar to \citet{zhang-gou}'s estimate of 13.7\% of the same statistic from RMS Toronto data. Moreover, as a result of sorting, in our model the average income and house size of renters in the free rental market are 36\% and 30\% higher than the same statistics for renters in the rent-controlled market, respectively. Our model replicates these two dimensions in the data reasonably. The percentage of renters who spend over 50\% of their income on rent in our model is 9.7\%, which is quite similar to our estimate of the same statistic from the 2016 Census. The wealth distribution in our model is less concentrated than the data's, and this is because our model cannot generate the high concentration of net wealth at the very top of the wealth distribution. This is because our model does not feature much rate-of-return heterogeneity\footnote{In the model homeowners receive an exogenous 4.46\% return on their house, and households with financial assets receive a 2.27\% return on those assets.}, which \citet{fagereng} show is important for generating a high concentration of wealth at the top of the wealth distribution. Alternatively, our model also does not feature heterogeneous discount factors \citep{ks-1998} or Michael Jordan income shocks \citep{mj-shocks}, which could also explain its inability to generate the high concentration of wealth at the top of the wealth distribution.
+
+\paragraph{Life-cycle statistics} In figure \ref{fig:life_cycle}, we show the performance of our model on life-cycle dimensions. As panel (a) shows, the homeownership rate in our model over households' life-cycle traces the data quite closely. However, as shown in panel (b), households in our model have somewhat higher LTV ratios compared to the data. This is due to the fact that many households in Toronto have high LTV ratios at origination, but the high real growth rate in house prices quickly reduces their mortgage debt relative to the value of their homes, showing up as lower LTV than in our model. In fact, a household purchasing a home with a LTV ratio of 80\% at origination and does not pay any of the principal in the first 10 years, would have a LTV ratio of only 51\% at the end of the 10 years as a result of the 4.46\% real growth in house prices in Toronto estimated in the data. 
+
+\paragraph{Tenure distribution} Lastly, we also show tenure by labor productivity in table \ref{tab:tenure_by_labor_productivity}, where $e_{1}$ represents the lowest labor productivity and $e_{7}$ the highest. We break down tenure into four categories: renters in the rent-controlled market, renters in the free market, homeowners with positive mortgage debt, and homeowners without any mortgage debt. The calibrated model performs exactly as one would expect. Households with lower $e$'s tend to be renters, while households with higher $e$'s tend to be homeowners without a mortgage. As a result of this, the percentage of households who own a home with a mortgage initially rises with $e$ and then declines. As well, households with lower $e$'s tend to rent in the rent-controlled market since they expect to remain renters for longer, whereas households with higher $e$'s are more likely to rent in the free market since they expect to become owners more quickly. 
+
+\section{Experiments}\label{section:experiments}
+
+\paragraph{Experiments' overview} Using our calibrated model, we conduct three experiments. In the first experiment we compare the long-run equilibrium under full rent deregulation to the long-run equilibrium under full rent control. In the second experiment, we search for the degree of rent control which produces the highest welfare in the long-run equilibrium. In our third experiment, we compute the transitional dynamics from the benchmark to the long-run equilibrium under full rent deregulation. In all our experiments we keep the tax code fixed and balance the government's budget with lump sum transfers. 
+
+\paragraph{Welfare measure} Our measure of welfare is the same as that used by \citet{conesa-et-al} and \citet{gkkoc}, which measures the expected ex-ante utility of a newborn household. It is equivalent to giving all newborn households a fixed proportional non-housing consumption transfer. Formally, a newborn household's non-housing consumption-equivalent welfare effect due to a change in policy after $t$ periods is given by
+
+\begin{equation*}
+  CE(\mathcal{S}_{t}) = \left[\frac{\int_{\mathcal{S}_{t}}V^{\dagger}_{1,t}(s)\ \mathrm{d}\Psi^{\dagger}_{1,t}(s)}{\int_{\mathcal{S}_{t}}V^*_{1,t}(s)\ \mathrm{d}\Psi^*_{1,t}(s)}\right]^{\frac{1}{(1-\gamma)(1-\sigma)}}-1,
+\end{equation*}
+
+\noindent where daggers denote equilibrium objects in the counterfactual and stars denote equilibrium objects in the simulation considered as the original equilibrium used for comparison. 
+
+\subsection{Full rent control versus full deregulation}
+
+\subsubsection{Experiment's description} Our first experiment highlights the benefits and costs of rent control by comparing two extreme cases: a fully rent-controlled market and to a fully deregulated rental market. We first solve the calibrated model assuming that the rental market is fully under rent control and then solve the model assuming that the rental market is fully deregulated. 
+
+\subsubsection{Aggregate results} The second column of table \ref{tab:aggregate_effects} presents aggregate outcomes for the long-run equilibrium under full rent deregulation relative to the long-run equilibrium of the economy under under full rent control. When rental markets are deregulated, the value of staying longer in the same rental unit would decline, thus strengthening the incentive to buy a house and raising the homeownership rate. Moreover, the decline in the value of remaining in the same rental unit would encourage renters to move more frequently and reduce their stay in the same rental unit by 55\%, and thus demand larger units over time as their incomes grow. The two effects combined would raise the demand for housing, and thus increase house prices by 1.1\%, which would raise property tax revenues and enable the government to provide a lump sum transfer equal to 0.04\% of the average labor income. The increase in demand for larger rental units would outweigh the decline in the percentage of households who rent, and thus average rental prices would increase by 3.7\% and the quantity of rental housing supplied would rise by 0.86\%. Although the free market rent would be 3.7\% larger than the average rent in the economy with full rent control, rents of new tenants would be 6.8\% lower in the deregulated market. Because households are born renters with low incomes and no assets, the reduction in rents of new tenants would mainly benefit the young and poor. Because these households have the highest marginal utilities, their welfare gain would raise the aggregate welfare in the economy by 0.76\%. However, if we were to measure welfare using all households, welfare would decline by 1.1\%, even though more than 50\% of households would experience a welfare gain. The reason that average welfare would decline but newborns' welfare would rise is that deregulating the rental market would benefit households who have not yet lived in a rental unit long enough to benefit from rent control. However, many older renters have already lived in the same rental unit for a while, and thus they have reached a stage in which they benefit from rent control. Removing rent control for them would reduce their welfare.
+
+\subsubsection{Distributional results} 
+
+We have shown that rent deregulation would increase the average welfare of newborns, but how would these gains be distributed? To answer this question, we create table \ref{tab:distributional_impact} in which we present distributional outcomes arising from rent deregulation. 
+
+\paragraph{Set up of results} In the first three rows we break down welfare gains and losses into three different effects: rent effect, house price effect, lump sum transfer effect, respectively. The bottom row of the table presents the total welfare gain or loss, which is the sum of all the separate effects. $e_{1}$ represents the lowest labor productivity, and $e_{7}$ the highest. We begin by focusing on the first row in the table, which lists the welfare gains and losses arising only from changes in the rental market.\footnote{To obtain the rent effect, we hold house prices and lump sum transfers fixed at their levels in the full rent control long-run equilibrium. We then deregulate the rental market and set the free market rent to equal its value in the long-run equilibrium of the fully deregulated rental market. We then run the model in partial equilibrium to obtain the direct effect of rents on welfare. To obtain the house price effect, we run another simulation, in which we repeat the exercise for the rent effect but also set the house price to its level in the long-run equilibrium of the fully deregulated rental market. The lump sum transfer effect is the difference between the long-run equilibrium of the fully deregulated rental market and the exercise in which we only change rents and house prices.} 
+
+\paragraph{Rent effect} Newborn households with the lowest productivity gain substantially from rent deregulation. These households are born assetless renters and have the lowest incomes, which means that the reduction in rents for renters moving into a new rental unit would free-up more of their after-tax income for non-housing consumption. In other words, these households would benefit from trading off lower rents early in life in exchange for higher average rents because their incomes are quite low early in life. The opposite would be true for the second and third lowest productivities, $e_{2}$ and $e_{3}$. As the second row in table \ref{tab:avg_years_in_rental} shows, these households expect to remain many years in the same rental unit, almost as much as households with $e_{1}$. However, their incomes are higher early in life. Thus, newborns with $e_{2}$ and $e_{3}$ value lower average rents more than lower rents upon moving into a new unit. In contrast, newborns with the top four productivities, $e_{4}-e_{7}$, gain. Looking at the second row of table \ref{tab:avg_years_in_rental}, we can see that these households expect to remain significantly fewer years in the same rental unit, because they expect to become homeowners rather quickly. This means that they do not benefit from rent control, and therefore would prefer to pay lower rents upon moving into a new unit.
+
+\paragraph{House price effect} In the second row of table \ref{tab:distributional_impact}, we present the welfare gains and losses that arise purely from the 1.1\% increase in house prices. As we can see, all newborn households, regardless of productivity, lose from that. This is because the higher housing price would delay homeownership and reduce the house size they end up purchasing. Since newborns with the lowest three productivies have higher expectations of remaining renters longer, they lose less than newborns with the highest four productivities, who expect to become homeowners more quickly and buy larger homes. 
+
+\paragraph{Lump sum transfer effect} The third row of table \ref{tab:distributional_impact} lists the welfare gains and losses due to the lump sum transfer. As one would expect, the lump sum transfer would increase welfare across the board. However, newborns with lower productivities would gain more than those with higher productivities. This is because households with lower productivities have higher marginal utilities.
+
+\paragraph{Total welfare changes} In the last row of table \ref{tab:distributional_impact}, we sum up all the welfare effects to arrive at the total welfare change. For newborns with $e_{1}-e_{3}$, the rent effect would outweigh the house price and lump sum transfer effects. For newborns with the top four productivities, all the effects would roughly cancel each other out, leading to negligible welfare gains or losses. 
+
+\paragraph{Magnitudes of effects} Because the largest changes would occur in the rental market, and those changes would primarily affect low productivity newborns, the rent effect would have a first order effect on welfare. The lump sum transfer would have a second order effect on welfare because it would benefit mostly newborns with the lowest productivities who have the highest marginal utilities. House prices, in contrast, would mainly affect high productivity newborns who are most likely to become homeowners. Since these households have the lowest marginal utilities, the house price effect would have the least impact on welfare. 
+
+\subsubsection{Summary} Rent deregulation would reduce average housing affordability, but would also reduce rents of new tenants. Contrary to conventional wisdom, the latter effect would mainly benefit newborns whose incomes are lowest. Newborns with low- to-mid incomes would lose due to the rising average costs of renting, whereas high-income newborns would have negligible welfare gains and losses.
+
+\subsection{Optimal degree of regulation}
+
+\subsubsection{Experiment's description} Although we show that full deregulation is superior to full rent control, a careful reader may begin to wonder whether some degree of rent control would be better than full deregulation. To answer this question, we do a grid search to find the degree of rent control under which the ex-ante expected utility of a newborn household is maximized. We increase and decrease the share of the rental market that is mandated to be under rent control and compute the welfare associated with the long-run stationary equilibrium for each case. 
+
+\subsubsection{Results} We find that no degree of rent control is optimal, which means that in the long-run welfare is highest under full deregulation. What explains this finding? When the degree of rent control declines, equilibrium rents in the rent-controlled market must increase in order to reduce the mass of renters in the rent-controlled market. This is an outcome of renters' sorting choice between the deregulated market and the rent-controlled market. Because renters with low-incomes tend to remain in the same rental unit longer, they benefit more from living under rent control. Thus, these are the households who end up renting in the rent-controlled market in equilibria with a lesser degree of rent control and are subjected to higher rents. Since these renters have the highest marginal utilities, their welfare loss also reduces overall welfare. 
+
+\subsection{Transition from benchmark to full deregulation}
+
+\subsubsection{Experiment's description} We have shown that full rent deregulation is superior in the long-run to all long-run equilibria in which some of the rental market is under rent control. But in many instances, policymakers care about the costs that would have to be incurred during the transition from one system to another. This raises the question: how long would it take for welfare gains to materialize? To answer this question we simulate the transition from the benchmark equilibrium to the long-run equilibrium under full rent deregulation.
+
+\subsubsection{Full rent deregulation relative to benchmark: long run equilibria comparison} Before we discuss the results of the transition, we quickly discuss the results comparing the long-run equilibrium under full rent deregulation to the benchmark. The results are detailed in the first column from the right in table \ref{tab:aggregate_effects}. With the exception of the homeownership rate, all the results are of the same qualitative nature as in the experiment comparing full rent regulation to full rent control. However, the magnitudes are smaller here because in the benchmark the rental market is already partly deregulated. Since there are no new insights in terms of intuition, we skip repeating ourselves and go straight to the transition results.
+
+\subsubsection{Explanation for figure \ref{fig:transition_path}} We present our results in the panels (a)-(b) of figure \ref{fig:transition_path}.\footnote{We do not show the homeownership rate as the changes in this variable are small and provide no additional insights.} In panel (a), the y-axis on the left side is the scaling for our normalized rents, and the y-axis on the right side is the scaling for welfare gains. Equivalently, in panel (b), the y-axis on the left side is the scaling for our normalized house price, and the y-axis on the right side is the scaling for the lump sum transfers as a percentage of average labor income.
+
+\subsubsection{Results} As panel (a) shows, rents would decline 4.6\% upon implementation, which is 1.3p.p. more than their long-run equilibrium level. Since the homeownership rate remains roughly the same, this suggests that the decline in rents would be a consequence of renters reducing their units' sizes. Why would that happen? The key to understanding this, is to remember that joint distribution of housing and financial assets across ages in the benchmark equilibrium is a function of households' choices under a high degree of rent control. Upon the removal of rent control, households endowments positions are fixed, and it takes them time to adjust their positions to reflect the optimal choices under full rent deregulation. Taking this into consideration, some renters begin the period living in large units but would no longer benefit from rent control. These renters would see a sharp increase in their rents upon implementation, which would cause them to switch to smaller units, reducing the overall demand for rental housing, and thus decreasing equilibrium rents beyond their long-run equilibrium levels. This reduction in rents would be the primary force raising welfare. 
+
+As the transition continues, however, households would anticipate the higher average rents and increase their savings in order to buy a house, which would eventually raises overall housing demand, the homeownership rate, and house prices to their higher long-run levels, as shown in panel (b). As house prices would rise, property tax revenues would too, and the government would be able to provide larger lump sum transfers as well.
+
+Moreover, while waiting to purchase a home, renters would increase their average savings and thus enjoy greater capital income from their increased savings. With no additional monetary benefit to staying more periods in the same rental unit, this would encourage them to move more frequently to larger rental units as their incomes grow. This, in turn, would put upward pressure on the demand for rentals as well and raise rents over the next 25 periods slightly beyond their long-run levels, but eventually settling down to their long-run level. During the 25 periods during which rents would be above their long-run level, welfare gains would decline to close to 0. However, after rents would settle at their long-run levels, welfare gains would increase to their long-run levels.
+
+\subsubsection{Summary} The key message from the transition exercise is that rents would decline rapidly upon implementation causing welfare gains to materialize immediately and remain positive almost all along the transition path.
+
+\section{Conclusion}\label{sec:conclusion}
+
+\textcolor{red}{Write up the conclusion}
+
+\bibliographystyle{aer}
+\bibliography{bib}
+\linespread{1.5}
+
+\begin{table}[H]
+    \centering
+    \caption{Assigned parameter values}
+    \vspace{-0.5cm}
+    \label{tab:calibration}
+    \input{tables/calibration.tex}
+    \vspace{-0.45cm}
+    \begin{fignote2}{1.07\textwidth}
+    \textit{Notes:} Table \ref{tab:calibration} we show the values of the calibrated parameters. Part (i) shows the external calibration for non-housing parameters. Part (ii) lists the external calibration of housing parameters. Part (iii) displays the external calibration of mortgage-related parameters. Part (iv) shows the internally assigned parameter values. The model matches all target almost exactly. Data for mortgages/housing value comes from the Survey of Financial Security. Data for total rent/total income, homeownership rate, average income tax rate, and renters with rent/income>30\% come from the 2016 Census. The rent-controlled market share is the average of the shares in the 1991-2016 Census waves. The elasticity of rental supply is estimated using data from the 2001-2006 Census waves on the quantity of bedrooms rented out and average real rents, as well as data from the MLS on average real growth in house prices. 
+    \end{fignote2}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+    \caption{Model performance on life-cycle statistics}
+    \vspace{-0.5cm}
+    \label{fig:life_cycle}
+    \includegraphics[width=\textwidth]{figures/lifecycle_plots.pdf}
+    \vspace{-0.45cm}
+    \begin{fignote2}{0.8\textwidth}
+      \textit{Notes:} In the two panels in figure \ref{fig:life_cycle}, we plot the performance of the model on life-cycle statistics relative to the data. In panel (a), we show the average homeownership rate of several age groups: 26-34, 35-44, 45-54, 55-64, and 65+. In panel (b), we also show the average of LTV ratios for all homeowners for the same age groups. The model output is in shown in blue and the data is in orange. Data for homeownership comes from the 2016 Census, and data for the LTV ratio comes from the 2016 Survey of Financial Security.       
+    \end{fignote2}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \caption{Aggregate non-targeted statistics}
+    \vspace{-0.5cm}
+    \label{tab:aggregate_non_targreted_statistics}
+    \input{tables/non_targeted_statistics.tex}
+    \vspace{-0.45cm}
+    \begin{fignote2}{0.92\textwidth}
+      \textit{Notes:} Table \ref{tab:aggregate_non_targreted_statistics} lists the performance of the model on aggregate non-targeted and distributional statistics relative to the data. The performance of the model is shown in the second column, while the third column has the estimates from the data. 
+    \end{fignote2}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Tenure by labor productivity for all households in benchmark}
+    \vspace{-0.5cm}
+    \label{tab:tenure_by_labor_productivity}
+    \input{tables/tenure_by_productivity_benchmark.tex}
+    \vspace{-0.45cm}
+    \begin{fignote2}{0.97\textwidth}
+      \textit{Notes:} Table \ref{tab:tenure_by_labor_productivity} presents tenure by labor  productivity for all renters. $e_{1}$ represents the lowest labor productivity, and $e_{7}$ the highest. In the brackets next to each productivity, we denote the percentage of households that have that productivity. For example, 1.72\% of households have productivity $e_{1}$. The columns under each labor productivity show the distribution of households with that productivity across tenure. For example, the first row of the $e_{1}$ column says that 76.14\% of households with productivity $e_{1}$ are renters in the controlled market. The second row says that 2.01\% of households with $e_{1}$ are renters in the free market. The third row says 8.5\% of households with $e_{1}$ are owners with a mortgage, and the last row says that 13.35\% are homeowners without a mortgage.
+    \end{fignote2}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Aggregate effects}
+    \vspace{-0.5cm}
+    \label{tab:aggregate_effects}
+    \input{tables/aggregate_effects.tex}
+    \vspace{-0.45cm}
+    \begin{fignote2}{0.74\textwidth}
+      \textit{Notes:} Table \ref{tab:aggregate_effects} compares the long-run equilibrium under full rent deregulation to the long-run equilibrium under full rent control.        
+    \end{fignote2}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Avg. years in same rental unit by labor productivity for all renters}
+    \vspace{-0.5cm}
+    \label{tab:avg_years_in_rental}
+    \input{tables/years_in_same_rental.tex}
+    \vspace{-0.45cm}
+    \begin{fignote2}{1.07\textwidth}
+      \textit{Notes:} Table \ref{tab:avg_years_in_rental} reports tenure length of renters in the model broken down by labor productivity. $e_{1}$ represents the lowest labor productivity, and $e_{7}$ the highest. In the brackets next to each productivity, we denote the percentage of households that have that productivity. For example, 1.72\% of households have productivity $e_{1}$. The first row shows the duration a renter stays in the same unit in the benchmark where rental markets are partially regulated. The second row shows the duration when we simulate the model with full rent control. The third row lists the duration when we simulate the model without any regulation.
+    \end{fignote2}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Newborns' distributional impact by labor productivity (full deregulation relative to full rent control)}
+    \vspace{-0.5cm}
+    \label{tab:distributional_impact}
+    \input{tables/distributional_impacts.tex}
+    \vspace{-0.45cm}
+    \begin{fignote2}{0.95\textwidth}
+      \textit{Notes:} Table \ref{tab:distributional_impact} displays welfare effects for newborn households, comparing full rent deregulation to full rent control. $e_{1}$ represents the lowest labor productivity, and $e_{7}$ the highest. In the brackets next to each productivity, we denote the percentage of newborn households that have that productivity in their age. For example, 1.25\% of newborn households have productivity $e_{1}$. Note that the percentage of newborns in each productivity group is different than the percentage of all households in each productivity. This is because the intra- and inter-generational labor productivity processes imply that the stationary ergodic distributions of labor productivities across all ages is different from that distribution of productivities of the youngest cohort. The first row isolates the welfare impact due to the change in rents. The second row isolates the impact due to the change in house prices. The third row provides the welfare effect due to the lump sum transfer. For each column, representing a labor productivity group, summing the numbers in bottom three rows, yields the number in the last row, which is the total welfare gain.
+    \end{fignote2}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+    \caption{Transition path}
+    \vspace{-0.5cm}
+    \label{fig:transition_path}
+    \includegraphics[width=\textwidth]{figures/transition_plots.pdf}
+    \vspace{-0.45cm}
+    \begin{fignote2}{0.95\textwidth}
+      \textit{Notes:} Figure \ref{fig:transition_path} plots the transition path of the model from the benchmark to the long-run equilibrium under full rent deregulation. In panel (a), the y-axis on the left side is the scaling for rents, where we normalize the benchmark rent to 1. The y-axis on the right side is the scaling for welfare gains. In panel (b), the y-axis on the left side is the scaling house prices, where we normalize the benchmark price to 1. The y-axis on the right side is the scaling for the lump sum transfers as a percentage of average labor income.
+    \end{fignote2}
+\end{figure}
+
+\end{document}
+
+%The increasing cost of housing in major cities is one of the greatest economic challenges of our time. In 2016, the share of renters paying over 30\% of their income on housing has risen by 25\% since 1990 to nearly half of all renters \citep{JCHS-2018}. In Canada, the share of renters spending over 30\% of their income on rent has ?? between ?? and 2016. The problem is even worse in major cities. In Toronto and Vancouver.... In response to these trends, rent control has recently returned to the limelight as a policy tool to increase housing affordability (need references here). 
+
+%The second moment is the ratio of aggregate mortgage debt to aggregate housing value of homeowners, which we estimate from the 2016 wave of the Survey of Financial Security (SFS). We calibrate the discount factor to match this moment. The discount factor is important because it determines how much renters are willing to trade off lower rents early in life at the expense of higher average rents over their life-cycle. As we show shortly below, the main trade off between universal rent control and a universally deregulated rental market is that in the former rents are higher early in life but lower on average compared to the latter. 
+
+%Before retirement, owners have access to mortgage debt, $m$, which is limited to $m \leq \lambda_{m}(ph) p h$, where $\lambda_{m}(ph)<1$, and depends on the value of the house. We set the interest rate on mortgage debt to $r_{m}=r+\Delta r$, where $r$ is the return on financial wealth, and $\Delta r$ is the interest premium paid on mortgage debt \citep{sommeretal-2013,sommersullivan-2017,kaplanetal-2019}. Following \citet{gervais}, mortgage debt is fully repaid at the beginning of each period. Because in Toronto households cannot deduct their mortgage interest or property tax payments from their taxable income, they cannot do so in the model either.
+
+%Because in our calibrated model households' discount the future more than the present, $\beta<1$, in equilibrium, free market rent must always be strictly higher than the average controlled market rent. To see why, suppose that the free market rent was equal to the average rent in the controlled market. Then, households expecting to pay the same rent on average in both markets would sort into the free market because they would pay initially in the free rental market. This would raise the free market rent and lower the average rent in the controlled market.
+
+%As well, the model's percentage of owners with a housing costs to income ratio above 30\% and 50\% is also similar to the same statistics we estimate using 2016 SFS data.
+
+\begin{comment}
+We use 2016 census data of Toronto CMA to compute several key parameters. Homeownership rate is 67\%. Total rent to total income and renters with rent/income higher than 30\% (calculate in VDL). In 2016, the MLS average price is \$767,336 and average rent of primary apartments is \$1,240 from Rental Market Survey. The average rent of secondary apartments is \$1,901 and the average rent of other dwelling types other than apartments is \$1,583. Taking the average rent of primary and secondary markets, the ratio of rent over house price is 2.46\%. The HPI for apartments in 2016 is \$359,618 and average rent of apartments is \$1570.5. The ratio of rent over apartment price is 5.24\%. 
+From CMHC (2018), the elasticity between housing starts and house prices in Toronto from 1992 to 2016 is 0.35. We also collected property tax rates from different municipalities in Toronto CMA and computed the average property tax rate, 0.67\%. The average real growth rate of house prices in Toronto from 2006 to 2016 is 4.46\% using MLS average house prices (that's more workable). The average growth rate of house prices in Toronto from 2006 to 2021 is 4.04\%. I'll take the 4.46\% and see what happens!. The ratio of total rent to total income before tax for renters in Toronto CMA in 2016 is 24.29\%. The share of renters with rent/income over 30\% is 45.16\% in Toronto in 2016. The average household employment income in Toronto in 2016 is \$74,722. 
+\end{comment}
+
+Next steps:
+\begin{enumerate}
+    \begin{comment}
+    \item Average income tax rate for Toronto - aggregate taxes paid over aggregate gross income. 
+    I used aggregate numbers. The income tax rate is 19.46\%. Does that include CPP and EI contributions? CPP and EI are not included. (I see EI contributions are 1.88\% and CPP are 4.95\% in 2016). So about 26\% if those are not included. Still really low...I think we are missing something. I think you should limit it to households aged above 22 and below 65. We should re-estimate $\psi$ restricting the ages to 22-65 as well. Even for the age from 22 to 65, the income tax rate is 19.99\%. No big difference. $\psi$ is 0.9278 and constant 0.6718.
+    \item From SFS (2016) LTV 26-34 - 44.1\%, 35-44 - 40.1\%, 45-54 - 25.7\%, 55-64 - 16.9\%, 65+ 4.8\%
+    \item From SFS (2016) top 1\% - \%, top 10\% - \%, top 20\% - \%, bottom 50\% - \%, Gini -
+    \item Maybe someone did similar work for intra-generational log(earnings), https://www.bankofcanada.ca/wp-content/uploads/2020/11/swp2020-46.pdf? https://www23.statcan.gc.ca/imdb/p2SV.pl?Function=getSurvey&Id=31183 - yes, Ihttps://www.sciencedirect.com/science/article/abs/pii/S1094202512000397
+    \item SR: Increase in real income of households between ages 25-55 (and 65).
+    The growth rate for 25-65 is 104\%
+    The growth rate for 25-55 is 147.86\%
+    average income for 24-26 year-old households: \$56,151.55
+    average income for 54-56 year-old households: \$137,802, and 64-66 year-old households:\$113,520.8.
+    Interesting. So declining after 55....I guess we should have an up and then down. I made the function go up until age 55 and then go down until 65.
+    \item Fraction of Toronto's rental market not under regulation.
+    From RMS, the fraction of uncontrolled units in Toronto in 2016 is 2.62\%. It is the fraction of rental units built after 1992. Interesting - very low! It is basically full regulation.
+    \item SR: Lin, what source did you use to get this from "The HPI for apartments in 2016 is \$359,618 and average rent of apartments is \$1570.5. The ratio of rent over apartment price is 5.24\%"?
+    HPI comes from CREA.
+    \item Homeownership rate for each age 25-86 from the Census.
+    In 2016, homeownership rates for 25-34 years 42\%, for 35-44 years 64.3\%, for 45-54 years 72.2\%, for 55-64 75\%, and for 65 years and over 75.1\%.
+    \item SR: I will compute the LTV for each age from 25-86.
+    \item SR: I will compute wealth inequality from SFS.
+    \item SR: https://www.oecd.org/els/public-pensions/PAG2021-country-profile-Canada.pdf
+    \item SR: Lin, you'll see in the text there are some places where I put ?? below. Can you add some description of how and where you got the statistic from, for all these ?? 
+    \item SR: we need the fraction of gross income from all sources spent on rent (net of any rent subsidy) at the bottom 2\%, 3\%,....,10\% of the income distribution. Might not need this because I can calibrate the smallest rental so that no one spends over 75\% of their gross income on rent, which I think may be a reasonable thing to do. Otherwise, our welfare results may be too dependent on this number.
+    \item SR: mortgage interest rate premium relative to risk free rate? Currently using 1\% based on US data, but would be better if we had this data for Canada.
+    \item SR: we need an estimate of the elasticity of rental housing supply to calibrate $\theta$. LZ: model to estimate elasticity
+    $log(starts)=\alpha log(rent)+controls+\epsilon$
+    \item SR: for completeness in the non-targeted stats we should also show how many homeowners spend over 30\% and 50\% of their income on housing (property taxes+interest+principal), excluding those spending over 75\%.
+    \item SR: is it possible to compute the \% of renters spending over 30\%, 50\% of their income on housing? And in these calculation exclude households spending over 75\% of their income on rent (I think those are quite odd cases).
+    \item I think that in order to motivate ourselves in the beginning, it would be good to show statistics of over time (from 1976-2016 - or whatever far back we can go) on housing affordability in Canada as a whole, and in major centre like Toronto, Vancouver and Montreal.
+    \end{comment}
+\end{enumerate}

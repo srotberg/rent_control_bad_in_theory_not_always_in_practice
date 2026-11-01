@@ -1,0 +1,958 @@
+\documentclass[parskip=full]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Basic includes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\usepackage{arydshln}
+\usepackage{array}
+\usepackage{makecell}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{verbatim}
+\usepackage{mathrsfs}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{bm}
+\usepackage[capposition=top]{floatrow}
+%\usepackage[dvipsnames]{xcolor}
+\usepackage{ulem}
+\usepackage[labelfont=bf]{caption}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{natbib}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{rotating}
+\usepackage{pdflscape}
+\usepackage[title]{appendix}
+\usepackage{footmisc}
+\usepackage{bigdelim}
+\usepackage{tabularx}
+\usepackage{xspace}
+\newcommand{\A}{\ensuremath{\mathcal{A}}\xspace}
+\newcommand{\B}{\ensuremath{\mathcal{B}}\xspace}
+\newcommand\pa[1]{\ensuremath{\left(#1\right)}}
+\usepackage{epigraph}
+\usepackage{setspace}
+\usepackage[pdftex, colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue, bookmarks=false]{hyperref}
+%\onehalfspacing
+\setstretch{1.5}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Microtype
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
+% activate={true,nocompatibility} - activate protrusion and expansion
+% final - enable microtype; use ``draft'' to disable
+%tracking=true, kerning=true, spacing=true - activate these techniques
+% factor=1100 - add 10% to the protrusion amount (default is 1000)
+% stretch=10, shrink=10 - reduce stretchability/shrinkability (default is 20/20)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Hyperref setup
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{url}
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\UrlOrds}
+\makeatother
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks,%
+  citecolor=black,%
+  filecolor=black,%
+  linkcolor=blue,%
+  urlcolor=black
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Font setup
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{mathpazo} % math & rm
+%\linespread{1}        % Palatino needs more leading (space between lines)
+\usepackage{parskip}
+\usepackage[scaled]{helvet} % ss
+\usepackage{courier} % tt
+\usepackage{natbib}
+
+\usepackage{filecontents}
+
+\normalfont
+\usepackage[T1]{fontenc}
+
+\usepackage{titlesec}
+\titleformat{\section}
+{\normalfont\fontsize{12}{17}\bfseries}
+{\thesection}
+{1em}
+{}
+
+\titleformat{\subsection}
+{\normalfont\fontsize{11}{16}\bfseries}
+{\thesubsection}
+{1em}
+{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% macros
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcommand{\indicator}[1]{\mathbbm{1}_{\left\{ {#1} \right\} }}
+%\newcommand{\resultsloc}{../code/python/output/}
+\newcommand{\subfigwidth}{0.475\textwidth}
+\newcommand{\subfigwidthtwo}{0.375\textwidth}
+\newcommand{\figwidth}{0.6\textwidth}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\setlength\epigraphwidth{0.9\textwidth}
+\setlength\epigraphrule{0pt}
+\renewcommand{\epigraphflush}{center}
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\epigraph}{\@epitext{#1}}{\itshape\@epitext{#1}}{}{}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Page and paragraph settings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\parskip}{0.0pc} \setlength{\parindent}{0.25in}
+\setlength{\topmargin}{-3pc}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0pc} \setlength{\evensidemargin}{0pc}
+\setlength{\textwidth}{6.5in}
+\makeatletter
+\@fpsep\textheight
+\makeatother
+
+\newenvironment{fignote}{\begin{quote}\footnotesize}{\end{quote}}
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\renewcommand{\baselinestretch}{1.5}
+
+% Formats the notes at the bottom of tables and figures.
+\newenvironment{fignote2}[1]
+{
+\par
+\medskip
+\begin{minipage}{#1}
+\footnotesize
+}
+{
+\end{minipage}
+}
+
+% Formats the notes at the bottom of tables and figures.
+\newenvironment{fignote3}[1]
+{
+%\par
+\begin{minipage}{#1}
+\footnotesize
+}
+{
+\end{minipage}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{\vspace{-1.8cm}The Welfare Economics of Rent Control\footnote{This paper was previously titled "The Welfare Consequences of Rent Controls". We extend our gratitude to the seminar attendees at the University of Wisconsin-Madison, University of Southern California, Queen's University, York University, McMaster University, University of Windsor, as well as to Joseph Steinberg, Efraim Benmelech, Ay\c{s}e \.{I}mrohoro\u{g}lu, Boaz Abramson, Pau Pujalos, Shouyong Shi, Edward Glaeser, Amy Sun, Yahong Zhang, Ruoyu Chen, Chenggang Zhou, and John Baker for their valuable insights and comments. We owe a very special thanks to Joseph Steinberg who generously gave us access to one of his high-powered computers for this research. The data and replication code are available on GitHub at \url{www.github.com/srotberg/the_welfare_consequences_of_rent_controls}.}}
+
+%For those who like audio, we have an AI-generated Spotify episode explaining the paper: \url{https://spotifycreators-web.app.link/e/QVkPeRFoUOb}.
+
+\author{Shahar Rotberg\footnote{Canada Mortgage and Housing Corporation. Corresponding author contact: \url{shahar.rotberg@gmail.com}. Website: \url{www.sites.google.com/site/shaharrotberg}. Shahar Rotberg did this work on his personal equipment and time. He exclusively owns the code that was used to solve the model in this paper.} \and Lin Zhang\footnote{Canada Mortgage and Housing Corporation. Contact: \url{lzhang@cmhc-schl.gc.ca}. The opinions expressed herein do not necessarily represent the views of CMHC.}}
+
+\pagestyle{plain}
+
+\begin{document}
+
+\maketitle
+
+\setstretch{1.5}
+\begin{abstract}
+\onehalfspacing
+\noindent %The standard Economics 101 supply-and-demand diagram shows that rent control reduces supply, distorts allocation, and lowers total surplus. Thus, economists often argue normatively that rent control should be abolished, even when landlords earn economic profits in the long run, but they assume that any profits can be efficiently redistributed. We relax this by developing and calibrating a dynamic general equilibrium model with less-than-infinitely-elastic rental supply, exemptions for new construction, and varying redistribution efficiency. When redistribution is perfectly targeted to the poorest, decontrol raises welfare. Under more realistic equal redistribution, rent control yields higher welfare.
+
+\noindent Can rent control improve welfare? Economists typically say “no”: it discourages rental supply, misallocates housing, reduces maintenance and labor productivity, and increases evictions. Advocates argue “yes”: it redistributes from wealthy landlords to poorer renters more effectively than government, insures tenants against rent shocks, enhances affordability, and reduces homelessness. We develop a general equilibrium model with realistic rental supply elasticities, heterogeneous households, and imperfect redistribution of landlord profits. We find that rent control can improve welfare when addressing rent risk and the over-consumption of housing service, but not as a redistributive tool, which introduces more distortions than benefits.
+%words=97
+\\[1.5ex]
+
+\noindent \textbf{JEL Classification:} E17; R31; R52. 
+
+\noindent \textbf{Keywords:} Rent control, general equilibrium, housing, tenancy control, unit control, homelessness.
+\end{abstract}
+\setstretch{1.5}
+
+\section{Introduction}
+
+Rent control is one of the most widely used — and controversial — housing policies around the world, with direct implications for housing affordability and misallocation, rental supply, and homelessness.
+
+Economists typically oppose rent control because it discourages rental housing supply, misallocates units, and creates deadweight loss \citep{gl-2003}. On top of these first-order effects, rent control economists also argue that it distorts labor, increases the risk of eviction for sitting tenants, and accelerates the physical deterioration of the housing stock. In frictionless models with perfectly elastic long-run supply, rent control is a non-starter: any binding price ceiling pushes rents below break-even, driving supply to zero. In such settings, removing rent control obviously welfare improving — having some rental housing is clearly better than having none. But in reality, rental supply is far from perfectly elastic even in the long run \citep{cy-1994,susin-2002,fack-2006,sy-2020,rs-2023}, and landlords often earn economic profits that, in principle, could be redistributed.
+
+Standard theory assumes that such redistribution is both feasible and efficient — typically modeled as lump-sum transfers to households. But rent control advocates argue that governments rarely tax landlords’ full profits or redistribute revenues effectively. In such a world, they contend, rent control may be a less inefficient tool for transferring resources from wealthy landlords to poorer renters. Further, they argue that rent control shields renters from uninsurable rent risk that could lead to homelessness. 
+
+This disagreement reflects a deeper normative question: when market distortions and imperfect fiscal tools coexist, can rent control improve welfare?
+
+We address this question by developing a quantitative general equilibrium model of rent control that incorporates realistic supply elasticities, heterogeneous households, and varying degrees of targeted redistribution of landlord profits. The model captures key concerns raised by economists — including supply disincentives, misallocation, reduced labor productivity, increased evictions, and housing deterioration — as well as those emphasized by rent control advocates, which are its redistributive nature and its role as insurance against rent risk. We calibrate the model to data from Toronto where rent control is used with exemptions for new construction.
+
+We begin by assuming that all rental profits accrue to the top 35\% of the wealth distribution — consistent with the empirical concentration of landlord ownership. We then consider three redistribution regimes, each taxing rental profits at the average income tax rate (19.4\%) but differing in how the revenue is returned: (1) targeted transfers to the poorest newborns, (2) uniform lump-sum transfers to all households, and (3) proportional reductions in income taxes.
+
+We show that under the first two redistribution schemes, decontrol raises welfare — consistent with standard theory. However, when redistribution occurs through income tax cuts, rent control can outperform decontrol. Our results highlight that the normative case against rent control depends critically on assumptions about the feasibility and targeting of redistribution — and that under plausible fiscal constraints, price regulation may be second-best optimal.
+
+%Visible homelessness and encampments are known to reduce foot traffic, perceived safety, and business activity — with documented effects in cities like San Francisco, where small businesses report lost revenue due to homeless encampments deterring customers and weakening local demand \citep{sf-smallbiz-2020,ap-homeless-2023}. These visibility effects can reduce labor demand and depress wages and productivity more broadly. Residents and firms may therefore be willing to pay substantial amounts — through higher taxes, rents, or public expenditures — to mitigate such externalities. Indeed, studies show that urban disamenities such as crime, noise, and pollution can reduce local property values by 1–3% \citep{pope-2014,currie-2015,diamond-2022}, suggesting a willingness to pay on the order of $200–$500 per person annually to avoid sustained increases in visible homelessness.
+
+\begin{comment}
+
+
+In standard Economics 101 supply-and-demand models, rent control is a binding price ceiling that creates excess demand, misallocates housing, and reduces total surplus. While the analysis itself is a \textsl{positive} depiction of the consequences of rent control — consequences that have also been documented empirically \citep{gl-2003,diamond-2019} — this positive logic and related evidence often underpin the standard \textsl{normative} recommendation to remove rent control.\footnote{\citet{buchanan_1986} called rent control “one policy that economists universally would oppose.” \citet{myrdal-1965} described it as “maybe, the worst example of poor planning by Governments lacking courage and vision”. \citet{friedman_stigler_1946} wrote that “unless removal of rent ceilings would be a powerful new stimulus to inflation, therefore, there is no important defense for them”. \citet{lindbeck1971} famously stated that, “in many cases, rent control appears to be the most efficient technique presently known to destroy a city — except for bombing.”}
+
+In a perfectly competitive rental market with free entry, landlords earn no economic rents in the long run, so there is nothing to redistribute: removing rent control simply restores the efficient allocation and quantity — which would equal zero in the long run if the price ceiling is set below the break-even level. In reality, however, rental housing supply is far from perfectly elastic even in the long run \citep{cy-1994,susin-2002,fack-2006,sy-2020,rs-2023}, so landlords do earn economic profits that could, in principle, be redistributed. Standard theory suggests that even in this case, rental markets should be decontrolled and economic profits should be redistributed (efficiently) through lump-sum transfers rather than by distorting prices and quantities. But in practice, governments can rarely achieve perfect redistribution. We therefore ask the direct normative question: does rent control increase social welfare once we recognize realistic supply elasticities and imperfect government redistribution? To our knowledge, this kind of welfare assessment has not been conducted before.
+
+To answer this question, we develop a dynamic general equilibrium model with overlapping generations of households who face income risk, decide whether to own or rent, and choose between the controlled and free rental markets. Free-market rents do not decline with tenure length and are subject to uninsurable idiosyncratic volatility.\footnote{Long-term fixed-rent leases are rare in practice because enforcing multi-year rent commitments is costly, landlords value flexibility handle tenant misconduct, and low-income tenants typically cannot provide large security deposits to mitigate these risks to landlords \citep[pp. 26–27]{Merrill-2020}.} To capture the idea that rent control provides insurance against uninsurable rent volatility, controlled rents, in contrast, are predictable and may decline with tenancy duration. 
+
+In contrast, to account for its negative impacts on labor mobility, the larger the discounts controlled renters receive the less likely they are to transition to higher labor productivity states. Moreover, the likelihood of eviction increases for a controlled renter as the gap between the market rent for new tenants and their regulated rent grows. Housing in the model is bound below by a minimum size — a feature which has substantial implications for welfare as discussed at length in \citet{rs-2023}. This leads low-income renters to over-consume housing services, but in our setting, landlord neglect — often seen as a downside of rent control — actually reduces low-income renters' excess consumption of housing services, which can potentially improves welfare. 
+
+Rental supply is explicitly modeled: a price-taking rental firm chooses how much housing to rent out in each segment to maximize profit, facing convex management costs, depreciation, and a capacity limit based on year of construction. Our rental supply model encompasses the idea that rent control reduces the incentive to supply older stock, and thus under some conditions, even with exemptions, total rental quantity can remain below the socially efficient level. We allow for varying degrees of efficiency in the government's redistribution of landlords’ profits, and then calibrate the model to match key moments from Toronto’s rent-controlled market, including empirical estimates of rental supply elasticity. We then compare welfare across long-run equilibria with and without rent control and show when rent control can improve social welfare, as measured by the ex-ante expected utility of newborn households.
+
+We consider two widely used rent control regimes: unit control, where rent discounts are attached to the dwelling, and tenancy control, where discounts are attached to the duration of a tenant’s lease.
+
+Our model simulations show that:
+
+\begin{itemize}
+\item When redistribution is well-targeted — with 100\% of profits transferred to the poorest newborns — rent decontrol improves welfare substantially.
+\item Under equal redistribution of the full profits across all households — a rather optimistic and generous assumption by real-world standards — unit control delivers the highest welfare.
+\item In the extreme case in which landlords' profits are not rebated to households at all, both forms of rent control strictly dominate decontrol with tenancy control generating the largest welfare gains.
+\end{itemize}
+
+In sum, we find that if governments face real limits to redistribution — as they almost always do — then well-designed rent control can outperform decontrol, not just politically but economically.
+
+\end{comment}
+
+\section{Related literature}\label{sec:related_lit}
+
+Economists have long argued that rent control distorts housing markets by capping rents below market-clearing levels, suppressing supply, creating excess demand, and misallocating units \citep{suen-1989, gl-2003, diamond-2019}. Classic textbook theory, developed mainly for unit control regimes, predicts that landlords will under-supply under binding rent ceilings, leading to persistent shortages and deadweight losses. Based on such positive analyses, economists have typically recommended removing rent control \citep{lindbeck1971, buchanan_1986, friedman_stigler_1946}. Two key assumptions underpin this normative conclusion: rental supply is perfectly elastic in the long run — so landlords earn no sustained profits — and any profits that do arise can be redistributed costlessly through lump-sum transfers.
+
+However, empirical evidence consistently shows that rental supply is far from perfectly elastic, even in the long run \citep{cy-1994, susin-2002, fack-2006, sy-2020, rs-2023}. This means that landlords often earn profits that could, in principle, be taxed and redistributed. Moreover, in practice, governments face real constraints in fully taxing these profits and precisely targeting the proceeds to the households who need them most. As a result, when supply is realistically inelastic and redistribution is imperfect, the standard recommendation to abolish rent control and rely solely on transfers becomes normatively ambiguous.
+
+Recent work highlights that rent control’s consequences depend critically on policy design and market context. For example, \citet{diamond-2019} and \citet{dmq-2019} use quasi-experimental evidence from San Francisco’s tenancy control expansion to estimate how supply, rents, and property values changed in dollar terms, but do not provide a welfare analysis of household utility or how these effects vary with alternative redistribution, supply elasticities, or the type of rent control regime. Their results show that restricting landlords’ ability to raise rents reduced rental supply and raised market rents for new tenants citywide, harming newcomers on net.
+
+Empirical studies directly measuring entry premiums under tenancy control include \citet{nagy-1997}, \citet{early-2000}, and \citet{cjq-2023}, who find that new tenants in regulated units often pay a premium relative to comparable free-market units, confirming that tenancy control, or unit control where landlords cheat, can clear markets through price rather than rationing. \citet{arnott-1995} also makes this point theoretically. Our model formalizes this mechanism by endogenizing the entry premium, which clears the controlled market while providing tenure-dependent rent discounts that insure households against rent shocks.
+
+From a theoretical perspective, \citet{fallis-1985} provided an early static partial equilibrium analysis of Toronto’s mixed rental market, emphasizing partial exemptions for new construction. \citet{be-2000} developed a static model of tenancy control with asymmetric information about tenancy length, showing how landlords optimally set entry rents when they cannot observe a tenant’s planned duration. We extend these insights by embedding tenancy control in a dynamic general equilibrium model with endogenous household income risk, endogenous labor productivity that depends on the size of the discount in the controlled market, realistic supply elasticity, landlord neglect, and partial exemptions — all calibrated to Toronto data where tenancy control is used.
+
+Other general equilibrium studies, such as \citet{eric-1995} and \citet{fmn-2023}, analyze unit control within dynamic life-cycle frameworks but do not model tenancy control, rent risk insurance, endogenous eviction incentives in a unified system. Critically, these studies evaluate welfare by summing utility across all households, including incumbent renters who already benefit from rent discounts. By contrast, our model explicitly asks under what conditions rent control raises the ex-ante expected utility of newborns — a welfare criterion that isolates the genuine insurance and affordability benefits from pure transfer gains to incumbents.
+
+Our framework also reveals that landlord neglect, typically viewed as a negative side effect of rent control, can partially offset over-consumption of housing services by low-income renters constrained by minimum unit size requirements. This connects to previous findings in \citet{rs-2023}, which show that minimum size rules distort consumption for the poor. In our model, deterioration in controlled units actually brings housing consumption closer to low-income renters’ optimum, improving their welfare.
+
+Beyond rents and allocation, rent control affects broader housing outcomes such as homelessness. \citet{eo-1998} provide early evidence that stronger tenant protections can reduce homelessness. More recent macro-housing models \citep{az-2024, abramson-2024} incorporate minimum size constraints and local shelter costs but do not analyze rent control. Our model links these threads by showing how minimum size rules, landlord neglect, and rent control jointly shape renters’ housing consumption and local homelessness outcomes.
+
+Finally, evidence from decontrol episodes, such as \citet{sims-2007} and \citet{app-2014} for Cambridge, Massachusetts, shows that repealing rent control raises both rents and house prices. Our calibrated decontrol experiments replicate these patterns within a fully structural framework consistent with Toronto’s observed supply elasticity \citep{piaxao-2021, rs-2023}.
+
+In sum, our paper provides the first quantitative general equilibrium assessment, which shows that when redistribution is imperfect and supply is not perfectly elastic, rent control can still raise social welfare despite its distortionary effects. By jointly modeling unit and tenancy control, endogenous eviction, partial exemptions, rent risk, landlord neglect, and a flexible redistribution channel, we clarify the benefits and costs of each type of rent control regime and the conditions under which well-designed rent control can deliver not only insurance and affordability but also higher welfare than decontrol — contrary to common belief. 
+
+\section{Model}\label{sec:model}
+
+\subsection{General overview}\label{sec:brief_overview}
+
+The model features overlapping generations of finitely lived households, along with price-taking, profit-maximizing rental and housing construction firms, and federal and local government entities. Households are heterogeneous with respect to age, labor market productivity, housing tenure (ownership, renting, and homelessness), housing assets, mortgage debt, and financial assets. Renters are further differentiated by the type of rental market in which they participate — either controlled or free — as well as by the duration of their residence in their unit. 
+
+In the free market, rents are not a function of tenancy duration but are subject to iid shocks — meant to encapsulate shifts in local housing demand and supply conditions. Landlords offset the depreciation of these units, thus maintaining constant housing services throughout a tenancy. In the controlled market, rents are predictable and may decline the longer a tenant remains in place, which encourages controlled renters to stay longer in their units than they would have if they were living in free-market units. However, the larger the discount they receive, the less likely they are to transition to or stay at higher labor productivities. Furthermore, the more their landlords can charge from a new tenant, the more likely they are to be evicted. Lastly, landlords of controlled rentals allow them to deteriorate by not offsetting their depreciation. 
+
+Working-age households participate in the labor market, while retirees receive government pensions that depend on their average lifetime earnings. Under tenancy control, renters choose between the controlled and free rental markets and decide on their tenancy duration. Under unit control, households enter a lottery for the chance to rent a controlled unit and receive and immediate discount relative to free-market rents. If they win the lottery and capitalize on it, they can remain in that unit as long as they wish, but their rents — adjusted for housing service decline — do not decline over time. Homeowners pay proportional property taxes and maintenance costs and finance their purchases through long-term mortgages contracts, following the approach of \citet{kkk-2021}.\footnote{Our general equilibrium results depend on how easily households can switch between renting and owning, as this affects rental demand and, consequently, equilibrium rents. Because mortgage contract features critically affect tenure decisions, we model mortgages as realistic long-term contracts.} 
+
+A competitive, profit-maximizing rental firm supplies rental housing to both the free-market and rent-controlled segments, facing convex marginal management costs, depreciation, and property taxes. Housing stock built after a policy cut-off year is exempt from rent control if rented out, but can only be converted to rentals up to a certain maximum utilization rate — meaning that not all exempt stock can be turned into rental housing. The firm rents out as much exempt stock as possible — as long as this quantity remains below what the quantity supplied would be under full deregulation — and then uses the older stock to supply controlled units to meet any remaining rental demand, provided that the regulated rent covers the marginal cost of a controlled rental. If the controlled rent is too low, the firm withholds some older units from the market, causing total rental supply to fall below the efficient competitive level despite the partial exemption.
+
+Under tenancy control, landlords can reset rents upon tenant turnover. In equilibrium, the initial controlled rent paid by new tenants clears the market for rent-controlled units by equating the aggregate demand for controlled rentals to the supply of controlled rentals. In contrast, under unit control, rents are below free-market rents regardless of tenant turnover. As a result, shortages arise, and access to controlled units is allocated randomly. In this case, the market-clearing object is the probability of securing a controlled unit via lottery.
+
+Housing is supplied endogenously by a competitive, profit-maximizing construction company, which is subject to increasing marginal costs. The higher the housing price, the more it invests in the production of new housing, which supplements the depreciated housing stock. In equilibrium, the housing price equates the aggregate demand for housing (from both homeowners and renters) to the aggregate supply of housing.
+
+The model incorporates both local and federal governments. The local government offers local public services to residents and homeless shelters to the homeless, financed via property taxes. Given the localized nature of rent control legislation, we require budget balance at the local level in all simulations via property taxes. The federal government funds pensions and federal public goods through income and consumption taxes. As well, it obtains the full profits of the rental and housing companies and rebate them to different households in a lump-sum fashion or via a reduction in income taxes. 
+
+Because the model economy represents a single city, we take the interest rate, $r$, as exogenous. 
+
+\subsection{Demographics}\label{subsection:demographics}
+
+Households enter the model at age $j=1$, retire from the labor force at age $J_{R}$, and live for $J$ periods. They face no mortality risk prior to age $J$, but die with certainty afterward. Household preferences are characterized by the following flow utility function:
+
+\begin{equation*}
+    u_{j}(c,h(o,f,\iota))=\xi_{j}^{\sigma}\frac{\left(c^{1-\gamma} h(o,f,\iota)^{\gamma}\right)^{1-\sigma}}{1-\sigma},
+\end{equation*}
+
+\noindent where $c$ denotes non-housing consumption and $h(o,f,\iota)$ represents housing services consumption, discussed further in Section \ref{subsection:housing_choice}. The consumption of housing services depends on the household's tenure status, $o$, rental market type, $f$, and tenancy duration, $\iota$. Specifically, $o=1$ indicates homeownership, while $o=0$ denotes renting. The indicator $f=1$ corresponds to renting in the free market and $f=0$ to renting in the controlled market.\footnote{For homeowners, the rental market indicator $f$ holds no significance, and we therefore set it to $1$.} The parameter $\iota$ represents the number of years a renter in the controlled market has resided in the same unit. The parameter $\gamma$ denotes the weight assigned to the consumption of housing services in utility, $\sigma$ captures relative risk aversion, and $\xi_{j}$ is an age-specific equivalence scale that adjusts for changes in household size over their lifecycle, following \citet{lm-1980}, \citet{wz-2010}, and \citet{xu-2013}. Households discount future consumption at rate $\beta$ and pay a proportional tax $\tau_{c}$ on their non-housing consumption.
+
+In addition, households derive warm-glow utility from bequests they leave behind upon death following \citet{cagetti-denardi-2006}. The bequest utility function is given by $\omega_{B}(q)=\mu \frac{q^{1-\sigma}}{1-\sigma}$, where $q$ denotes net worth at the end of life (formally defined in Section \ref{subsection:household_optimization}), and $\mu$ modulates the strength of the bequest motive.
+
+\subsection{Income and income taxes}\label{subsection:income}
+
+Working-age households ($j<J_{R}$) supply labor inelastically. Labor income for an age-$j$ household with labor productivity components $\chi$ and $e$ is given by $y_{\ell,j}(\chi,e)=\chi e\zeta_j$, where $\chi$ remains constant over the lifecycle and is drawn from the unconditional distribution $\hat{F}(\chi)$. The idiosyncratic shock $e$ evolves according to a Markov process $F(e,e')$. The term $\zeta_j$ captures the deterministic component of lifecycle earnings. Upon retirement, households receive pensions $y_{R}(\chi,e)$ based on their labor productivity at retirement.\footnote{Households with higher productivity at retirement are likely to have had higher earnings over their lives, and therefore receive larger pensions.}
+
+In addition to labor income, households earn capital income on their savings: $y_{k}(a)=ar$, where $r$ is the interest rate. Taxable income is defined as:
+\begin{equation*}\label{eq:taxable_labor_income}
+  y^{x}_{j}(\chi,e,a) =y_{\ell,j}(\chi,e)+\nu y_{k}(a),
+\end{equation*}
+
+\noindent where $\nu$ denotes the taxable share of capital income. Taxable income is subject to a progressive tax schedule:
+\begin{equation}\label{eq:income_tax}
+  y^{\tau}_{j}(\chi,e,a) = y^{x}_{j}(\chi,e,a)-\tau_{\ell}y^{x}_{j}(\chi,e,a)^{\psi},
+\end{equation}
+
+\noindent where $\tau_{\ell}$ determines the average tax rate and $\psi$ governs the progressivity of the tax schedule, following \citep{hsv-2020}.
+
+As in \citet{kkk-2021}, surviving households across all ages receive financial endowments each period, which are equal to the bequests from the deceased in the preceding period. These are denoted by $\vartheta (\chi,e)$, capturing a positive correlation between bequests and household income.
+
+Lastly, households may get lump-sum transfers $T(s)$, from the government depending on their state, denoted as $s$ for now.
+
+\subsection{Housing}\label{subsection:housing_choice}
+
+Households choose between owning or renting a dwelling, denoted by $o \in \mathcal{O}=\{0,1\}$, and the size of their dwelling, denoted by $h>0$. Households who cannot own or rent or decide not to, become homeless. We expand on the homelessness component in Section \ref{sec:cohabit_homeless}.
+
+Household who purchase a house of size $h$ pay $p h$, with the restriction that homeowners must purchase a house no smaller than $\underline{h}_{o}$. Buying and selling houses involve proportional transaction costs, $\tau_{b} p h$ and $\tau_{s} p h$, respectively. All housing is subject to a property tax rate $\tau_{p}$ and depreciates at a rate $\delta_h$ per period. 
+
+Renters must consume at least $0<\underline{h}_{r}<\underline{h}_{0}$ at the time of move-in \citep{gervais,sommeretal-2013,sommersullivan-2017,kaplanetal-2019,rs-2023}. Following \citet{rs-2023}, we calibrate the minimum rental size $\underline{h}_{r}$, to match the share of renters spending more than 50\% of their pre-tax income on housing. This parameter captures the extent to which some renters would prefer to consume less housing services than $\underline{h}_{r}$ but are prevented from doing so by exogenous constraints — such as minimum size regulations imposed by municipalities.\footnote{See Section 9.5.4 of the Ontario Building Code: \url{https://www.ontario.ca/laws/regulation/120332}.}
+
+\subsubsection{Unregulated rental market}
+
+In the free market, rents are subject to iid shocks, denoted by $z$, which are drawn from the distribution $G(z)$. With probability $g(z=x)$, renters paying $p_{r,1}h$ for their rental $h$ in the current period, face an additional rent charge of $x p_{r,1}h$ in the following period, from which they cannot escape. The shock $x$ can be positive or negative and need not have a mean of 0. The average per-unit rent in the free market is $\int_\mathcal{Z}(1+z)p_{r,1}\mathrm{d}G(z)$, denoted as $\overline{p}_{r,1}$. Because the idiosyncratic shocks are iid, the aggregate revenues obtained by the rental company in the free market in the long-run are constant. 
+
+Landlords in the free market fully offset the
+depreciation of their unit each period, maintaining housing services constant over time.
+
+\subsubsection{Tenancy controlled rental market}
+
+Under tenancy control, renters choose between the controlled and free rental markets, indicated by $f \in \{0,1\}$, where $f=0$ denotes the controlled market and $f=1$ the free market. Rents in the controlled market decline over time as follows:
+\begin{equation}\label{eq:rent_in_controlled_market}
+\frac{\tilde{p}_{r,0}}{(1+\kappa_{1})^{\iota}} h.
+\end{equation} 
+
+\noindent $h$ is the size of the controlled unit at the time a new tenant moves in, $\tilde{p}_{r,0}$ is the initial rent paid by a new tenant, $\kappa_{1}$ is the rate of rent decline for each additional period the tenant remain in the same unit, and $\iota$ is the number of years in the unit.
+
+Landlords in the controlled market allow their units to deteriorate over time. As a result, continuing tenants in controlled units receive reduced housing services \citep{gl-1990,murray_et_al-1991}, given as follows:
+\begin{equation}
+h(o,f,\iota)=\frac{1}{(1+(1-o)(1-f)\kappa_{2})^{\iota}} h,
+\end{equation}
+ 
+\noindent where $\kappa_{2}$ is the rate of service decline per period for continuing tenants under tenancy control.\footnote{We do not track depreciated units. Once vacated, controlled units can be subdivided or restructured for new tenants.}
+
+Figure \ref{fig:diagram_rent_path_skeleton} qualitatively illustrates controlled and free-market rents under tenancy control.\footnote{To maintain clarity in our illustration, we abstract from changes in service decline and free-market rent volatility.} The downward-sloping blue line shows that rents in the controlled market begin at $\tilde{p}_{r,0}$ and decline with tenancy duration, as per equation \eqref{eq:rent_in_controlled_market}. The horizontal red line represents the free-market rent $p_{r,1}$, which is constant irrespective of tenancy duration. 
+
+When both markets coexist, the free-market rent must exceed the average controlled rent; otherwise, there would be no incentive to supply free-market rentals. In contrast, in equilibrium, the free-market rent $p_{r,1}$, must be lower than the initial rent in the controlled market $\tilde{p}_{r,0}$. What explains this equilibrium outcome?
+
+If initial rents in the controlled market were lower than free-market rents, $p_{r,1}$, all renters would choose the controlled market. To achieve equilibrium, therefore, the controlled market must feature an entry premium. Renters who expect to remain a short time in the unit would choose the free market to avoid this premium. In contrast, renters who expect to stay longer in the unit would pay the premium in exchange for tenancy control. Because landlords cannot observe a renter's expected duration when they move in, they must set a uniform entry rent, and the market clears via self-selection.
+
+The premium paid in the controlled market ensures that shortages do not arise. Although the point that shortages do not arise under tenancy control is not new, as highlighted in \citet{arnott-1995}, our framework shows that it also means that new movers in the controlled sector must pay a premium above free-market rents. This premium also allocates controlled units to those with the highest willingness to pay at the time they move into the unit. Although the initial allocation of controlled units is relatively efficient, households' state variables change over time, which can reduce the efficiency of the initial allocation if controlled renters ``over stay their welcome''. 
+
+Using 2016 Census data for Toronto, we estimate that new tenants in the controlled market pay a 6.3\% premium over free-market rents.\footnote{See Appendix Section \ref{section:appendix_measuring_premium}.} This result aligns with prior empirical studies \citep{nagy-1997,early-2000,cjq-2023}. Moreover, we show that the allocations of controlled units in our model with tenancy control are fully consistent with Toronto Census 2016 data.
+
+\subsubsection{Unit control rental market}
+
+Under unit control, rents, denoted as $\hat{p}_{r,0}$, are regulated at the unit level and landlords cannot increase them upon tenant turnover. Thus, new tenants receive immediate discounts relative to free-market rents, meaning that $\hat{p}_{r,0}<\overline{p}_{r,1}$. 
+
+If controlled rents declined each period at a rate larger than the landlords' lack of maintenance, they would fall to zero in real terms in the long run. Therefore, in our model rents decline at the same rate as the reduction in services due to landlords neglecting their unit ($\kappa_1=\kappa_2$). Thus, while the rent payment for a particular rental declines over time, the rent paid per quantity of housing services remains constant throughout a tenancy. 
+
+Because there is no price mechanism to allocate controlled units under unit control, shortages arise, and thus a random draw $\eta$ determines which households gain access to controlled units. With probability $\pi$, a renter draws a favorable shock ($\eta=1$) and can rent a controlled unit, staying as long as they wish unless evicted. Upon leaving their unit, they must draw a new favorable shock in order to re-enter the controlled market. With probability $1-\pi$, the draw is unfavorable ($\eta=0$), and the renter is excluded from the controlled market for that period. 
+
+This highlights the tradeoff between unit control and tenancy control. Under tenancy control, prices allocate controlled units, resulting in a more efficient allocation than under unit control. However, tenants must forgo current consumption to access the insurance against rent volatility and to enjoy the longer-term affordability benefits of rent control. In contrast, unit control provides an immediate discount relative to free-market rents to those who secure a controlled unit, but may exclude certain households with very high willingness to pay. 
+
+Our simulations in Section \ref{sec:non_targeted_statistics} confirm that unit control results in fewer controlled units being allocated to low-income households. While the opportunity to rent a controlled unit — determined by lotteries — is random, the decision to rent a controlled unit and remain in it longer is not. Since low-income households are more likely to stay longer in the same unit, they ultimately receive a disproportionately larger share of controlled units in equilibrium.
+
+\subsubsection{Impact of rent control on evictions}
+
+A common argument against tenancy control is that it motivates landlords to evict long-term tenants in order to secure higher rents from new tenants. This incentive does not arise in free-market or unit-controlled settings, where landlords cannot charge higher rents to new tenants. To capture this mechanism, our model specifies an eviction probability that depends solely on the rent gap between what the landlord could charge a new tenant and what the current tenant pays.
+
+Formally, renters face no eviction risk in free-market or unit-controlled rentals beyond ordinary turnover — which is not modeled explicitly here. Under tenancy control, however, the probability of eviction rises with the rent increase a landlord can gain by replacing the incumbent tenant with a new tenant. We specify the eviction probability $\epsilon$ as:
+\begin{equation}\label{eq:eviction}
+\epsilon(\iota)=
+\begin{cases}
+0 & \text{if not a renter or renting in a free-market or unit-controlled rental} \\ \epsilon_1 \frac{1}{\left(1 + \kappa_1 - \kappa_2 \right)^{\iota}} & \text{if in a tenancy-controlled rental}.
+\end{cases}
+\end{equation}
+
+\noindent Here, $\epsilon_1$ is a scale parameter that determines how strongly the rent gap influences eviction risk. We calibrate $\epsilon_1$ to match the observed rate of evictions due to reasons other than non-payment of rent, which we interpret as landlord-driven displacement motivated by rent increases.
+
+Renters who are evicted from tenancy-controlled or unit-controlled markets re-enter the next period as free-market renters, with their housing market state reset to $f=1$ and their idiosyncratic rent shock set to $z=0$.
+
+\subsubsection{Impact of rent control on labor productivity}
+
+To reflect the widely documented distortions that rent control creates for labor mobility, our model specifies the Markov process for stochastic labor productivity as an endogenous function of households’ choices to reside in a controlled unit and the extent of their rent discount.
+
+Specifically, controlled renters with larger discounts are less likely to move to higher-income states or to remain in a given high-income state. We define the discount $\aleph$ as follows:
+\begin{equation}\label{eq:discount}
+\aleph(\iota)=\begin{cases}
+1-\frac{1}{\left(1+\kappa_1-\kappa_2 \right)^{\iota}} & \text{under tenancy control} \\[8pt]
+1-\frac{\hat{p}_{r,0}}{\overline{p}_{r,1}} & \text{under unit control}.
+\end{cases}
+\end{equation}
+
+We define the penalty $\Upsilon$ using the sigmoid function as follows:
+\begin{equation}\label{eq:penalty}
+\Upsilon(\iota,\chi,e,j)=1-\aleph(\iota) \times  \kappa_3\,\frac{1}{1+e^{-\kappa_4\big( y_{\ell,j}(\chi,e)-\hat{y}\big)}},
+\end{equation}
+
+\noindent where $\hat{y}$ denotes the median income of renters, $\kappa_3$ determines the strength of the penalty, and $\kappa_4$ controls how strongly the penalty affects high-income renters relative to low-income renters. Higher values of $\kappa_4$ reduce the penalty for low-income renters and increase it for high-income renters.
+
+Lastly, the Markov chain for $e$'s is adjusted so that for $e$'s below the maximum productivity level and above the smallest productivity, $F(e,e'\mid\iota,\chi,e,j,e'\geq e)=(1-\Upsilon(\iota,\chi,e,j)\,F(e,e'\mid e'\geq e)$, for the $e$ that is equal to the smallest productivity, $F(e,e'\mid\iota,\chi,e,j,e'>e)=(1-\Upsilon(\iota,\chi,e,j))\,F(e,e')$, and for the $e$ that is equal to the maximum productivity, $F(e,e\mid\iota,\chi,e,j)=(1-\Upsilon(\iota,\chi,e,j)\,F(e,e)$. All remaining probabilities adjust accordingly to ensure that $\sum_{e^{'}} F(e,e')=1$ for every $e$.
+
+\subsubsection{Homelessness}\label{sec:cohabit_homeless}
+
+Because rental housing has a binding minimum size, some households may not want or be able to participate in the conventional rental housing market. Those households face homelessness $\left(b \in \mathcal{O}\right)$. However, they receive reduced housing services $\underline{h}_{h}$ while homeless, where $0<\underline{h}_{h}<\underline{h}_{r}$. They receive these services free of charge. However, as in \citet{abramson-2024}, the city incurs a cost $\theta_{b}$ per homeless household. 
+
+For households who are homeless, we set $o=0$ and $f=1$ when we define the dynamic program later.
+
+\subsection{Mortgages}\label{subsection:morgtages}
+
+In addition to rent control, the structure of mortgage contracts significantly influences households' tenure decisions, which in turn affect rental demand, equilibrium rents, and welfare results. Modeling mortgages as realistic long-term contracts is therefore important. We model mortgages, denoted as $m$, as long-term contracts with origination costs, prepayment penalties, and loan-to-value (LTV) and payment-to-income (PTI) constraints at origination only. We set the mortgage interest rate at $r_{m}=r+\Delta_m$, where $r$ is the return on financial assets, and $\Delta_m$ is the mortgage debt interest rate premium \citep{sommeretal-2013,sommersullivan-2017,kaplanetal-2019}. Consistent with Canadian tax policy, mortgage interest payments are not deductible from taxable income.
+
+To obtain a new mortgage, households must pay a fixed cost $\omega_{1}$. A mortgage can only be originated if the LTV ratio does not exceed a threshold $\lambda_{m,1}(ph)<1$, determined by the house value at the time of purchase $ph$:
+\begin{equation}\label{eq:LTV}
+\frac{m}{p h} \leq \lambda_{m,1}(ph).
+\end{equation}
+
+\noindent The PTI constraint caps mortgage debt based on the borrower's pre-tax income at the time of origination: 
+\begin{equation}\label{eq:PTI}
+\frac{\tau_{p}ph+(r_{m}+\upsilon_{1})m}{y_{\ell,j}(\chi,e)+y_{k}(a)} \leq \lambda_{m,2}.
+\end{equation}
+
+\noindent $\upsilon_{1}$ represents the average annual fraction repaid over the mortgage term, and $\lambda_{m,2}$ is the maximum PTI ratio permitted. This constraint ensures that the sum of property taxes, interest payments, and average principal repayments does not exceed a fixed share $\lambda_{m,2}$ of the borrower's pre-tax labor and capital income.
+
+Each period, mortgage holders must allocate at least a fraction $\upsilon_{1}$ of the outstanding balance for repayment, and may pay up to a fraction $\upsilon_{2}>\upsilon_{1}$ of the debt without penalty. Payment above this threshold incurs a prepayment penalty:
+\begin{equation}\label{eq:prepayment_penalty}
+\tau_{pp}(m,m')=\omega_{2}\mbox{max}\left\{(1-\upsilon_{2})m-m',0\right\}.
+\end{equation}
+
+\noindent We consider borrowers paying less than $\upsilon_{1}m$, as ones who must originate a new mortgage. Therefore, they must incur the fixed cost $\omega_{1}$ and adhere to constraints \eqref{eq:LTV}--\eqref{eq:PTI} once again.
+
+\subsection{Summary of heterogeneity}
+
+Households are heterogeneous along several dimensions:
+
+\begin{itemize}
+    \item Financial assets, $a\in \mathcal{A}=\mathbb{R}_{+}$.
+    \item Housing tenure status, $o \in \mathcal{O}=\{0,1\}$.
+    \item Opportunity to rent in the controlled market in the case of unit control $\eta \in \mathcal{O}$.
+    \item Rental market type for renters, $f \in \mathcal{O}$.
+    \item Rent shock for free-market renters, $z \in \mathcal{Z}={\mathbb{R}}$.
+    \item Duration of residence in the same unit for rent-controlled tenants, $\iota \in \mathcal{I}=\mathbb{N}$.
+    \item Housing size, $h\in \mathcal{H}=\mathbb{R}_{++}$.
+    \item Mortgage debt, $m \in \mathcal{M}=\mathbb{R}_{+}$.
+    \item Idiosyncratic labor fixed effect $\chi \in \mathcal{X}=\mathbb{R}_{++}$.
+    \item Stochastic labor productivity shock, $e \in \mathcal{E} = \mathbb{R}_{++}$.
+\end{itemize}
+ 
+\noindent We denote the measure of age-$j$ households over endowments by $\Psi_{j}(a,o,\eta,f,z,\iota,h,m,\chi,e)$. For brevity, to represent the state of a household whose age is $j$, we mainly employ the notation $s$.
+
+\subsection{Dynamic program}\label{subsection:household_optimization}
+Given its state variables, a household must make several decisions: saving ($a'$), housing tenure ($o'$), whether to be homeless ($b'$), and housing consumption ($h'$). Under tenancy control, renters also decide whether to rent in the controlled or free market ($f'_{c}$, where we set $f'_{c}=1$ whenever $o'=1$ or $b'=1$). We use $f'_c$ to denote the household's intended choice of rental market, distinguishing it from the realized $f'$. This is important because, in the event of eviction, $f'$ is forced to equal 1 regardless of whether $f'_c=0$.
+Renters in the controlled market also choose whether to extend their tenancy by one period ($\iota'_c$). For the decision of whether to remain in the same unit, we similarly define $\iota'_c$ as the household's intended duration choice, which may differ from the realized $\iota'$. If an eviction occurs, the household is forced to start anew, so $\iota'$ is set to 1 even if they had planned to stay longer (i.e., $\iota'_c > 1$). Homeowners choose their mortgage debt ($m'$) and whether to originate a new mortgage ($n$). At the terminal age $J$, households also decide how much bequest to leave behind ($q'$).
+
+In order to combine both tenancy control and unit control into one budget constraint, we denote the rent control regime by $\alpha \in \{0,1\}$, where $\alpha=0$ means tenancy control and $\alpha=1$ means unit control. 
+
+The household's dynamic optimization problem is given by:
+\begin{equation}\label{eq:vf}
+\begin{aligned}
+V_{j}(s) 
+= \max_{\substack{\{c,\, a',\, o',\, b',\, f'_c, \\ \iota'_c,\, h',\, n,\, m',\, q'\}}} \Big\{
+& \; u_{j}\big( c,\, h'( o', f'_c, \iota'_c ) \big)
++ \mathbbm{1}_{\{ j = J \}}\, \omega_{B}(q')+ \\
+& \mathbbm{1}_{\{ j < J \}}\, \beta 
+\int_{\mathcal{E} \times \mathcal{Z}} \Big[
+(1 - \epsilon(\iota'_c))\, V_{j+1}\big( s'( f' = f'_c,\, \iota' = \iota'_c ) \big) \, dF(e, e' \mid f'_c, \iota'_c, \chi, e, b') +\\ & \quad \epsilon(\iota'_c)\, V_{j+1}\big( s'( f' = 1,\, z' = f'_c \times 0 + (1 - f'_c) z',\, \iota' = 1 ) \big) \, dF(e, e' \mid f'_c, \iota'_c, \chi, e, b') \Big] dG(z)
+\Big\}.
+\end{aligned}
+\end{equation}
+
+\noindent subject to the following constraints:
+\begin{flalign}
+  & c(1+\tau_{c})+a'+or_{m}m+(1-o')\left[(1-f'_{c})\frac{\left((1-\alpha)\tilde{p}_{r,0}+\alpha \hat{p}_{r,0}\right)} {(1+\kappa_{1})^{\iota'_{c}-1}}h'(0)+(1-b')f'_{c}p_{r,1}h'\right]+\label{eq:bc} \\ & \quad o\left(\tau_{p}+\delta_{h}+\mathbbm{1}_{\left\{o'=0 \vee h'\neq h\right\}}\tau_{s}\right)ph + o'(1+\tau_{b}\mathbbm{1}_{\left\{o=0 \vee h'\neq h\right\}})ph'+ \omega_{1}n+(1-n)\tau_{pp}(m,m')+ \notag \\ & \quad \mathbbm{1}_{\left\{o'=1 \land j=J\right\}}ph(\tau_{p}-\delta_{h}-\tau_{s})= y_{\ell,j}(\chi,e)+y_{k}(a)-y^{\tau}_{j}(\chi,e,a)+a+o(ph-m)+o'm'+\vartheta(\chi,e)+T(s) \notag \\
+    & a' \geq 0 \label{eq:financial_wealth} \\
+    & h' \geq o'\underline{h}_{o}+(1-b')(1-o')\underline{h}_{r} \label{eq:min_house_size} \\
+    & h'=b'\underline{h}_{h} \label{eq:min_house_size_homeless} \\
+    & f'_{c} = 1 \quad \text{if $\eta=0$ and $\alpha=1$}\label{eq:free_market} \\
+    & h'(o',f'_{c},\iota'_{c})=\frac{1}{(1+(1-o')(1-f'_{c})\kappa_{2})^{\iota'_{c}-1}}h' \label{eq:housing servies_controlled}\\
+    & n \in \left\{0,o'\mathbbm{1}_{\left\{j<J_{R}\right\}}\right\} \label{eq:origination} \\
+    & nm' \leq \lambda_{m,1}(ph') p h' \label{eq:LTV_1} \\
+    & n (\tau_{p}ph'+(r_{m}+\upsilon_{1})m')\leq \lambda_{m,2}(y_{\ell,j}(\chi,e)+y_{k}(a))\label{eq:PTI_1} \\
+    & (1-n)m'\leq (1-\upsilon_{1})m \label{eq:settle_debt} \\
+    & q' = a' + o' \left[p h'-m'\right] \label{eq:networth}\\
+    & \iota'_{c} = 1 \quad \text{if $f'_{c}=1$,}\label{eq:iota_restriction}
+\end{flalign} 
+
+\noindent The household's utility function comprises three components: a flow utility derived from housing and non-housing consumption, a warm-glow component stemming from bequests left behind by deceased households, and a discounted value of future utility which depends on whether the households was evicted or not.\footnote{The dynamic program is written to allow for labor productivity shocks across all ages, facilitating a unified representation of decision-making for both retirees and working-age individuals.}
+
+Equation \eqref{eq:bc} defines the household's budget constraint. The left-hand side includes expenditures (in order of appearance): consumption and consumption taxes, savings, mortgage interest payments, rental costs in controlled and free markets, property taxes, housing depreciation, and housing transaction costs (buying/selling), mortgage origination costs, prepayment penalties, and property taxes, depreciation, and selling costs for terminal homeowners. The right-hand side comprises resources available for expenditure (in order of appearance): after-tax labor and capital incomes, financial assets, housing equity, mortgage funds raised, bequests contingent upon the household's labor productivity, and lump-sum transfers from the federal government that might depend on the household's state. 
+
+The remaining constraints specify behavioral and institutional limits: 
+\begin{itemize}
+    \item Constraint \eqref{eq:financial_wealth}: Households cannot borrow without collateral (no unsecured debt).
+    \item Constraint \eqref{eq:min_house_size}: Housing consumption constraint for owners and renters. All owners must consume at least $\underline{h}_{o}$ units of housing, all renters must consume at least $\underline{h}_{r}$.
+    \item Constraint \eqref{eq:min_house_size_homeless}: Housing consumption for households who are homeless. Households experiencing homelessness must consume exactly $\underline{h}_{h}$.
+    \item Constraint \eqref{eq:free_market}: Under unit control, households cannot rent in the controlled market if they draw a bad shock ($\eta=0$).
+    \item Constraint \eqref{eq:housing servies_controlled}: Renters in controlled units experience declining housing services over time due to landlord neglect. 
+    \item Constraint \eqref{eq:origination}: Only working-age households may originate new mortgages.
+    \item Constraints \eqref{eq:LTV_1} and \eqref{eq:PTI_1}: Loan-to-value and payment-to-income constraints at origination.
+    \item Constraint \eqref{eq:settle_debt}: Mortgage holders must repay at least a minimum fraction $\upsilon_{1}$ of their principal.
+    \item Constraint \eqref{eq:networth}: Bequests equal net financial and housing wealth at death.
+    \item Constraint \eqref{eq:iota_restriction}: Years in the same rental constraint. For households who do not rent in the controlled market, we mechanically set the number of years in the same rental $\iota'_{c}$, to 1.
+\end{itemize} 
+
+Finally, we denote policy functions for households as follows: consumption $c_{j}(s)$, savings $a'_{j}(s)$, homelessness $b'_{j}(s)$, housing tenure $o'_{j}(s)$, rental market choice $f'_{c,j}(s)$, tenure duration in rent-controlled housing $\iota'_{c,j}(s)$, housing size $h'_{j}(s)$, mortgage debt $m'_{j}(s)$, mortgage origination $n_{j}(s)$, and bequests $q'_{j}(s)$.
+
+\subsection{Rental company with partial exemptions and stock constraints}\label{sec:rental_company}
+
+A key concern with any rent control policy is its potential impact on rental housing supply. To address this, we develop a theoretical framework that extends and deepens the rental supply ideas in \citet{fallis-1985}. Moreover, to generate a realistically finite rental supply elasticity we exploit the convex management costs approach in \citet{garrigaeetal-2009}. We extend both frameworks to model partial rent control exemptions tied to the housing stock’s year of construction and its potential for rental utilization. Our framework captures how, even with such exemptions, rent control policies can lead to the quantity of rental housing supplied falling below the competitive level.
+
+The rental company is a price-taker and supplies housing in two segments:
+\begin{itemize}
+    \item \textbf{Free market segment} ($i=1$): Housing built after a policy cut-off year, denoted as $Y_{c}$, is legally exempt from rent control. However, not all of this exempt housing stock can be converted to rental use. Let $H'_1$ denote the stock built after year $Y_{c}$, and let $\phi \in (0,1)$ represent the maximum rental utilization rate of the unregulated stock. In practice, legal restrictions (such as condo by-laws and co-op rules that prohibit renting certain units) and heterogeneous owner preferences impose a binding upper limit on the fraction of this exempt stock that can be rented out. We capture this institutional and behavioral constraint by imposing an exogenous cap on the rental utilization rate for the exempt stock. To calibrate $\phi$, we use census data from Calgary and Edmonton — two large Canadian cities without rent control — to measure the average rental utilization rates for condominiums and single-family homes. We then weight these averages by Toronto’s actual mix of condos and single-family homes to obtain an estimated rental utilization rate of any unregulated stock of 46.8\%.
+    \item \textbf{Controlled segment} ($i=0$): older housing defined as $H_0'=H'-H_1'$, are subject to a rent control if rented out, which can only earn the expected controlled rent of $\overline{p}_{r,0}$.\footnote{While tenancy control could, in principle, induce landlords to discriminate among prospective tenants when setting entry rents, we find no significant impact of observable characteristics — such as age or income — on rents paid by new tenants (see Section \ref{section:appendix_discrimination} in the Appendix). This finding supports the view that large landlords — who dominate the supply of controlled units — rely on standardized pricing, lack information about expected tenancy duration of specific prospective tenants, and face legal constraints that limit this type of price discrimination. See \citet{be-2000} for further discussion.}
+\end{itemize}
+
+To supply $X'=X'_0+X'_1$ rentals in total, the firm incurs convex management costs: $C(X')=\frac{\theta_1}{\theta_2}X'^{\theta_2}$ with $\theta_2>1.$ \citep{garrigaeetal-2009}. Each unit also incurs depreciation $\delta_h$ and property taxes $\tau_p$, and housing can be bought at price $p$, which is its resale value net of depreciation and taxes.
+
+Let $X'^{*}$ denote the unconstrained competitive rental quantity when the exempt housing stock $H'_1$ equals the total housing stock $H'$. This unconstrained amount satisfies: \[MC(X'^{*}) = p^{*}_{r,1},\] where $p^{*}_{r,1}$ is the competitive rent in the absence of rental market regulations. Therefore, as long as $\phi H'_1<X'^{*}$, it is optimal for the firm to first fully utilize the available exempt stock and supply:
+\begin{equation}\label{eq:uncontrolled_optimization}
+X_1'=\phi H'_1\leq X'^{*}.  
+\end{equation}
+
+The controlled supply is derived from the marginal cost curve of the firm, evaluated at the expected controlled rent $\overline{p}_{r,0}$, as follows: 
+\begin{equation}\label{eq:controlled_optimization}
+X_0'=\mbox{min}\{\text{max}\left\{X_0'^*,0\right\},X'^*-X'_1\}, \quad
+\text{where}\quad MC(X_0'^*)=\overline{p}_{r,0}.    
+\end{equation}
+
+\noindent In the controlled sector, the firm will only produce up to the point where the marginal rental cost — at $X_0'$ — is equal to the controlled rent. However, if the controlled rent is sufficiently large, such that $X_0'^*>X'^*-X'_1$, then the firm will only supply the difference to reach the efficient quantity.
+
+Conditional on the government’s choice of $H'_1$ and the expected controlled rent $\overline{p}_{r,0}$, which is either an outcome of government intervention or directly set by policy, the rental firm’s dynamic program is given by:
+\begin{align}\label{eq:rental_optimization}
+V(X) &= \max_{\{X_0',X_1'\}} \Big\{\overline{p}_{r,0}X_0'+\overline{p}_{r,1} X_1'-\frac{\theta_1}{\theta_2}(X')^{\theta_2}-p X'+p(1-\delta_h-\tau_p)X+\frac{1}{1+r} V(X')\Big\},
+\end{align}
+\noindent subject to \eqref{eq:uncontrolled_optimization}-\eqref{eq:controlled_optimization} and:
+\begin{align}
+& X'=X_0'+X_1'. \label{eq:total_supply_def}
+\end{align}
+
+\noindent The marginal cost curve is therefore \[MC(X')=\theta_1(X')^{\theta_2-1}+p\left(\frac{r+\delta+\tau_p}{1+r}\right)\]
+
+\subsection{Implications of rental company set up}
+
+This rental supply framework highlights several policy-relevant implications:
+
+\begin{itemize}
+
+\item \textbf{Partial exemptions alone do not guarantee efficient supply.} 
+Even if the government allows housing built after a given year $Y_{c}$ to be rented at free-market rents, the rental company will only supply up to their optimal condition \eqref{eq:uncontrolled_optimization}. If this produces a smaller quantity in the free market than the unconstrained competitive quantity $X'^*$, then the firm must rely on the controlled segment to close the gap. However, if the regulated rent $\overline{p}_{r,0}$ is too low to cover the marginal cost at the controlled supply $X'_0=X'*-X'_1$, the firm withholds some older stock from rental, resulting in under-production: $X'=X'_1+X'_0<X'^*$.
+
+\item \textbf{Expanding the exemption window increases supply.} 
+If the government lowers the exemption cut-off year $Y_{c}$ — for example, reducing it from 1991 to 1980 — then the stock of housing eligible for free-market rents $H'_1$, increases. This raises the free-market supply $X_1'$ and thus allows the firm to supply more rental housing at market rents without relying on the controlled segment. In turn, this reduces any potential gap between actual supply and the efficient supply.
+
+\item \textbf{More stringent rent control increases the chance that supply will fall short of the competitive quantity.} 
+Lowering the controlled rent $\overline{p}_{r,0}$ reduces the incentive to supply older units if it falls below the marginal cost at the original supply of $X_0'$. In this case, it opens a potentially gap between the efficient competitive quantity and the actual quantity supplied. Moreover, since the optimal quantity of controlled units is given by \[X_0'=\min\left\{\text{max}\left\{\left[\frac{1}{\theta_{1}}\left(\overline{p}_{r,0}-p\left(\frac{r+\delta_{h}+\tau_{p}}{1+r}\right)\right)\right]^{\frac{1}{\theta_{2}-1}},0\right\},\, X'^*-X_1'\right\},\]
+it follows that if $\overline{p}_{r,0}$ is lower than  
+$p\left(\frac{r+\delta_{h}+\tau_{p}}{1+r} \right)$, then $X_0'=0$. Therefore, if rent control is too stringent, the controlled market collapses entirely.
+
+\end{itemize}
+
+Finally, we denote the profits of the rental company each period with \[\Pi_r=\overline{p}_{r,0}X_0'+\overline{p}_{r,1} X_1'-\left[\frac{\theta_1}{\theta_2}(X')^{\theta_2}+p(\delta_h+\tau_p) X'\right]\]
+
+\subsection{Housing construction company}\label{sec:construction_company}
+
+A competitive construction firm produces new housing \citep{rotberg-2022}. It earns revenue $pI$, from its production of new housing $I$. The firm's total cost of production is given by the technology:
+\begin{equation*}
+TC(I)=\frac{\varsigma_{1}}{\varsigma_{2}}I^{\varsigma_{2}}\label{eq:total_cost_structure},
+\end{equation*}
+
+\noindent where $\varsigma_{1}$ dictates the average cost of housing investment, and $\varsigma_{2}$ is the price elasticity of housing investment. The firm chooses $I$ to maximize profits:
+\begin{equation*}
+\label{eq:construction_company_profits}
+\Pi_h= \underset{I} {\text{$\mbox{max}$}}{\left\{p I-TC(I)\right\}}.
+\end{equation*}
+
+\noindent The first-order condition for this problem implies the following relationship between housing investment and the price of housing:
+\begin{equation}
+\label{eq:construction_company_first_order_condition}
+I^{\star}=\varsigma_{1} p^{\varsigma_{2}-1}.
+\end{equation}
+
+\subsection{Aggregation}\label{subsection:aggregation}
+
+As mentioned in Section \ref{subsection:income}, we redistribute only the change in rental and construction company profits relative to the benchmark's profits, which we denote as $\Pi_b=\Pi_{r,b}+\Pi_{h,b}$. Thus we require that:
+\begin{align}\label{eq:rebates}
+   (\Pi_h+\Pi_r-\Pi_b)=\sum_{j=1}^J \int_\mathcal{S} T(s)\mathrm{d}\Psi(s).
+\end{align}
+
+As outlined in Section \ref{sec:brief_overview}, our model incorporates both a local and a federal government. The local government collects property taxes, and provides local public goods to residents that do not enter into households' utility as well as homeless shelters to the homeless. Given that rent-control policies are typically set at the local level, we impose a balanced budget requirement for the local government as follows:
+\begin{align}\label{eq:gbc_1}
+  G_l +\sum_{j=1}^J \int_\mathcal{S} \theta_{b} b'_{j}(s)\mathrm{d}\Psi(s) = \tau_{p} p H.
+\end{align}
+
+\noindent That is, expenditures on local public goods must be financed entirely through property tax revenues. In calibrating the model to match the existing tax code in Toronto, we set the level of consumption of local public goods, denoted as $G_l$, to ensure budget balance. In all policy experiments, we hold $G_l$ constant and adjust the property tax rate $\tau_{p}$ to satisfy the budget constraint.
+
+The federal government collects income and consumption taxes and provides pensions to retirees and federal public goods, $G_{f}$. It also collects the full profits of the rental and construction companies, which it can redistribute back to households as lump-sum transfers or income tax cuts. Lump-sum transfers need not be uniformly paid; they can be conditional on a household state. As in the case of the local government, we set the level of $G_{f}$ to ensure budget balance, and in our experiments, we hold $G_{f}$ at its benchmark level and either adjust the lump-sum transfer $T(s)$ or the parameter that determines the average labor income tax $\tau_{\ell}$ to balance the budget. As in \citet{kkk-2021}, to easily compare different equilibria, the federal government may only redistribute the change in profits relative to the benchmark's profits, denoted as $\Pi_b=\Pi_{r,b}+\Pi_{h,b}$. Thus we require that:
+\begin{align}\label{eq:gbc_2}
+   G_{f}+\sum_{j=1}^J \int_\mathcal{S} (T(s)+\mathbbm{1}_{\{j>R\}} y_{R}(s) \mathrm{d}\Psi(s)=\sum_{j=1}^J \int_\mathcal{S} y^{\tau}_{j}(s)+\tau_{c}c_{j}(s)\mathrm{d}\Psi(s) (\Pi_h+\Pi_r-\Pi_b).
+\end{align}
+
+Before presenting the remaining market-clearing conditions, we denote $S=A\times O \times O \times O \times Z \times I \times H\times M\times X \times E$ as a typical subset of the state space $\mathcal{S}$, and $A$, $O$, $Z$ $I$, $H$, $M$, $X$, and $E$ as typical subsets of $\mathcal{A}$, $\mathcal{O}$, $\mathcal{Z}$, $\mathcal{I}$, $\mathcal{H}$, $\mathcal{M}$, $\mathcal{X}$, and $\mathcal{E}$, respectively.
+
+We require that the aggregate housing demand equals aggregate housing supply:
+\begin{equation}
+\label{eq:housing_clearing_condition}
+  \sum_{j=1}^J \int_\mathcal{S}  \left(\frac{(1-b'_{j}(s))h'_{j}(s)}{\left[(1+(1-o'_{j}(s))(1-f'_{c,j}(s))\kappa_{2}\right]^{\iota'_{c,j}(s)}}\right) \mathrm{d}\Psi(s) = H',
+\end{equation}
+
+\noindent where the law of motion of the housing stock is: 
+\begin{equation}\label{eq:housing_stock_lom}
+H'=I+(1-\delta_h)H.
+\end{equation}
+
+\noindent Equation \eqref{eq:housing_stock_lom} is a standard law of motion for housing, stating that the next period's housing stock equals new investment plus the depreciated stock of housing. 
+
+We also impose market-clearing conditions for rental housing. In each rental market, aggregate rental demand equals aggregate rental supply:
+\begin{equation}\label{eq:rental_housing_clearing_condition}
+  \sum_{j=1}^J \int_\mathcal{S} (1-o'_{j}(s))\mathbbm{1}_{\left\{f'_{c,j}(s)=i\right\}}\left(\frac{(1-b'_{j}(s))h'_{j}(s)}{\left[1+(1-f'_{c,j}(s))\kappa_{2}\right]^{\iota'_{c,j}(s)}}\right) \mathrm{d}\Psi(s) = X'_{i} \quad i \in \{0,1\}.
+\end{equation}
+
+The distributions of households evolve according to the following laws of motion,
+\begin{equation}\label{eq:lom1}
+\Psi_{1}(S) = \int_{\mathcal{X} \times \mathcal{E}} \mathbbm{1}_\big\{ (0,0,0,0,0,0,0,0,X,E) \in S \big\} d\hat{F}(X)\, \tilde{F}(E), \quad \text{under tenancy control.}
+\end{equation}
+
+\begin{equation}\label{eq:lom1_2}
+\begin{split}
+\Psi_{1}(S) = & \, \eta \int_{\mathcal{X} \times \mathcal{E}} \mathbbm{1}_{\big\{ (0,0,1,0,0,0,0,0,X,E) \in S \big\}} d\hat{F}(X)\, \tilde{F}(E)+ \\ & (1-\eta) \int_{\mathcal{X} \times \mathcal{E}} \mathbbm{1}_{\big\{ (0,0,0,0,0,0,0,0,X,E) \in S \big\}} d\hat{F}(X)\, \tilde{F}(E), \quad \text{under unit control.}
+\end{split}
+\end{equation}
+
+\begin{equation}\label{eq:lom2}
+\begin{split}
+\Psi_{j+1}(S) = \int_{\mathcal{S}} \biggl\{ 
+& [1-\epsilon(\iota)]\, \hat{F}(X)\, F(E,e | f'_{c,j}(s), \iota'_{c,j}(s), \chi, e, b'_j(s))\, G(z)\, \mathbbm{1}_{\{ f' = f'_{c,j}(s) \}}\, \mathbbm{1}_{\{ z' = z \}}\, L_j(s)+ \\ & \, \epsilon(\iota)\, \hat{F}(X)\, F(E,e | f'_{c,j}(s), \iota'_{c,j}(s), \chi, e, b'_j(s))\, G(z)\, \mathbbm{1}_{\{ f' = 1 \}} \times \\ & \quad  \mathbbm{1}_{\big\{ z' = f_{c,j}(s) \times 0 + [1 - f_{c,j}(s)] z \big\}}\, L_j(s)
+\biggr\} d\Psi_j(s), \quad j=1,\ldots,J-1,
+\end{split}
+\end{equation}
+
+\noindent where
+\[ \quad L_j(s) = \mathbbm{1}_{\big\{ a'_j(s) \in A,\, o'_j(s) \in O,\, b'_j(s) \in O,\, \iota'_{c,j}(s) \in I,\, h'_j(s) \in H,\, m'_j(s) \in M \big\}}.\]
+
+Finally, total bequests from deceased households must equal total wealth endowments received by living households:
+\begin{equation}\label{market_clearing:agg_bequests}
+    \int_{\mathcal{S}} q'_{J}(s) \mathrm{d}\Psi_{J}(s) = \sum_{j=1}^J \int_{\mathcal{S}} \vartheta (\chi,e)\ \mathrm{d}\Psi_j(s).
+\end{equation}
+
+\noindent Following \citet{kkk-2021}, we choose the parameter $\vartheta$ to ensure that this condition holds in all our experiments. Consequently, variations in $\vartheta$ across experiments are contingent upon proportional changes in aggregate bequests.
+
+\subsection{Equilibrium}
+An equilibrium in the model consists of: 
+\begin{itemize}
+    \item A sequence of aggregate prices and quantities
+    $\left\{H',I,\{X'_{i}, \overline{p}_{r,i} \}^{1}_{i=0},\Pi_r,\Pi_h,\tilde{p}_{r,0},\hat{p}_{r,0},\pi,p,\{T(s)\}_{s \in \mathcal{S}},\vartheta\right\}$;
+    \item A sequence of value and policy functions
+    $\biggl\{V_{j}(\cdot),c_{j}(\cdot),a'_{j}(\cdot),o'_{j}(\cdot),b'_{j}(\cdot),f'_{c,j}(\cdot),\iota'_{c,j}(\cdot),h'_{j}(\cdot),m'_{j}(\cdot),n_{j}(\cdot),q'_{j}(\cdot)\biggl\}_{j=1}^J$; and
+    \item A sequence of measures 
+     $\left\{\Psi_{j}(\cdot)\right\}_{j=1}^J$,
+\end{itemize}
+\noindent such that:
+\begin{enumerate}
+\item The policy and value functions solve the household's dynamic problem \eqref{eq:vf} subject to constraints \eqref{eq:bc})--\eqref{eq:networth};
+\item Rental supply in both markets $\{X'_{i}\}^{1}_{i=0}$, solves the rental company's problem as defined in \eqref{eq:rental_optimization};
+\item Housing investment $I$, solves the construction company's first-order condition, 
+\eqref{eq:construction_company_first_order_condition};
+\item The lump-sum transfers $\{T(s)\}_{s \in \mathcal{S}}$, satisfy constraint \eqref{eq:rebates};
+\item The local and federal governments' budgets balance \eqref{eq:gbc_1}--\eqref{eq:gbc_2};
+\item The housing price $p$, clears the housing market
+\eqref{eq:housing_clearing_condition}, subject to the housing stock law of motion \eqref{eq:housing_stock_lom};
+\item The free-market rent $p_{r,1}$, is determined in general equilibrium by clearing the free rental market (\eqref{eq:rental_housing_clearing_condition}, when $i=1$); and
+\begin{itemize}
+    \item Under tenancy control, the initial controlled rent $\tilde{p}_{r,0}$ equates the aggregate demand for controlled rentals to the aggregate supply of controlled units, which equals to the mandated amount of controlled rentals (\eqref{eq:rental_housing_clearing_condition}, with $i=0$); or
+    \item Under unit control, the probability $\pi$ of the random shock $\eta$, which determines whether or not a renter can secure a controlled unit, clears the controlled market under unit control (\eqref{eq:rental_housing_clearing_condition}, when $i=0$);
+\end{itemize}
+\item The laws of motion for the distribution of households, \eqref{eq:lom1}--\eqref{eq:lom2}, evolve in accordance with households' policy functions; and
+\item $\vartheta$ equates aggregate bequests left by descendants to the aggregate bequests provided to all living households, \eqref{market_clearing:agg_bequests}.
+\end{enumerate}
+
+\section{Calibration}\label{sec:calibration}
+
+Since Toronto's rental market operates with tenancy control regulations, we calibrate our model with tenancy control ($\alpha=0$). Later we explore how the calibrated model changes when unit control is imposed instead.
+
+Our calibration of our model proceeds in two steps. First, we calibrate specific parameters using data from Toronto and existing estimates from the literature. Second, we calibrate the remaining parameters to match certain model-generated statistics with their corresponding moments in the Toronto data. Table \ref{tab:calibration_external} summarizes the externally assigned parameters and their sources. Table \ref{tab:calibration_internal} lists the internally calibrated parameters along with the corresponding empirical targets. In Section \ref{sec:non_targeted_statistics}, we assess the model's performance on non-targeted dimensions.
+
+In Section \ref{appendix:data} of the online appendix, we provide details on how we construct key statistics from various datasets. 
+
+\subsection{Assigned parameter values}
+
+\subsubsection{Demographics, preferences, and income}
+A model period is one year. Households enter the model at age 26 and live up to age 85, retiring at age 66. This implies a retirement age of $J_{R}=41$ and a total lifespan of $J=60$ periods. 
+
+We set the coefficient of relative risk aversion to $\sigma=2$, and assign the equivalent household size by age cohort, $\{\xi_{j}\}_{j=1}^{J}$, using data from the 2016 Census. We scale household sizes by their square root, following standard practice in the literature. We determine the discount factor $\beta$ and the utility weight on housing services $\gamma$ in the second stage of our calibration.
+
+We adopt the labor productivity process outlined in \citet{gkkoc}. The standard deviation of the fixed effect is set to $0.128$, and the stochastic labor productivity shocks follow an AR(1) process in logarithmic terms,
+
+\begin{equation*}
+  \log e' = \rho_{e} \log e + \epsilon_{e},\quad \epsilon_{e}\overset{\mathrm{i.i.d.}} \sim N(0,\sigma_{e}).
+\end{equation*}
+
+\noindent We set the persistence parameter $\rho_{e}$ to 0.9, following \citet{gkkoc}. The standard deviation $\sigma_{e}$ of the stochastic component of labor productivity is calibrated internally. Newborns draw their stochastic productivity from the unconditional probability distribution associated with the ergodic distribution, which is endogenously generated by our productivity process. Consistent with \citet{az-2024}, we modify the stochastic process for homeless households by increasing the probability of moving to or remaining in the lowest productivity state by 20\%.  
+
+We use 2016 Census data to estimate the deterministic life-cycle productivity component as:
+
+\begin{equation*}
+\zeta_j = 0.923+0.09\times j-1.61\times 10^{-3}\times j^{2}, \mbox{ for } j\leq J_{R},
+\end{equation*}
+
+\noindent where the coefficients are obtained from a regression of average household income for each age, ranging from 26 to 64, on age and age squared. 
+
+We determine pension benefits ${y_{R}(\chi,e)}$, based on the replacement rate of gross individual earnings in Canada from \citet{OECD-pension}. Surviving households' endowments are determined proportionally to their labor income, expressed as $\vartheta(\chi,e):=\vartheta \chi e$. We select the parameter $\vartheta$, governing surviving households' wealth endowments, to fulfill equation \eqref{market_clearing:agg_bequests}.
+
+\subsubsection{Taxes and interest rates}
+
+We set the taxable portion of capital income to $\nu=0.5$, consistent with the Canadian tax code. Utilizing household-level data from the 2016 Census for Toronto, we estimate the parameter $\psi=0.9275$ in equation \eqref{eq:income_tax}l which determines the progressivity of income taxes. The consumption tax rate $\tau_{c}=0.13$ reflects the Harmonized Sales Tax (HST) in Ontario. The interest rate is set to $r=2.77\%$, following the estimate for Canada by \citet{bruneau-etal-2018}.
+
+\subsubsection{Housing}
+
+We set our iid free-market rent shocks $\left\{z\right\}_{\mathbb{Z}}$ to $\left[-0.1227,-0.0607,0,0.0624,0.1284,0.2589\right]$, and their corresponding probabilities $\{g(z)\}_{\mathbb{Z}}$ to $\left[0.16,0.12,0.44,0.08,0.16,0.04\right]$. We derive these values from 1992 to 2016 data from Canada Mortgage and Housing Corporation's Rental Market Survey (RMS), reflecting average rents fluctuations in the free market. Our analysis indicates that in the free market in Toronto, there is a non-negligible higher probability of substantial rent increases relative to the probability of significant rent decreases.
+
+We set the per-household public cost of homelessness to $\theta_{b}=82.3\%$ of average household income. We determine this parameter by dividing the City of Toronto's 2021 total spending on homelessness supports by the number of homeless individuals.\footnote{See \url{https://www.homelesshub.ca/community-profile/toronto} and \url{https://www.toronto.ca/legdocs/mmis/2021/ex/bgrd/backgroundfile-163804.pdf}. In the vast majority of cases, individuals experiencing homelessness are single adults. As a result, using individual-level data for homelessness spending is effectively equivalent to using household-level data.}
+
+We set the depreciation rate of housing $\delta_h=0.6\%$ based on estimates from \citet{rosenthal-2014}. The decline in services per year of tenancy, due to landlords' lack of maintenance of controlled units, is therefore set to $\kappa_{2}=0.6\%$. This aligns with estimates from \citet{murray_et_al-1991}, who analyze a rent control regime similar to our model with tenancy control.\footnote{In their Table I, they estimate that unit deterioration of controlled units ranges from 2.2\% to 6.9\% over an eight-year period, implying an average annual deterioration rate of almost 0.6\%.}
+
+The property tax rate is set to $\tau_p=0.44\%$, based on Altus Group reports and Property Sale and Assessment Data (PSAD) from 1992 to 2016. Following \citet{gm-2003}, we set buying costs to $\tau_{b}=2\%$ of the purchase price, and selling costs to $\tau_{s}=6\% $ of the sale price.
+
+To target a price elasticity of housing supply of 0.89 as estimated for Toronto by \citet{piaxao-2021}, we set the cost curvature parameter $\varsigma_{2}=1.89$. The construction company's cost function level, denoted as $\varsigma_1$, is a free parameter that we derive from the market clearing condition \eqref{eq:housing_clearing_condition}.
+
+We pick $\theta_1$, which determines the average free-market rent, to generate an average free-market rent to house price ratio of 5.82\%, based on our analyses utilizing data from the 2016 Census and 2016 CREA. We show our full calculation in the Appendix (\ref{appendix:data}).
+
+We calibrate $\phi=0.468$ using 2016 Census data for Toronto, Calgary, and Edmonton. Specifically, we calculate the rental utilization rates for condominiums and single-family homes in Calgary and Edmonton, two major Canadian cities without rent control. The averages of each type-specific rates are then combined using Toronto’s actual distribution of housing types to obtain the final estimate. 
+
+Furthermore, we set the parameter $\theta_2$, which governs the convexity of marginal management costs in the rental housing sector and determines the rental supply elasticity, to 3.71. When $\theta_2=1$, marginal management costs are constant, implying perfectly elastic rental supply. As $\theta_2$ increases above one, marginal management costs rise more steeply with the scale of rental supply, reducing supply elasticity and increasing the cost of managing additional units. Our value for $\theta_2$ is such that the rental supply elasticity in our baseline calibration is 1. This value is somewhat lower than the 1.6 estimate for the overall U.S. housing market reported by \citet{rs-2023}, but it is consistent with evidence that supply elasticities are substantially lower in dense urban areas \citep{cy-1994,susin-2002,fack-2006,sy-2020}, the very ones where government normally considers rent control. Thus, we see our choice of elasticity of 1 as one that favors the case for decontrol over rent control.
+
+\citet{zhang-gou} estimate that the average controlled rent is 13.7\% lower than the average free-market rent, holding other factors constant. According to the 2016 Census, about 30\% of the rental stock consisted of free-market units. Given our supply elasticity of 1 at the equilibrium quantity, this implies that the marginal cost of supplying the last controlled unit is approximately $0.3/1=0.3$ (or 30\%) lower than the free-market rent. Since this marginal cost is still below the controlled rent itself, the model predicts that landlords have no incentive to withdraw units, and the total quantity of rental housing remains at the competitive level. Thus, in our benchmark, rent control does not reduce the overall supply of rental housing.
+
+%We set the parameter $\epsilon_1$, which governs the extent to which the rent gap raises the probability of eviction, to 0.005. This value matches an estimated 0.1\% eviction rate in Toronto attributable to reasons consistent with this mechanism, such as noise, damage, landlord’s own use, renovation, and demolition \citep{LeonIveniuk2020}. 
+
+Lastly, the initial rent charged to new tenants in tenancy-controlled units, $\tilde{p}_{r,0}$, is also set externally to match the observed rent premium for new tenants relative to the average free-market rent. Specifically, we choose $\tilde{p}_{r,0}$ so that new tenants in controlled units pay 5.9\% more than the average free-market rent, consistent with our point estimate for Toronto (95\% confidence interval: 2.7\%–9.1\%), as detailed in Appendix Section~\ref{section:appendix_measuring_premium}.
+
+\subsubsection{Mortgages}
+
+In accordance with banking regulations in Canada, we set the LTV constraint, denoted as $\lambda_{m,1}(ph)$, as follows:
+
+\begin{equation*}
+\lambda_{m,1}(ph) = \begin{cases}
+0.8 &\text{if $ph\geq \$1M$}\\
+0.9 &\text{if $\$500K\leq ph< \$1M$}\\
+0.95 &\text{if $ph < \$500K$}.
+\end{cases}
+\end{equation*}
+
+\noindent Households purchasing a home valued above a model-equivalent \$1 million can borrow up to 80\% of its value; those purchasing homes valued between \$500,000 and \$1 million can borrow up to 90\% of the house value; and those purchasing homes valued below \$500,000 face a 95\% LTV cap. We set the PTI constraint parameter to $\lambda_{m,2}=0.39$, consistent with the 39\% PTI threshold commonly used in the Canadian mortgage industry.\footnote{See \url{https://www.cmhc-schl.gc.ca/consumers/home-buying/calculators/debt-service-calculator}.}
+
+Mortgage origination costs are set at a fixed amount equal to $\omega_{1}=0.68\%$ of the average household income in Toronto. This figure is based on the 2016 Census data and the website of the Canada Mortgage and Housing Corporation (CMHC), which includes standard expenses such as appraisal fees ($\approx$\$250) and lawyer fees ($\approx$\$500).\footnote{See \url{https://www.cmhc-schl.gc.ca/en/professionals/industry-innovation-and-leadership/industry-expertise/resources-for-mortgage-professionals/how-much-will-my-home-really-cost}.}
+
+The mortgage prepayment penalty, $\omega_{2}$, is set to three months of interest, a standard practice in Canadian mortgage contracts. Following the methodology in \citet{kkk-2021}, we set $\upsilon_{1}=1.7\%$, which reflects the average annual principal repayment rate under a 30-year amortization schedule. The threshold for incurring a prepayment penalty, $\upsilon_{2}$, is set to $1.15 \times \upsilon_{1}$ plus 15\% of the annual mortgage payment amount (including both principal and interest), yielding an effective threshold of 18.8\%. This calibration mirrors contractual terms in Canada, which typically allow borrowers to increase their annual mortgage payments by up to 15\% and make lump-sum payments of up to 15\% of the original principal without penalty.
+
+Finally, we set the interest rate premium on mortgage debt, $\Delta_{m}$, to 0.19\%. This value corresponds to the historical average spread between 5-year variable mortgage rates and 10-year Government of Canada bond yields over the 2002-2022 period.\footnote{While the mortgage rate data we use are not publicly available, historical 10-year bond yields can be accessed at \url{https://www.bankofcanada.ca/rates/interest-rates/canadian-bonds/}.}
+
+\subsection{Internally calibrated parameters}
+
+After assigning the externally determined parameter values discussed above, we proceed to calibrate another nine parameters, as outlined in Table \ref{tab:calibration_internal}. These variables include the discount factor, $\beta$; the utility weight on the consumption of housing services, $\gamma$; the strength of the bequest motive, $\mu$; the average income taxation level, $\tau_{\ell}$; the variability in labor income's stochastic component, $\sigma_{e}$; he per-period rent decline for continued tenancy, $\kappa_1$; the parameter governing how strongly the rent gap affects eviction risk, $\epsilon_1$; the parameter governing the reduction in the probability of moving to or remaining in high labor productivity states, $\kappa_3$; the parameter that determines how strongly this effect differs for high-income versus low-income renters, $\kappa_4$; the minimum housing unit size for purchase, $\underline{h}_{o}$; the smallest rental, $\underline{h}_{r}$; and housing services for homeless households, $\underline{h}_{h}$.\footnote{The construction cost scalar, $\varsigma{1}$, is a free parameter selected to equate housing supply to housing demand in the benchmark equilibrium. This value remains fixed in all counterfactual simulations.}
+
+We collectively calibrate these parameters to match twelve key empirical moments in our Toronto data:
+
+\begin{itemize}
+    \item The ratio of aggregate mortgage debt to aggregate house values among homeowners, which stands at 21.5\% according to the 2019 Survey of Financial Security (SFS).
+    \item The avg. rent to income ratio, which we estimate at 31.1\% using the 2016 Census data.
+    \item The ratio of aggregate bequests to aggregate net wealth, which is 2.2\%, based on estimates we derive from the 2019 SFS.
+    \item The average labor income tax rate, recorded at 19.6\%, from the 2016 Census data.
+    \item The Gini coefficient of labor income, which we also obtain from the 2016 Census.
+    \item The ratio of average controlled rent to average free-market rent, which is 0.863 based on estimates by \citet{zhang-gou} for Toronto.
+    \item The percentage of renters evicted because landlords can obtain higher rents from new tenants, estimated at 0.1\% based on Toronto data from \citet{LeonIveniuk2020}.
+    \item The percentage of renters in the controlled market, which we estimate is 71\% in the 2016 Census.
+    \item The percentage of households in the top income quintile who rent in the controlled market, estimated at 4.1\% based on 2016 Census data.
+    \item The homeownership rate, which is 66.5\% in the 2016 Census.
+    \item The percentage of renters spending over 50\% of their before-tax income on rent, standing at 15.4\% according to the 2016 Census.
+    \item The percentage of households experiencing homelessness, which is documented at 0.26\% according to the ``Homeless Hub".\footnote{See \url{https://www.homelesshub.ca/community-profile/toronto}.}
+\end{itemize}
+
+While all parameters are determined jointly in calibration, each one tends to exert a more significant influence on specific outcomes. Here is how:
+\begin{itemize}
+    \item Discount factor, $\beta$: Primarily shapes homeowners' debt levels; lower $\beta$ values lead to higher homeowner debt levels.
+    \item Utility weight on housing, $\gamma$: Influences the proportion of renters' income spent on housing; higher $\gamma$ values indicate greater desire for housing services among households.
+    \item Bequest motive strength, $\mu$: Affects the ratio of bequests to net wealth; higher $\mu$ values result in relatively more bequests compared to overall net wealth.
+    \item Average income taxation level, $\tau_{\ell}$: Determines the average income tax rate; lower $\tau_{\ell}$ values correspond to higher tax burdens on households' incomes.
+    \item Variability in labor income's stochastic component, $\sigma_{e}$: Shapes labor income inequality; higher $\sigma_{e}$ values lead to greater dispersion in the labor income distribution and thus higher Gini coefficients.
+    \item Annual rent decrease for each additional period a tenant remains in the unit, $\kappa_1$: Governs how much rents decline over time for sitting tenants. Higher values of $\kappa_1$ result in a lower average controlled rent relative to the average free-market rent.    
+    \item Increased risk of eviction due to a larger rent gap, $\epsilon_1$: Determines how strongly the rent gap increases the probability of eviction under tenancy control. Higher values of $\epsilon_1$ lead to a higher eviction rate attributable to landlords seeking higher rents from new tenants.
+    \item Reduction in the probability of transitioning to higher income states or remaining in high income states, $\kappa_3$: Affects the likelihood that renters transition to lower-income states when renting in the controlled market. Larger values of $\kappa_3$ decrease the share of renters who choose to remain in the controlled segment.
+    \item Differential impact on transitions to lower income states by income level, $\kappa_4$: Modulates how strongly the reduction in upward mobility affects high-income versus low-income renters. Higher values of $\kappa_4$ imply that higher-income renters face a greater penalty, reducing their incentive to rent in the controlled market.
+    \item Minimum housing unit size for purchase, $\underline{h}_{o}$: Influences the homeownership rate; larger minimum sizes lead to fewer households opting for homeownership.
+    \item Minimum rental size, $\underline{h}_{r}$: Governs the proportion of renters spending over 50\% of their before-tax income on housing; larger minimum sizes result in higher percentages of renters facing high housing cost burdens. As demonstrated by \citet{rs-2023}, this parameter plays a crucial role in matching the observed distribution of rent-to-income ratios and, consequently, in determining welfare outcomes.
+    \item Housing services for homeless households, $\underline{h}_{h}$: Affects the homelessness rate; greater services result in higher rates of homelessness.
+\end{itemize}
+
+\subsection{Model performance}\label{sec:non_targeted_statistics}
+
+We assess the performance of our benchmark model by evaluating its ability to replicate aggregate, lifecycle, and distributional moments not targeted in our calibration. Table \ref{tab:aggregate_non_targreted_statistics} reports the model's fit relative to key non-targeted aggregate statistics. The model generates a similar ratio of average owned-house value to average household income compared to the data, alongside a somewhat lower percentage of owners with positive mortgage debt. Due to data limitations, we cannot directly estimate the ratio of average rental unit value to average owner-occupied unit value in Toronto. Hence, we compare our model's moment with the U.S. estimate reported by \citet{chatterjee-eyigungor-2015}, finding similar ratios. Lastly, free-market renters in our model earn approximately 24\% more than controlled renters, closely matching the gap observed in the 2016 Census data. This suggests that the model generates a reasonable degree of income-based sorting between the rent-controlled and free-market segments.
+
+The model's wealth distribution is quite unequal with a Gini coefficient of 0.49, though lower than the 0.65 observed in our 2019 Survey of Financial Security (SFS) data. The model understates wealth concentration at the top relative to observed in the data due to the absence of rate-of-return heterogeneity, which \citet{fagereng} identify as a key determinant of upper-tail wealth accumulation. Our model also omits heterogeneous time preferences \citep{ks-1998} and the type of fat-tailed income shocks studied in \citet{mj-shocks}, both of which are known to amplify wealth inequality.
+
+The model generates lifecycle patterns in homeownership rates and LTV ratios that resemble those observed in the data. Figure \ref{fig:life_cycle}, panel (a), shows similar patterns in homeownership rates, though the model slightly over-predicts homeownership among middle-aged households and under-predicts it for younger and older cohorts. Panel (b) plots LTV ratios, which decline with age in both the data and the model. Young households in the model hold marginally higher LTV ratios than observed, whereas older households exhibit somewhat lower leverage.
+
+Figure \ref{fig:rent_to_income_cdf} displays the cumulative distribution function (CDF) of rent-to-income ratios. Our model replicates the observed distribution well, though it somewhat underestimates the proportion of renters with high rent-to-income ratios and somewhat overestimates the share of renters with low ratios.
+
+Table \ref{tab:tenure_by_income_quintile} reports the shares of households living in the controlled market by income quintile. The second column from the left represents the lowest income quintile, while the first column from the right corresponds to the highest quintile. The first row reports statistics from the 2016 Census, while the second row shows the corresponding estimates in the calibrated model. The model closely replicates the empirical distribution across income quintiles but slightly overstates the degree of misallocation under tenancy control. In particular, it allocates fewer controlled units to the bottom quintile than observed in the data. As a result, tenancy control in the model appears less efficient than it is in reality, potentially exaggerating the relative advantage of rent decontrol in our analysis.
+
+Overall, the model closely replicates both key features observed in the data. It particularly does well on the rent-to-income CDF and the shares of households renting in the controlled market across income quintiles. As argued in \citet{rs-2023}, the former gives more confidence in our welfare estimate. The latter suggests that the misallocation of controlled units in the model is similar to reality. This strong alignment lends credibility to the subsequent policy experiments that assess the welfare implications of alternative rent control regimes.
+
+\section{Experiments}\label{section:experiments}
+
+\paragraph{Overview of experiments}  
+Using our baseline calibrated model, we conduct two main experiments and a set of robustness checks to quantify how rent control affects welfare, rents, rental supply, housing prices, and homeownership under alternative assumptions about profit redistribution.
+
+\begin{itemize}
+    \item \textbf{Experiment 1:} We compare the benchmark equilibrium — where tenancy control coexists with a free rental market and partial exemptions — to a scenario with \textit{full decontrol}, where no rental housing are regulated. This quantifies whether the insurance benefit and redistributive power of tenancy control can offset its distortion of rental allocation, household labor productivity, and eviction risk under varying degrees of profit redistribution: efficient targeting to the poorest newborns, redistribution through equal lump-sum transfers, redistribution through reduction in income taxes, or no redistribution at all.
+    \item \textbf{Experiment 2:} We compare tenancy control to unit control, holding the exemption share and average controlled rent constant. This isolates how alternative rent control designs changes the beneficiaries from insurance, and rent discounts. In this experiment we also consider landlord profits being redistributed in the same fashion as in experiment 1.
+    \item \textbf{Sensitivity analyses:} We test the sensitivity of our main findings by varying the exemption share (0\% and 50\%, with 0\% representing full control), the depth of the rent discount (double and half the depth of the benchmark), and the rental supply elasticity (double and half the elasticity in the benchmark).For the first two variations, which involve changes to policy parameters, we compare the outcomes under tenancy control and unit control—with the policy changes implemented—to our benchmark model. Since these are policy variations, the relevant comparison is how each regime performs relative to the benchmark, and not against full decontrol, whose performance is already known. In contrast, in the third variation, we alter the rental supply elasticity. Because this is not a policy change, the benchmark remains unchanged, and so we re-evaluate it against both full decontrol and unit control under the new elasticities. These robustness checks can be found in Appendix \ref{appendix:sensitivity_analyses}.
+\end{itemize}
+
+In all scenarios, the tax code remains fixed, and the property tax rate adjusts to balance the local government's budget.
+
+\paragraph{Welfare measure} Our welfare metric is the expected ex-ante utility of newborns \citep{ralws-1971,conesa-et-al,gkkoc}. This measure is conceptually equivalent to providing each newborn with a fixed proportional transfer of non-housing consumption. Formally, the non-housing consumption-equivalent welfare effect of a policy change is expressed as:
+
+\begin{equation}
+  CE = \left[\frac{\int_{\mathcal{S}}\left(V^{\dagger}_{1}(s)-\omega_{B}\left(q'^{\star}_{J}(s)\right)\right)\mathrm{d}\Psi^{\dagger}_{1}(s)}{\int_{\mathcal{S}}\left(V^{\star}_{1}(s)-\omega_{B}\left(q'^{\star}_{J}(s)\right)\right)\mathrm{d}\Psi^{\star}_{1}(s)}\right]^{\frac{1}{(1-\gamma)(1-\sigma)}}-1,
+\end{equation}
+
+\noindent where daggers denote objects in the counterfactual equilibrium, and stars refer benchmark objects. 
+
+\section{Conclusion}\label{sec:conclusion}
+
+We show that under realistic market frictions and imperfect redistribution, rent control can increase welfare — calling into question the common practice of making strong normative claims for its removal based solely on standard positive analyses. Using a dynamic general equilibrium model calibrated to Toronto data, we capture four key endogenous channels: rental supply, the allocation of controlled units, households’ labor productivity transitions, and eviction risk. In our framework, rental supply depends on the share of exempt stock and the depth of rent discounts; transitions to higher productivity states decline with the size of the discount controlled renters receive; and eviction risk rises with the gap between the controlled rent paid by an incumbent tenant and the higher market rent a landlord could charge a new tenant. This rich structure allows us to test how relaxing textbook assumptions about supply elasticity and perfect redistribution alters the welfare consequences of decontrol and the ranking of rent control regimes.
+
+Our results show that tenancy control, which uses prices to allocate rent discounts, achieves a more efficient allocation of controlled units than unit control, which relies on lotteries. However, because unit control raises free-market rents more than tenancy control, it generates larger landlord profits that can be redistributed to households if the government has sufficient capacity to do so. Price-based allocation directs controlled units more effectively toward lower-income households and limits excessive demand spillovers that would otherwise push up free-market rents and increase homelessness. When supply is only moderately elastic and redistribution is limited, moderate tenancy control can deliver higher welfare than full decontrol by providing insurance against rent volatility and channeling landlord profits more efficiently through the allocation mechanism itself.
+
+Robustness checks confirm that these findings hold across different exemption shares, discount depths, and supply elasticities. The model also helps explain why widespread non-compliance under unit control in cities like New York may inadvertently push the market closer to the more efficient-allocation tenancy control outcome.
+
+Taken together, these results highlight that the welfare impact of rent control depends critically on policy design and on how supply, allocation, labor productivity, and eviction outcomes respond endogenously in equilibrium. When rental supply is moderately elastic, unit control can perform best if redistribution is effective, because its higher free-market rents generate larger landlord profits to redistribute despite greater misallocation. In contrast, when redistribution is limited or absent, tenancy control achieves higher welfare by allocating controlled units more efficiently through entry prices and by limiting distortions in free-market rents. However, in both cases, the benefit depends on striking a balance: too few exemptions or overly deep discounts discourage supply and raise free-market rents and house prices, while too many exemptions make controlled units scarce, driving up entry premia and weakening affordability and insurance benefits. This non-monotonic effect shows that rent control is neither simply good nor bad: its welfare consequences hinge on careful calibration of coverage, discount depth, and realistic redistribution capacity.
+
+\bibliographystyle{aer}
+\bibliography{reference_files/bib}
+
+\vspace{1cm}
+
+\begin{table}[H]
+    \centering
+    \caption{Externally assigned parameter values}
+    \vspace{-0.5cm}
+    \label{tab:calibration_external}
+    \input{tables/calibration_external}
+    \vspace{-0.45cm}
+    \begin{fignote2}{1.02\textwidth}
+    \textit{Notes:} Table \ref{tab:calibration_external} presents the values of the externally calibrated parameters. Part (i) delineates the external calibration for non-housing parameters, while part (ii) outlines the external calibration of housing parameters. Part (iii) provides the external calibration of mortgage-related parameters. $\overline{y}_{\ell}$ denotes the average labor income
+    \end{fignote2}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Internally assigned parameter values}
+    \vspace{-0.5cm}
+    \label{tab:calibration_internal}
+    \input{tables/calibration_internal}
+    \vspace{-0.45cm}
+    \begin{fignote2}{0.98\textwidth}
+    \textit{Notes:} Table \ref{tab:calibration_internal} displays the values of the internally calibrated parameters. Our benchmark is closely aligned with all of our targets. From the 2019 SFS, we compute the percentage of homeowners with mortgages and the aggregate bequests to aggregate net wealth ratio.  From the 2016 Census, we obtain data for Toronto CMA regarding the total rent to total income ratio, the average income tax rate, the labor income Gini coefficient, the percentage of renters in the controlled market, the percentage of renters spending over 50\% of their income on rent, the percentage of high-income renters renting in the controlled market, and the homeownership rate. Additionally, using the 2016 Census and 2016 CREA data for Toronto CMA, we calculate the average free-market rent to housing price ratio. The average controlled rent to average free-market rent comes from \citet{zhang-gou} and the eviction rate due to tenancy control is estimated using data from \citet{LeonIveniuk2020}. Lastly, we obtain the homelessness rate from the ``Homelessness Hub". $\overline{h}_{o}$ denotes the average owned-house size. $\overline{y}_{\ell}$ denotes the average labor income.
+    \end{fignote2}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Aggregate non-targeted statistics}
+    \vspace{-0.5cm}
+    \label{tab:aggregate_non_targreted_statistics}  \input{tables/aggregate_non_targeted_statistics.tex}
+    \vspace{-0.45cm}
+    \begin{fignote2}{0.74\textwidth}
+      \textit{Notes:} Table \ref{tab:aggregate_non_targreted_statistics} presents the performance on non-targeted aggregate statistics compared to the data. The second column from the left displays the benchmark model's performance, the last column includes estimates from the literature or the data, and the last column provides the source.
+    \end{fignote2}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Households in controlled market by income quintile (all households)}
+    \vspace{-0.5cm}
+    \label{tab:tenure_by_income_quintile}    
+    \input{tables/tenure_by_income_quintile_everyone.tex}
+    \vspace{-0.45cm}
+    \begin{fignote2}{0.81\textwidth}
+    \textit{Notes:} Table \ref{tab:tenure_by_income_quintile} displays the percentage of households renting in the controlled market by income quintile. The first row presents these statistics in the data, which we computed using data from the 2016 Census. The second row displays outcomes in our model's benchmark with tenancy control, and the last row represents the performance of our model with unit control instead of tenancy control. The second column from the left represents the lowest income quintile, while the first column from the right signifies the highest quintile.  
+    \end{fignote2}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Aggregate effects generated by changes in rent-control policy conditional on redistribution efficiency}
+    \vspace{-0.5cm}
+    \label{tab:aggregate_effects}
+    \input{tables/aggregate_effects}
+    \vspace{-0.45cm}
+    \begin{fignote2}{0.94\textwidth}
+    \textit{Notes:} Table \ref{tab:aggregate_effects} contrasts the benchmark with the unit control and full decontrol long-run equilibria under various assumptions about how landlords' profits are redistributed. In the unit control experiment, the government exempts the same fraction of the housing stock as in the benchmark, and provides immediate discounts that are equal to the average discounts in our benchmark.
+    \end{fignote2}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+    \caption{Diagram illustrating rent trajectories under tenancy control based on rental market selection and duration in the same rental unit}
+    \vspace{-0.37cm}
+    \label{fig:diagram_rent_path_skeleton}
+    \includegraphics[width=\textwidth]{figures/path_of_rent_diagram_skeleton.pdf}
+    \vspace{-1.3cm}
+    \begin{fignote2}{1.0\textwidth}
+    \textit{Notes:} The downward-sloping blue line shows how rents decline over time for tenants in tenancy-controlled units, starting from the initial rent $p_{r,0}$ and averaging to $\overline{\tilde{p}}_{r,0}$. The horizontal red line represents the free-market rent, $p_{r,1}$. Free-market rents remain constant regardless of tenancy duration. Initially, controlled tenants pay more, but over time they benefit from lower rents. This premium deters short-term tenants — who prefer lower upfront costs — from choosing controlled units, while long-term tenants are willing to pay it for improved affordability later.
+   \end{fignote2}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+    \caption{Lifecycle statistics}
+    \vspace{-0.2cm}
+    \label{fig:life_cycle}
+    \includegraphics[width=\textwidth]{figures/LTV_and_homeownership.png}
+    \vspace{-0.45cm}
+    \begin{fignote2}{1\textwidth}
+      \textit{Notes:} In Figure \ref{fig:life_cycle}, the two panels illustrate the model's performance on lifecycle statistics compared to the data. Panel (a) displays the average homeownership rate for each age cohort, while panel (b) presents the average loan-to-value (LTV) ratios for homeowners across 12 age groups, as the 2019 SFS provides household maintainers' ages in 5-year ranges. Model outputs are depicted in orange, while data points are represented in blue. We source homeownership rates by age for Toronto CMA from the 2016 Census, and obtain data on the average LTV ratios from the 2019 SFS.
+    \end{fignote2}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+    \caption{Rent-to-income ratio cumulative distribution function}
+    \vspace{-0.2cm}
+    \label{fig:rent_to_income_cdf}
+    \includegraphics[width=\textwidth]{figures/rent_to_income_CDF.png}
+    \vspace{-0.45cm}
+    \begin{fignote2}{1\textwidth}
+    \textit{Notes:} In Figure \ref{fig:rent_to_income_cdf}, we depict the cumulative distribution function (CDF) of the rent-to-income ratio for renters. We represent the model's output in orange, and the data in blue. We calculate the rent-to-income CDF using data from the 2016 Census for Toronto CMA.
+    \end{fignote2}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \caption{Sensitivity analyses}
+    \vspace{-0.5cm}
+    \label{tab:sensitivity_analyses}
+    \input{tables/sensitivity_analysis}
+    \vspace{-0.65cm}
+    \begin{fignote2}{0.91\textwidth}
+    \textit{Notes:} Table \ref{tab:sensitivity_analyses} contrasts the benchmark with....
+    \end{fignote2}
+\end{table}
+
+\newpage
+
+\include{appendix}
+
+\end{document}

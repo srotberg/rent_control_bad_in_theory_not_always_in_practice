@@ -1,0 +1,814 @@
+\documentclass[11pt,aspectratio=169]{beamer}
+% Change text margins
+\setbeamersize{text margin left = 12pt, text margin right = 12pt} 
+\setbeamercovered{transparent}
+
+\settowidth{\leftmargini}{\usebeamertemplate{itemize item}}
+\addtolength{\leftmargini}{\labelsep}
+
+% \begin{columns} -----------------------------------
+\usepackage{multicol}
+\usepackage{natbib}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{verbatim}
+\usepackage{mathrsfs}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{bigdelim}
+%\onehalfspacing
+\usepackage{courier}
+
+% Title --------------------------------------------
+\title{A General Equilibrium Analysis of Rent Control with Heterogeneous Households}
+\date{\today}
+\author{Shahar Rotberg$^*$ and Lin Zhang$\dagger$ (CMHC)}
+
+\begin{document}
+
+% ------------------------------------------------------------------------------
+\begin{frame}
+\maketitle
+ 
+ \vspace{1cm}
+{\footnotesize $^*$Shahar Rotberg co-authored this paper in his own personal capacity and time. $\dagger$The opinions expressed herein do not reflect the views of the CMHC.}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Introduction}{Research questions}
+
+How does rent control affect eq'm rents, house prices, and welfare in general equilibrium?
+
+\vspace{0.5cm}
+
+Who losses and who benefits from rent control?
+
+\vspace{0.5cm}
+
+How do transitions out of rent control look like?
+ 
+\end{frame}
+
+\begin{frame}{Introduction}{Motivation}
+
+\uncover<1-4>{In this work, we argue that:}
+\begin{enumerate}
+    \item \uncover<2>{\textcolor{blue}{Although in long-run rent control reduces avg. rent it reduces welfare}}
+    \item \uncover<3>{\textcolor{blue}{Fully repealing rent control raises welfare in long-run and immediately upon implementation}}
+    \item \uncover<4>{\textcolor{blue}{No amount of rent control is welfare-maximizing in long-run}}
+\end{enumerate}
+    
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Introduction}{Motivation}
+
+Many cities have considered or have implemented rent controls \citep{fraser-1981}
+
+\vspace{0.5cm}
+
+Last 30 years focused on rent controls with tenancy deregulation and exemptions
+\begin{itemize}
+    \item Newly-built units are exempted from rent control
+    \item Controlled units must follow rent increase guidelines 
+    \begin{itemize}
+        \item Landlords can reset rental prices with new tenants
+    \end{itemize}
+\end{itemize}
+
+\vspace{0.5cm}
+
+Scant general eq'm analysis of rent control \citep{diamond-2019}
+\begin{itemize}
+    \item \citet{hayek-1929} and \citet{fs-1946} study rent freeze's effect on supply
+    \item  Economics textbooks analyze its dead-weight loss
+    \item \citet{fallis-1985} study controls with exemptions using partial eq'm model
+    \item \citet{fmn-2022} is related but more similar to social affordable housing
+\end{itemize}
+\end{frame}
+
+{\setbeamercolor{background canvas}{bg=black}
+\begin{frame}{}
+
+\centering \Large
+\textcolor{white}{What we do}
+    
+\end{frame}
+
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Introduction}{What we do (part 1)}
+
+Model rent control with exemptions in general eq'm with heterogeneous hhlds
+
+\begin{itemize}
+    \item Households choose to own or rent
+    \item Rental market has controlled and uncontrolled segments
+    \begin{itemize}
+        \item Real rents in controlled units decline the longer tenants remain in same unit  
+    \end{itemize}
+    \item Renters optimally choose how long to stay in same unit
+    \item Renters optimally choose in which market to rent
+    \begin{itemize}
+        \item To achieve eq'm, renters in controlled market pay initially more than in free market
+        \item Renters planning to stay longer in same unit sort to controlled market
+        \begin{itemize}
+            \item High-income renters plan to buy early on $\rightarrow$ sort to free market
+            \item Low-income renters plan to remain renters longer $\rightarrow$ sort to controlled market
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Introduction}{What we do (part 2)}
+
+Calibrate model to data from Toronto where markets are partly controlled and partly free:
+
+\begin{itemize}
+    \item Census, 2001-2016
+    \item Rental Market Survey, 1992-2021
+    \item Survey of Financial Security, 2016
+\end{itemize}
+
+\vspace{0.5cm}
+
+Calibrated model imitates reasonably well data from Toronto on:
+
+\begin{itemize}
+    \item Life-cycle homeownership and debt
+    \item Sorting behavior into free and controlled markets
+    \item Wealth inequality
+    \item Other aggregate statistics
+\end{itemize}
+    
+\end{frame}
+
+
+\begin{frame}{Introduction}{What we do (part 3)}
+
+We conduct 4 experiments and compare to our benchmark:
+
+\begin{itemize}
+    \item Long-run full decontrol
+    \item Transition from benchmark to long-run full decontrol - modelled as permanent “MIT shock”
+    \item Long-run Full control
+    \item Optimal degree of rent control in long-run
+    \begin{itemize}
+        \item Maximize ex-ante expected utility of newborns \citep{conesa-et-al,gkkoc}
+    \end{itemize}
+\end{itemize}
+    
+\end{frame}
+
+{\setbeamercolor{background canvas}{bg=black}
+\begin{frame}{}
+
+\centering \Large
+\textcolor{white}{Main results}
+    
+\end{frame}
+
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Introduction}{Main results (part 1)}
+
+In long-run, full rent decontrol would:
+
+\begin{itemize}
+    \item Raise average rents but reduce free market rents and rents of new tenants
+    \begin{itemize}
+        \item Decontrol $\rightarrow$ less benefit to renting longer $\rightarrow$ more homeownership $\rightarrow$ less rental demand
+        \item Lower rents of new tenants would benefit young, low-income households 
+    \end{itemize}
+\end{itemize}
+
+\vspace{0.5cm}
+
+In short-run, full decontrol would:
+
+\begin{itemize}
+    \item Increase welfare upon implementation
+    \begin{itemize}
+        \item Renters in large controlled units switch to smaller units $\rightarrow$ reduce rental demand immediately
+        \item Lower free market rents $\rightarrow$ lower initial rents of new tenants upon implementation
+    \end{itemize}
+    \item But raise average rents
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Introduction}{Main results (part 2)}
+
+In long-run, full control would:
+
+\begin{itemize}
+    \item Reduce welfare
+    \begin{itemize}
+        \item Free market rent $>$ average controlled rent $\rightarrow$ reduce rental company's marginal rent
+        \item Less quantity of rental housing supplied $\rightarrow$ higher initial and average rents in controlled market
+    \end{itemize}
+\end{itemize}
+
+\vspace{0.5cm}
+
+In long-run, no degree of rent control is optimal:
+
+\begin{itemize}
+    \item Less control $\rightarrow$ higher initial rents in controlled market to divert renters to free market
+    \begin{itemize}
+        \item Higher-income hhlds stay less in same unit $\rightarrow$ more sort to free market  
+        \item Lower-income hhlds stay longer $\rightarrow$ pay more in controlled market
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+    
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Road map}
+
+\begin{itemize}
+    \item History of rent control laws in Toronto
+    \item Model 
+    \item Calibration
+    \item Experiments
+    \item Conclusion
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{\setbeamercolor{background canvas}{bg=black}
+\begin{frame}{}
+
+\centering \Large
+\textcolor{white}{History of rent control in Toronto}
+    
+\end{frame}
+
+}
+
+\begin{frame}{A timeline of rent control laws in Toronto}
+  \centering
+     \includegraphics[width=1\textwidth]{figures_for_slides/history_of_rent_control_Toronto.png}
+\end{frame}
+
+{\setbeamercolor{background canvas}{bg=black}
+\begin{frame}{}
+
+\centering \Large
+\textcolor{white}{Model}
+    
+\end{frame}
+
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Model}{Household preferences and demographic structure}
+Household preferences:
+\begin{equation*}
+    u(c,h)=\frac{\left(c^{1-\gamma} h^{\gamma}\right)^{1-\sigma}}{1-\sigma},
+\end{equation*}
+
+\begin{itemize}
+    \item $c$: non-housing consumption
+    \item $h$: housing consumption
+\end{itemize}
+
+\hspace{0.5cm}
+
+Overlapping generations of finitely-lived households:
+\begin{itemize}
+    \item Live from $j=1$ to $j=J$ and die with certainty after $j=J$
+    \item Work until age $j<R$ and retire at age $j=R$
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Model}{Household heterogeneity}
+Households are heterogeneous in:
+\begin{itemize}
+    \item Age, $j \in \mathcal{N}$
+    \item Financial wealth, $a \in \mathcal{R_{+}}$
+    \item Housing tenure, $o \in \{0,1\}$, $0=$renter, $1=$owner
+    \item Rental market in which they rent, $f \in \{0,1\}$, $0=$controlled market, $1=$free market
+    \item Years in same unit, $\iota \in \mathcal{N}$
+    \item Housing size, $h \in \mathcal{R_{++}}$
+    \item Mortgage debt, $m \in \mathcal{R_{+}}$
+    \item Labor productivity, $e \in \mathcal{R_{++}}$
+    \item $s$ to denote household state $(a,o,f,\iota,h,m,e)$
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Model}{Household incomes}
+
+\begin{itemize}
+    \item Labor income, $y_{\ell,j}(e)=W \zeta_{j} e$, for $j<R$ $\zeta_{j}$: deterministic age-dependent productivity
+    \begin{itemize}
+        \item Retirees receive pension, $y_{R}(e)$, $j\geq R \rightarrow$ higher productivities receive higher pensions
+        \item Intra-generational persistence of $e:$, $\log e' = \rho_{e} \log e + \epsilon_{e},\quad \epsilon_{e}\sim N(0,\sigma_{e})$
+        \item Inter-generational persistence of $e:$, $\log e^{\text{child}} = \hat{\rho}_{e} \log e^{\text{parent}} + \hat{\epsilon}_{e},\quad \hat{\epsilon}_{e}\sim N(0,\hat{\sigma}_{e})$
+    \end{itemize}
+    \item Capital income, $y_{k}(a)=ar$, $r$: risk free rate
+    \item Taxable income, $y^{x}_{j}(e,a)=y_{\ell,j}(e)+\nu y_{k}(a)$, $\nu$: taxable portion of capital income
+    \item Progressive taxes, $y^{\tau}_{j}(e,a) = y^{x}_{j}(e,a)-\tau_{\ell}y^{x}_{j}(e,a)^{\psi}$, $\tau_{\ell}$: avg. tax, $\psi$: progressivity
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Model}{Renters (part 1)}
+
+\begin{itemize}
+    \item Renters choose to rent in free market $f=1$, or controlled market $f=0$
+    \begin{itemize}
+        \item If $f=1$, pay $p^{r}_{1}h$, $p^{r}_{1}$: free market rent
+        \item If $f=0$, pay $\frac{p^{r}_{0}}{(1+\kappa)^{\iota}} h$, $p^{r}_{0}$: controlled market rent of new tenants
+        \begin{itemize}
+            \item $\iota$: number of periods in the same unit
+            \item $\kappa$: rate of decline in real controlled rent with each additional period tenant remains in same unit
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Model}{Renters (part 2)}
+  \centering
+    \begin{columns}[T]
+    \begin{column}{0.6\textwidth}  
+     \caption{Qualitative depiction of rent path based on rental market choice and years in same rental}
+     \includegraphics[width=1.4\textwidth]{figures/path_of_rent_diagram.pdf}
+     \end{column}
+    \begin{column}{0.4\textwidth}
+     \begin{itemize}
+        \item To clear markets, renters in controlled market pay initially more than in free market
+        \begin{itemize}
+            \item High-income renters plan to buy early on $\rightarrow$ sort to free market to avoid premium
+            \item Low-income renters plan to remain renters longer $\rightarrow$ pay premium and enjoy lower average rents in controlled market
+        \end{itemize}
+    \end{itemize}
+    \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Model}{Homeowners}
+
+\begin{itemize}
+    \item Owners have access to long-term mortgages, $m$
+    \item At origination pay $\omega_{1}$ and must satisfy:
+    \begin{itemize}
+        \item LTV constraint $m \leq \lambda_{m,1}(ph) p h$
+        \item GDS constraint $\frac{\tau_{p}ph+(r_{m}+\upsilon_{3})m}{y_{\ell,j}(e)+y_{k}(a)} \leq \lambda_{m,2}\left(\frac{m}{ph}\right)$
+    \end{itemize}
+    \item Pay at least $\upsilon_{1}m$ each period or incur cost of origination again
+    \item Can pay up to $\upsilon_{2}>\upsilon_{1}$ without prepayment penalty
+    \begin{itemize}
+        \item Otherwise pay prepayment penalty: $\tau_{pp}=\omega_{2}\mbox{max}\left\{(1-\upsilon_{2})m-m',0\right\}$
+    \end{itemize}
+    \item Must fully settle debt when $m\leq \upsilon_{4}ph$
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Model}{Housing}
+
+\begin{itemize}
+    \item All housing depreciates at a rate $\delta_{h}$
+    \item All housing is subject to a property tax rate $\tau_{p}$
+    \item Housing receives exogenous capital gains $g_{p}$
+    \begin{itemize}
+        \item High priced cities $\rightarrow$ (rent$<$ongoing operation costs) $\rightarrow$ no supply of rental housing
+        \item Capital gains tilt the user-cost equation to incentivize supply of rental housing
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Model}{Dynamic program}
+\footnotesize
+\begin{align}
+  \label{eq:vf}
+  V_{j}(s)=\max_{c,a',o',f',\iota',h',m'}\ \biggl\{u\left(c,h\right)+
+  \beta \mathbb{E}\biggl[V_{j+1}(s'|e)\biggl]\biggr\}
+\end{align}
+subject to
+\begin{flalign}
+  \begin{split} \label{eq:bc}
+  & c+a'+(1-o')\left[(1-f')\frac{p^{r}_{0}}{(1+\kappa)^{\iota'-1}}h'+f'p^{r}_{1}h'\right]+o'(ph'-m')+o\left(ph\left(\tau_{p}+\delta_{h}\right)+r_{m}m\right) + \\ & \quad \tau_{b}ph'(\mbox{purchase house=1})+\tau_{s}ph(\mbox{sell house=1})+ \omega_{1}(\mbox{originate mortgage=1})+\\ & \quad \tau_{pp}(\mbox{prepay more than allowed=1}) = \mbox{(after tax income from all sources)}+a+o(ph-m)
+  \end{split} \\
+  & o' \in \{0,1\}, \hspace{0.2cm} f' \in \{0,1\} \hspace{0.2cm} \mbox{if} \hspace{0.2cm} o'=0 \label{eq:rental_market_type} \\
+  & h' \geq \underline{h}_{r} \hspace{0.2cm} \mbox{if} \hspace{0.2cm} o'=0, \hspace{0.2cm}, \hspace{0.2cm} h' \geq \underline{h}_{o} \hspace{0.2cm} \mbox{if} \hspace{0.2cm} o'=1  \label{eq:min_housing}\\
+  & \mbox{Satisfy LTV \& GDS constraints if originating new mortgage}
+\end{flalign}
+
+Policy functions:
+\begin{itemize}
+    \item $c_{j}(s)$, $a'_{j}(s)$, $o'_{j}(s)$, $f'_{j}(s)$, $\iota'_{j}(s)$, $h'_{j}(s)$, and $m'_{j}(s)$
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Model}{Rental company (part 1)}
+Rental company buys housing and rents them out: 
+\begin{align}\label{eq:rental_company_problem}
+V(X)=\underset{X'_{0},X'_{1}} {\text{$\mbox{max} $}}\left\{\sum_{i=0}^{i} \overline{p}^{r}_{i}X'_{i}-c_{m}X'^{\theta}-p X'+p(1-\delta_{h}-\tau_{p}+g_{p})X+\frac{1}{1+r}V(X')\right\}.
+\end{align}
+subject to
+\begin{align*}
+& X'_{0}=\mbox{min}\{\underline{X}_{0},X'\}, \hspace{0.2cm} X'_{1} \geq 0, \hspace{0.2cm} X'=\sum^{1}_{i=0} X'_{i} 
+\end{align*}
+
+\begin{itemize}
+    \item $\underline{X'}_{0}$: amount of mandated controlled units; $X'_{1}$: supply on free market
+    \item $\overline{p}^{r}_{1}=p^{r}_{1}$: free market rent, which is also the marginal rent for rental company
+    \item $\overline{p}^{r}_{0}$: average rent in controlled market
+    \item $c_{m}$: avg. management cost; $\theta$: convexity of cost of supplying more rental housing
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Model}{Rental company (part 2)}
+
+\begin{itemize}
+    \item Inverse rental supply function is therefore: $\overline{p}^{r}_{1}=c_{m}\theta X'^{\theta-1}+p-\left\{\frac{1-\delta_{h}-\tau_p+g_{p}}{1+r}\right\}p$ 
+    \begin{itemize}
+        \item When rental markets are fully controlled, avg rents in controlled market $\overline{p}^{r}_{0}$ replace $\overline{p}^{r}_{1}=p^{r}_{1}$
+        \item In eq'm $\overline{p}^{r}_{1}>\overline{p}^{r}_{0}$ $\rightarrow$ moving to full control discontinuously reduces marginal rent and supply
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Model}{Housing construction company}
+
+\begin{itemize}
+    \item Competitive company constructs new housing with technology, $TC(I)=c_{1}\left(\frac{1}{\frac{1}{\epsilon}+1}\right)I^{\frac{1}{\epsilon}+1}$
+    \item Optimal investment: $I=\left(\frac{p}{c_{1}}\right)^{\epsilon}$; $p$: housing price; $\epsilon$: rental supply elasticity; $c_{1}$: scalar
+    \item Law of motion for housing $H'=(1-\delta_{h})H+I$
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Model}{Government}
+
+Must balance budget each period:
+\begin{itemize}
+    \item $G + \sum_{j=R}^J \int_\mathcal{S} y_{R}(s) \mathrm{d}\Psi(s) + \sum_{j=1}^J \int_\mathcal{S} T \mathrm{d}\Psi(s) = \sum_{j=1}^J \int_\mathcal{S}y^{\tau}_{j}(s) \mathrm{d}\Psi(s)+\tau_p p H$
+    \begin{itemize}
+        \item $G:$ public good; picked in benchmark to clear budget, held fixed in counterfactuals
+        \item $T:$ lump sum transfer; set to 0 in benchmark, picked in counterfactuals to clear budget
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Model}{Equilibrium definition}
+
+A stationary eq'm in the model is:
+
+\begin{itemize}
+    \item a sequence of aggregate prices and quantities, $\left\{H',I,\{X'_{i},\overline{p}^{r}_{i}\}^{1}_{i=0},p\right\}$;
+    \item value and policy functions, $\biggl\{V_{j}(\cdot),c_{j}(\cdot),a'_{j}(\cdot),o'_{j}(\cdot),f'_{j}(\cdot)\iota'_{j}(\cdot),h'_{j}(\cdot),m'_{j}(\cdot)\biggl\}_{j=1}^J$; and
+    \item a sequence of measures, $\left\{\Psi_{j}(\cdot)\right\}_{j=1}^J$, that:
+\end{itemize}
+\begin{enumerate}
+%\item all nominal prices rise at the rate of $i$, but real prices remain fixed;
+\item Solve the household's dynamic problem subject to constraints;
+\item Solve the rental company's problem subject to constraints;
+\item Satisfy the construction company's first-order condition;
+\item Satisfy the government's budget constraint;
+\item Clear the housing market;
+\item Clear the rental housing markets;
+\item And satisfy the laws of motion for the distribution of households
+\end{enumerate}
+    
+\end{frame}
+
+{\setbeamercolor{background canvas}{bg=black}
+\begin{frame}{}
+
+\centering \Large
+\textcolor{white}{Calibration}
+    
+\end{frame}
+
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Calibration}{External calibration (part 1)}
+
+\input{tables_for_slides/calibration_1.tex}
+
+\end{frame}
+
+\begin{frame}{Calibration}{External calibration (part 2)}
+
+\input{tables_for_slides/calibration_2.tex}
+
+\end{frame}
+
+\begin{frame}{Calibration}{External calibration (part 3)}
+
+\input{tables_for_slides/calibration_3.tex}
+
+\end{frame}
+
+\begin{frame}{Calibration}{Internal calibration}
+
+\input{tables_for_slides/calibration_4.tex}
+
+\end{frame}
+
+\begin{frame}{Calibration}{Non-targeted moments - aggregates (part 1)}
+
+\input{tables_for_slides/aggregate_non_targeted_statistics_1.tex}
+
+\end{frame}
+
+\begin{frame}{Calibration}{Non-targeted moments - aggregates (part 2)}
+
+\input{tables_for_slides/aggregate_non_targeted_statistics_2.tex}
+
+\end{frame}
+
+\begin{frame}{Calibration}{Non-targeted moments - lifecycle}
+  \centering
+     \includegraphics[width=0.9\textwidth]{figures/lifecycle_plots.pdf}
+\end{frame}
+
+\begin{frame}{Calibration}{Non-targeted moments - tenure by productivity}
+  \centering     \input{tables_for_slides/tenure_by_productivity_benchmark_1.tex}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{\setbeamercolor{background canvas}{bg=black}
+\begin{frame}{}
+
+\centering \Large
+\textcolor{white}{Experiments}
+    
+\end{frame}
+
+}
+
+\begin{frame}{Experiments}{Overview}
+
+We conduct 4 experiments that we compare to the benchmark:
+\begin{itemize}
+    \item Long-run full rent decontrol
+    \item Long-run full rent control
+    \item Optimal degree of rent control in long-run
+    \begin{itemize}
+        \item Maximize ex-ante expected utility of newborns \citep{conesa-et-al,gkkoc}
+    \end{itemize}
+    \item Transition from benchmark to long-run full rent decontrol - permanent "MIT shock"
+\end{itemize}
+
+\vspace{0.5cm}
+
+In all our experiments, we:
+\begin{itemize}
+    \item Keep tax system fixed
+    \item Balance government budget with lump sum transfers
+\end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Experiments}{Measure of rents}
+
+\begin{enumerate}
+    \item \underline{Free market rent}: rent in free market.
+    \item \underline{Average controlled rent}: avg. rent in controlled market.
+    \item \underline{Rent of new tenants}: rent new tenants pay when moving into a rental unit
+    \item \underline{Average rent}: weighted avg. of rents in controlled and free markets
+    \item \underline{Marginal rent}: rent that rental company receives if it supplied an additional rental unit
+    \begin{itemize}
+        \item When free markets operate, marginal rent is free market rent
+        \item When all rental units are controlled, marginal rent is avg. rent in controlled market
+    \end{itemize}
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}{Experiments}{Experiment 1: Long-run full decontrol, aggregate outcomes}
+
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+\input{tables_for_slides/aggregate_effects_1.tex}
+\end{column}
+
+\begin{column}{0.53\textwidth}
+    \begin{itemize}
+    \item Full decontrol $\rightarrow$ reduced incentive to remain in same unit $\rightarrow$ more homeownership
+    \item Less rental demand $\rightarrow$ lower free market rent
+    \item Lower rents of new tenants $\rightarrow$ benefits low-income, young hhlds with highest MU $\rightarrow$ welfare gain of newborns
+    \item In benchmark free market rent is 8.8\%$>$avg controlled rent $\rightarrow$ higher avg. rent under full decontrol
+    \item Higher avg. rent $\rightarrow$ hurts renters already under rent control $\rightarrow$ welfare loss when considering everyone
+    \end{itemize}
+\end{column}
+
+\end{columns}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{figure}[H]
+  \centering
+    \caption{Qualitative depiction of impact of full rent decontrol}
+    \label{fig:diagram_full_decontrol}
+    \vspace{-0.26cm}
+    \includegraphics[width=0.95\textwidth]{figures/full_rent_decontrol_diagram.pdf}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}{Experiments}{Experiment 1: Long-run full decontrol, distributional outcomes}
+
+\input{tables_for_slides/distributional_impacts_1.tex}
+
+\begin{itemize}
+    \item $e_{1}$ are lowest income $\rightarrow$ value lower initial rents more than lower average rents
+    \item $e_{2}-e_{3}$ remain long enough to benefit from rent control in same units and have higher incomes $\rightarrow$ value lower avg. rents more than lower initial rents
+    \item $e_{4}-e_{7}$ do not remain long enough to benefit from rent control $\rightarrow$ value lower initial rents 
+    \item Rent effect is first order, lump sum transfer second order, house price third order
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Experiments}{Experiment 2: Long-run full control, aggregate outcomes}
+
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+\input{tables_for_slides/aggregate_effects_2.tex}
+\end{column}
+\begin{column}{0.53\textwidth}
+    \begin{itemize}
+    \item Full control $\rightarrow$ incentive for more hhlds to remain longer in same rental 
+    \item Lower marginal rents $\rightarrow$ reduce rentals supplied $\rightarrow$ increase avg. rents    
+    \item Newborns face higher rents $\rightarrow$ reduce welfare 
+    \item Why does homeownership increase also under full control?
+    \begin{itemize}
+        \item Under full control, lower house prices cause homeownership to rise
+        \item Under full decontrol, homeownership causes house prices to rise
+    \end{itemize}
+    \end{itemize}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+\begin{frame}
+
+\begin{figure}[H]
+  \centering
+    \caption{Qualitative depiction of impact of full rent control}
+    \label{fig:diagram_full_control}
+    \vspace{-0.26cm}
+    \includegraphics[width=0.97\textwidth]{figures/full_rent_control_diagram.pdf}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}{Experiments}{Experiment 3: Optimal degree of rent control in long-run}
+
+Is little rent control better? We find the answer is "No" and that rental market sorting is key 
+\begin{itemize}
+    \item Less control $\rightarrow$ higher initial rents in controlled market to divert renters to free market
+    \begin{itemize}
+        \item Higher-income hhlds stay less in same unit $\rightarrow$ more sort to free market  
+        \item Lower-income hhlds with high MU stay longer $\rightarrow$ pay more in controlled market
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Experiments}{Experiment 4: Transition from benchmark to full rent decontrol}
+  \centering
+     \includegraphics[width=0.9\textwidth]{figures/transition_plots.pdf}
+\begin{itemize}
+    \item Decontrolling $\rightarrow$ raises rents for renters under control for a while $\rightarrow$ less rental demand 
+    \item Previously-uncontrolled rents decline upon decontrolling $\rightarrow$ increase newborns' welfare 
+    \item Less incentive to rent $\rightarrow$ accumulate more wealth to buy $\rightarrow$ house prices rise
+    \item Higher house prices $\rightarrow$ more property tax revenue $\rightarrow$ larger lump sum 
+    \item More wealth $\rightarrow$ more capital income $\rightarrow$ existing renters demand larger rentals $\rightarrow$ rents bounce back a bit
+\end{itemize}     
+     
+\end{frame}
+
+{\setbeamercolor{background canvas}{bg=black}
+\begin{frame}{}
+
+\centering \Large
+\textcolor{white}{Conclusion}
+    
+\end{frame}
+
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Conclusion}{Part 1}
+
+Build GE model with controlled and free rental markets to examine impact of rent control on:
+\begin{itemize}
+    \item Aggregate outcomes
+    \item Distributional outcomes
+    \item Short-run outcomes
+\end{itemize}
+
+\vspace{0.5cm}
+
+We calibrate the model to data from Toronto:
+\begin{itemize}
+    \item Rental markets are partly controlled and partly free
+    \item Model does reasonably well at imitating aggregate, life-cycle, and distributional data
+    \item Use calibrated model to conduct a series of experiments
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Conclusion}{Part 2}
+
+We find that:
+\begin{itemize}
+    \item In long-run, full rent decontrol would:
+    \begin{itemize}
+        \item Increase avg. rents $\rightarrow$ hurt renters who already live in controlled units
+        \item Reduce rents of new tenants $\rightarrow$ benefit high- and low-income, young households
+    \end{itemize}
+    \item In short-run, full rent decontrol would:
+    \begin{itemize}
+        \item Immediately reduce free market rents and initial rents of new tenants $\rightarrow$ welfare gains
+    \end{itemize}
+    \item In long-run, full rent control would:
+    \begin{itemize}
+        \item Lower rental company's marginal rent $\rightarrow$ less rentals supplied $\rightarrow$ higher initial and avg. rents
+    \end{itemize} 
+    \item No degree of rent control is optimal in long-run:
+    \begin{itemize}
+        \item Less control $\rightarrow$ higher initial rents in controlled market to divert renters to free market
+        \item Higher-income hhlds stay less in same unit $\rightarrow$ more sort to free market  
+        \item Lower-income hhlds stay longer $\rightarrow$ pay more in controlled market
+    \end{itemize}    
+\end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Conclusion}{Limitations and future research}
+
+Due to computational limitations, we abstract from:
+\begin{itemize}
+    \item Aggregate uncertainty
+    \begin{itemize}
+        \item Important for studying benefits of rent rigidity with rent control during RBC fluctuations
+    \end{itemize}
+    \item Endogenous labor supply
+    \begin{itemize}
+        \item Key to exploring rent control with subsidies to low-income, young hhlds, paid by income taxes
+    \end{itemize}
+\end{itemize}
+ 
+\end{frame}
+
+{\setbeamercolor{background canvas}{bg=black}
+\begin{frame}{}
+
+\centering \Large
+\textcolor{white}{References}
+    
+\end{frame}
+
+}
+
+\bibliographystyle{aer}
+\bibliography{reference_files/bib}
+
+\end{document}

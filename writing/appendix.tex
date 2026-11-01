@@ -1,0 +1,132 @@
+\appendix
+\setcounter{page}{1}
+%\maketitle
+
+\vspace{-3cm}
+\noindent {\Large Online Appendix: ``Rent Control? Bad in Theory, Not Always in Practice''}
+
+\section{Data and moment construction}\label{appendix:data}
+
+In Section \ref{appendix:data} we describe some of the more complex variables we estimate, organized into rental market variables, income- and tax-related variables, and other variables. We compute all variables for the Toronto CMA. The exception is a subset of variables constructed using the 2019 Survey of Financial Security (SFS), for which we use Ontario data because the publicly available SFS identifies geography only down to the provincial level.
+
+\subsection{Rental markets}\label{appendix:rental_markets}
+
+\subsubsection{Percentage of renters in the controlled market}
+
+To compute the percentage of renters residing in controlled units, we rely on data from the 2016 Census. We utilize the variable BUILT to distinguish between controlled and free-market units, subsequently dividing the total number of controlled units by the total number of rental units across both markets. This analysis reveals that 71\% of renters leased properties in the controlled market, implying that 29\% of renters opted for units in the free market. We denote the fraction of renters in the controlled market as $D$.
+
+\subsubsection{Average number of years in a tenancy-controlled rental}
+
+For our calibration, we need to estimate the ``entry premium'' in the controlled market. To compute this, we first need to know the average number of years a renter remains in the same rental. 
+
+We estimate this using the average renter turnover rate of 12.25\% from the 2016--2021 RMS data sample. Utilizing this value, we compute the average number of years a renter stays in the same unit using the following formula:
+
+\begin{equation}\label{eq:avg_tenure_duration}
+    Y=\sum_{i=1}^{50}i\left[(1-\tau_{\text{turnover}})^{i-1}-(1-\tau_{\text{turnover}})^{i}\right].
+\end{equation}
+
+\noindent $Y$ represents the average number of years renters stay in the same unit, where $\tau_{\text{turnover}}$ denotes the turnover rate, and $i$ signifies the number of years.
+
+To grasp the mechanics of equation \eqref{eq:avg_tenure_duration}, imagine an initial mass of renters equal to $1$. After one year, a fraction of $1-\tau_{\text{turnover}}$ remains in their unit, implying that a fraction of $\tau_{\text{turnover}}$ resides in their unit for precisely one year. After two years, a fraction of $(1-\tau_{\text{turnover}})^2$ continues to reside in their unit, suggesting that a fraction of $(1-\tau_{\text{turnover}})-(1-\tau_{\text{turnover}})^2$ resided in their unit for exactly two years, and so forth. We truncate the calculation at 50 years, as essentially no renters remain in the same unit for such an extended duration. By multiplying each fraction of renters living precisely $i$ years in the same unit by the number of years they resided in their unit, we obtain the expected number of years renters live in the same unit.
+
+Next, using the estimated fraction of renters in the controlled market ($D$) and our approximation for the average number of years a renter is expected to stay in the same unit across both the controlled and free market ($Y$), we can derive the average number of years a renter in the controlled market remains in the same unit, $Y_{c}$, as follows:
+
+\begin{equation*}
+    Y_{c}=\frac{Y-(1-D)Y_{f}}{D}.
+\end{equation*}
+
+\noindent $Y_{f}$ denotes the average number of years a renter stays in a free market unit. To obtain $Y_{c}$, we leverage the estimate in \citet{cjq-2023} that renters in the controlled market remain in the same unit twice as long as renters in the free market, which implies that $Y_{f}=\frac{Y_{c}}{2}$. Thus, we can solve for $Y_{c}$, which is 9.55.
+
+\subsubsection{Measuring ``entry premiums'' under tenancy control}\label{section:appendix_measuring_premium}
+
+To estimate the ``entry premium'' paid by new tenants in controlled units relative to comparable units in the free market, we use household-level data from the 2016 Census. Our empirical strategy is to estimate average free-market rents based on observable unit characteristics (specifically the number of bedrooms (BEDRM) and unit condition (REPAIR)).
+
+We identify new tenants in controlled units using the variables BUILT and MOB1, and then compute the percentage difference between the rent they pay and the quality-adjusted average free-market rent for comparable units. This difference represents the ``entry premium'' paid by new tenants in the controlled market. However, since controlled units systematically differ in quality from those in the free market, we need to adjust average free-market rents to account for these differences.
+
+To do so, we draw on the estimates of \citet{zhang-gou}, who employ a regression discontinuity design (RDD) based on Toronto’s rent control exemption threshold. Comparing rental units completed just before and after the November 1, 1991 cutoff, they attribute only $13.7\%$ of the observed rent gap to direct effects of rent control, whereas $24.01\%$ of the gap reflects differences in unit quality, location, and amenities. We use these estimates to quality-adjust rents of controlled units. However, these quality differences include units of tenants who have lived in their units for a while, not newly occupied units. We thus adjust the quality to reflect the quality at the time of entry.
+
+We do so by incorporating the model’s annual depreciation rate $\delta$ and average tenure duration $Y_{c}$. This captures the possibility that weaker maintenance incentives during regulated tenancies reduce quality over time. This yields the following quality-adjustment deflator for newly occupied controlled units:
+
+\begin{equation}\label{eq:deflator}
+    \text{Deflator}=1.2401-[(1+\delta)^{Y_c-1}-1].
+\end{equation}
+
+\noindent With our parameter values, this produces a deflator of $1.188$, which means that newly occupied controlled units are, on average, $18.8\%$ lower in quality than otherwise comparable free-market units, \emph{ceteris paribus}.
+
+After applying this deflator to average free-market rents, we compute the ``entry premium'' paid by each new tenant in the controlled sector and then take the average. We estimate an average ``entry premium'' of $5.9\%$, with a $95\%$ confidence interval of $[2.7\%, 9.1\%]$.\footnote{If we do not apply this adjustment for controlled units of new tenants, the point estimate is about $10.5\%$ with a confidence interval of $[7.2\%,13.9\%]$. Thus, we view our estimate of $5.9\%$ for the ``entry premium'' as a conservative lower bound.}
+
+\subsubsection{Age- and income-based discrimination under tenancy control}\label{section:appendix_discrimination}
+
+We also examine whether landlords discriminate among new tenants in controlled units based on age or income. Using household-level data from the 2016 Census, we estimate the following regression:
+
+\begin{equation*}
+\text{SHELCO}_j = \alpha + \beta_1 i.\text{AGEGRP}_j + \beta_2 \text{TOTINC}_j + \beta_3 \text{BEDRM}_j + \beta_4 i.\text{REPAIR}_j + \beta_5 \text{ROOMS}_j, 
+\end{equation*}
+
+\noindent where the sample is restricted to new tenants in controlled units. %— defined as households for which is\_controlled$=1$ and is\_new\_tenant$=1$.
+
+In this specification:
+
+\begin{itemize} 
+    \item $\text{SHELCO}_j$ is household $j$'s reported shelter cost. 
+    \item $\text{AGEGRP}_j$ is a categorical variable indicating the age group the household head belongs to. 
+    \item $\text{TOTINC}_j$ is the total pre-tax income of household $j$. 
+    \item $\text{BEDRM}_j$ denotes the number of bedrooms in the rented unit of household $j$. 
+    \item $\text{REPAIR}_j$ is a categorical variable indicating the unit’s state of repair. 
+    \item $\text{ROOMS}_j$ represents the total number of rooms in household $j$'s unit. 
+    \item $\beta_1$ and $\beta_4$ are vectors corresponding to the categorical variables $\text{AGEGRP}_j$ and $\text{REPAIR}_j$, respectively. 
+\end{itemize}
+
+The sample includes only households that moved into their unit within the past 12 months, identified by MOB1. Moreover, a unit is classified as rent-controlled if it was built before 1992, using the variable BUILT.
+
+The regression results yield the following insights. None of the coefficients in $\beta_1$, corresponding to the age categories $\text{AGEGRP}_j$, are statistically significant at the 5\% level, indicating no evidence of age-based discrimination in initial rents. The coefficient on $\text{TOTINC}_j$, $\beta_2$, is statistically significant but small in magnitude with a value of 0.003. This implies that an increase of \$10,000 in total pre-tax income is associated with only a \$30 increase in initial rent, or approximately 2\% of the average initial controlled rent.
+
+More importantly, this suggests that conditional on observables, higher-income renters face slightly higher initial rents than lower-income renters. From a policy perspective, this pattern is less concerning, as lower-income renters, who are the intended beneficiaries of rent control in most cases, do not appear to be disadvantaged. Instead, they may actually benefit from a somewhat preferential treatment in initial rent pricing.
+
+\subsubsection{Rent-to-house-price ratio}
+
+To calculate the rent-to-house price ratio, we use the average annual rent across all rental units in the 2006 RMS data, which was \$992 per month. Then, we multiply this figure by 12 and divide it by the average condo price in 2006, which was about \$227,000. The condo price data were combined in one place by Listings.ca for Toronto using several Toronto Real Estate Board (TREB) reports.\footnote{See \url{https://toronto.listing.ca/condo-price-history.htm}.} This computation results in a ratio of about $0.0524$.
+
+\subsubsection{Rent-to-house-price ratio in free market}
+
+To compute the rent-to-house price ratio in the free market, we utilize three estimated figures. Firstly, we have our computed rent-to-house price ratio across both markets, which is $0.0524$ as discussed just above. Secondly, in order to align with the year for which we computed the rent-to-price estimate above, we use 2006 Census data to estimate the share of the controlled market in the aggregate rental market, which was $D=87.62\%$. Thirdly, we incorporate an estimate from \citet{zhang-gou} regarding how much lower the average rent in the controlled market is relative to the average rent in the free market, all else being equal. We denote this difference as $T$. We formulate the rent-to-price ratio as follows:
+
+\begin{equation}\label{eq:free_market_rent_to_price}
+    {\left(\frac{\overline{p}_{r}}{p}\right)}=D \left(\frac{\overline{p}^{0}_{r}}{p}\right)+(1-D) \left(\frac{\overline{p}^{1}_{r}}{p}\right).
+\end{equation}
+
+\noindent $\left(\frac{\overline{p}_{r}}{p}\right)$ represents the rent-to-average price ratio, $\overline{p}^{0}_{r}$ denotes the average controlled rent, and $\overline{p}^{1}_{r}$ signifies the average free-market rent. Given that $\frac{\overline{p}^{0}_{r}}{p}=(1-T)\frac{\overline{p}^{1}_{r}}{p}$, we can substitute this into equation \eqref{eq:free_market_rent_to_price} and solve for $\frac{\overline{p}^{1}_{r}}{p}=0.0582$.
+
+\subsubsection{Renters in the controlled market by income quintile}
+
+Using 2016 Census data, we determine the percentage of households in each income quintile who rent in the controlled market. We categorize households into income quintiles using the total income variable (TOTINC), distinguish renters from owners using the tenure variable (TENUR), and identify controlled-market renters using the year-built variable (BUILT).
+
+\subsection{Income and taxes}
+
+\subsubsection{Increase in real average income by age}
+
+To derive the deterministic age-related growth component of labor income, $\zeta_{j}$, we leverage data from the 2016 Census. Firstly, we calculate the average market income (EMPIN) for households whose household head's age ranged from 25 to 64 (AGEGRP). Subsequently, we regress income on age and age squared, as we outlined in Section \ref{sec:calibration}.
+
+\subsubsection{Average income tax rate}
+
+We calculate the average income tax rate based on data from the 2016 Census. This involved dividing total taxes paid (TOTINC - TOTINC\_AT) by total income (TOTINC). The resulting average income tax rate is 19.6\%.
+
+\subsubsection{Estimating progressivity of income taxes}
+
+In our model, we define income taxes by equation \eqref{eq:taxable_labor_income}. Rearranging this equation, we obtain:
+
+\begin{equation}\label{eq:taxable_labor_income_regression}
+  \mbox{log}(y^{x}_{j}(\chi,e,a)-y^{\tau}_{j}(\chi,e,a))=\mbox{log}(\tau_{\ell})+\psi \mbox{log}(y^{x}_{j}(\chi,e,a)).
+\end{equation}
+
+\noindent The left-hand side variable represents the log of after-tax taxable household income, while the right-hand side has an intercept and the log of taxable household income. The intercept is $\log(\tau_{\ell})$, and the coefficient on taxable household income is $\psi$, which determines the progressivity of income taxes. Regressing household-level 2016 Census data following equation \eqref{eq:taxable_labor_income_regression}, we obtain a point estimate for $\psi$ equal to 0.9275. Since taxes in the 2016 Census were not categorized by income type, we utilize after-tax household income from all sources and pre-tax household income from all sources.
+
+\subsection{Other statistics}
+
+\subsubsection{Property tax rate}
+
+To calculate the property tax rate $\tau_p$, we draw on two data sources. Firstly, we rely on the property tax rate reported by the City of Toronto for 2023, which is 0.67\%.\footnote{See \url{https://www.toronto.ca/services-payments/property-taxes-utilities/property-tax/property-tax-rates-and-fees/2023-property-tax-rates-and-fees/}.} However, the property values assessed by municipalities in the City of Toronto often differ significantly from their actual values. Altus Group reports that more than 50\% of properties sold in Toronto in 2023 were assessed to be worth 35\% less than their actual sale price.\footnote{See page 12 here \url{https://assets.ctfassets.net/8jgyidtgyr4v/10K5oUs2wflXLjLgS8s44T/7dd2acc41dd82873f2e3e459f176e1f7/ENG_-_2024_Canadian_Tax_Rate_Benchmark_Report.pdf}.} Thus, this implies an effective property tax rate of $0.67\% \times 0.65 \approx 0.44\%$.
+
+\subsubsection{Aggregate bequests to aggregate net wealth}
+
+To compute the aggregate bequests to aggregate net wealth ratio, we use data from the 2019 SFS and the Life Tables for Canada, which we sourced from the World Health Organization.\footnote{See \url{apps.who.int/gho/data/view.searo.60290?lang=en}.} We calculate the net wealth for economic families within each age cohort (PWNETWPG) and then multiply this aggregate sum by the death rate of each age cohort. This process provides us with the total value of bequests for each age cohort. We sum up all bequests across all age cohorts and divide this total by the sum of net wealth for all economic families. As a result, we obtain a ratio of 0.022, indicating that aggregate bequests constitute 2.2\% of aggregate net wealth. This estimate aligns closely with figures reported for the United States (see \citet{cagetti-denardi-2006}).
