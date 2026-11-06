@@ -11,7 +11,7 @@ Inputs (paths relative to the replication package root):
     homeownership rate by age, 2016 Census, Toronto CMA.
   - data/2019_SFS.xlsx, sheet "LTV by Age Group":
     average LTV of homeowners by age group, 2019 Survey of Financial Security, Toronto.
-  - outputs/outputs_control_sorting_benchmark_marginal_profits.txt:
+  - outputs/benchmark.txt:
     benchmark simulation; lines "homeownership_age1" ... "homeownership_age60"
     (model ages 1-60 = ages 26-85) and "LTV_age_group1" ... "LTV_age_group12"
     (age groups 26-29, 30-34, ..., 75-79, 80+).
@@ -50,7 +50,7 @@ matplotlib.rcParams.update({
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CENSUS_XLSX = os.path.join(ROOT, "data", "2016_Census_vetted.xlsx")
 SFS_XLSX = os.path.join(ROOT, "data", "2019_SFS.xlsx")
-BENCHMARK = os.path.join(ROOT, "outputs", "outputs_control_sorting_benchmark_marginal_profits.txt")
+BENCHMARK = os.path.join(ROOT, "outputs", "benchmark.txt")
 
 AGES = list(range(26, 86))
 AGE_GROUPS = ["26-29", "30-34", "35-39", "40-44", "45-49", "50-54",

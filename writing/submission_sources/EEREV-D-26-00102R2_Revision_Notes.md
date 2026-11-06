@@ -1,4 +1,4 @@
-# Revision Notes 2
+# Revision Notes
 
 **Manuscript:** EEREV-D-26-00102R2, "Rent Control? Bad in Theory, Not Always in Practice"
 **Authors:** Shahar Rotberg and Lin Zhang
@@ -14,19 +14,21 @@ Thank you for the conditional acceptance of our paper. We are grateful to you, t
 - **Labels.** Every file name includes the manuscript number and states what the file is: `EEREV-D-26-00102R2_manuscript`, `_appendix`, `_references`, `_Table_1` to `_Table_6`, `_references_style_aer`, `_Figure_1`, `_Figure_2a`, `_Figure_2b`, `_ReadMe`, `_highlights`.
 - **Figures.** Each figure file carries the figure number used in the article: `EEREV-D-26-00102R2_Figure_1.eps`, and the two panels of Figure 2 as `EEREV-D-26-00102R2_Figure_2a.eps` and `EEREV-D-26-00102R2_Figure_2b.eps` (one graph per file, as the Guide for Authors asks). Following Elsevier's artwork instructions, all are vector EPS files with embedded Arial-compatible fonts; Figure 1 is sized for full page width (190 mm) and each panel of Figure 2 for half page width, so that all lettering prints at 7 pt or larger.
 - **Underscores.** No file name contains spaces.
+- **File-name length.** Every file name, including those inside the two zip folders, is 64 characters or fewer, and no file name appears twice. The simulation output files are stored under short names; the ReadMe lists the name the program writes for each.
 - **ReadMe.** The replication zip contains `EEREV-D-26-00102R2_ReadMe.pdf`. It lists every file in the package with its purpose and format, and explains the data sources and how they were used, the software required, run times, how to run the code, and which output file produces each number in Tables 2-6 and Figure 2.
-- **Size.** The replication files total about 18 MB, below the 100 MB limit, so we upload them directly. The same files are also available at <https://github.com/srotberg/rent_control_bad_in_theory_not_always_in_practice>, which is cited in the paper's first footnote.
+- **Size.** The replication files total about 18 MB, below the 100 MB limit, so we upload them directly. The same files are also available at <https://github.com/srotberg/rent_control_bad_in_theory_not_always_in_practice>, which is cited in the paper's Data availability statement.
 - **Two zip folders.** `EEREV-D-26-00102R2_Source_files.zip` and `EEREV-D-26-00102R2_Replication_files.zip`.
 
 ## 2-4. File inventory
 
-**Manuscript and LaTeX source files** (`EEREV-D-26-00102R2_Source_files.zip`):
+**Manuscript** (`EEREV-D-26-00102R2_manuscript.pdf`): the compiled manuscript, uploaded on its own.
+
+**LaTeX source files** (`EEREV-D-26-00102R2_Source_files.zip`):
 
 - `EEREV-D-26-00102R2_manuscript.tex`: the manuscript. It reads the appendix, each table and each figure from the separate files below.
 - `EEREV-D-26-00102R2_appendix.tex`: the appendix.
 - `EEREV-D-26-00102R2_Table_1.tex` to `EEREV-D-26-00102R2_Table_6.tex`: one file per table, numbered as in the article.
 - `EEREV-D-26-00102R2_references.bib`, `EEREV-D-26-00102R2_manuscript.bbl` and `EEREV-D-26-00102R2_references_style_aer.bst`: the bibliography, its compiled version, and the AER bibliography style.
-- `EEREV-D-26-00102R2_manuscript.pdf`: the compiled manuscript.
 - `EEREV-D-26-00102R2_Figure_1.eps`, `EEREV-D-26-00102R2_Figure_2a.eps` and `EEREV-D-26-00102R2_Figure_2b.eps`: artwork (vector EPS). Vector PDF copies of the same files are included so that the LaTeX source compiles directly with pdfLaTeX.
 
 **Replication files** (`EEREV-D-26-00102R2_Replication_files.zip`, supplementary material for online publication):

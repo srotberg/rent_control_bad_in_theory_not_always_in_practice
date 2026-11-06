@@ -68,7 +68,7 @@ The full search over the Experiment 4 discount took between 1.5 and 7 days per g
 
 ## 4. Instructions
 
-1. **Simulations.** Follow `code/readme.txt`. Run the benchmark first, then the counterfactuals in the same folder, because every counterfactual reads the benchmark's `.dat` files. Each run writes `outputs<simulation name>.txt`; the six that the paper uses are listed in Section 5.
+1. **Simulations.** Follow `code/readme.txt`. Run the benchmark first, then the counterfactuals in the same folder, because every counterfactual reads the benchmark's `.dat` files. Each run writes `outputs<simulation name>.txt`. Because the journal limits file names to 64 characters, the copies of these files in `outputs/` have shorter names; the table at the end of Section 5 gives the name the program writes for each one.
 2. **Tables 2-6.** Read the values from the output files as described in Section 5.
 3. **Figures.** Run `python plots/figure_1_rent_path_diagram.py` for Figure 1. For Figure 2, run `python plots/figure_2_homeownership_and_LTV.py`. It reads `data/2016_Census_vetted.xlsx`, `data/2019_SFS.xlsx` and the benchmark output file, and writes its two panels as `plots/Figure_2a_homeownership_by_age` and `plots/Figure_2b_LTV_by_age_group` (`.pdf` and `.eps`).
 4. **Data moments.** At the top of each Stata script, set `global datadir` to the folder that holds the script's input microdata file (the Stata log is written there too). The default `"."` is the current working directory: running `premium_and_discrimination.do` or `computations_fraction_controlled_new_and_old.do` from `data/` works as is, because `census_pumf_clean_2016.dta` is there. The results are the values recorded in `2016_Census_vetted.xlsx` and `2019_SFS.xlsx` (Section 2).
@@ -79,12 +79,12 @@ The six simulations reported in the paper (all files are in `outputs/`):
 
 | Simulation | Output file |
 |---|---|
-| Benchmark (tenancy control) | `outputs_control_sorting_benchmark_marginal_profits.txt` |
-| Experiment 1: decontrol, income tax cuts | `outputs0_control_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` |
-| Experiment 2: decontrol, transfers to renters and the homeless | `outputs0_control_GE_counter_marginal_pi_lump_sum_renters.txt` |
-| Experiment 3: decontrol, full profit tax, transfers to newborns | `outputs0_control_GE_counter_marginal_pi_lump_sum_young_pi_full_tax.txt` |
-| Experiment 4: optimal unit control | `outputs28_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` |
-| Experiment 4, controlled units for low-income renters only | `outputs28_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top_controlled_rentals_to_low_income_only.txt` |
+| Benchmark (tenancy control) | `benchmark.txt` |
+| Experiment 1: decontrol, income tax cuts | `exp1_decontrol_tax_cuts.txt` |
+| Experiment 2: decontrol, transfers to renters and the homeless | `exp2_decontrol_transfers_renters.txt` |
+| Experiment 3: decontrol, full profit tax, transfers to newborns | `exp3_decontrol_transfers_newborns.txt` |
+| Experiment 4: optimal unit control | `exp4_unit_control.txt` |
+| Experiment 4, controlled units for low-income renters only | `exp4_unit_control_low_income_only.txt` |
 
 Each output file is a list of lines of the form `name value`. In what follows, "line `x`" means the value on the line whose name is `x` (the first such line unless stated otherwise).
 
@@ -144,7 +144,51 @@ Values in the paper are rounded to two decimals; a few cells differ from the out
 
 - Experiment 4's discount of 35.6% relative to the benchmark free-market rent: the second `model_average_rent` line of the Experiment 4 output divided by the first `model_average_rent` line of the benchmark output.
 - The 2.57% welfare gain with income conditioning (footnote in Section 5.1): the welfare formula applied to the income-conditioned Experiment 4 output.
-- The optimal discount: Experiment 4 was run for a grid of values of `discount_in_unit_control` (files `outputsNN_discount_...`; see `code/readme.txt`). The run labelled 28 (`discount_in_unit_control=0.27`) gives the highest newborn welfare.
+- The optimal discount: Experiment 4 was run for a grid of values of `discount_in_unit_control` (files `grid_unit_control_labelNN.txt`; see `code/readme.txt`). The run labelled 28 (`discount_in_unit_control=0.27`) gives the highest newborn welfare.
+
+**Output file names.** The program names each results file `outputs<simulation name>.txt`. Those names are longer than the 64 characters the journal allows, so the files in `outputs/` are renamed as follows; the contents are unchanged.
+
+| File in `outputs/` | Name written by the program |
+|---|---|
+| `benchmark.txt` | `outputs_control_sorting_benchmark_marginal_profits.txt` |
+| `exp1_decontrol_tax_cuts.txt` | `outputs0_control_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` |
+| `exp2_decontrol_transfers_renters.txt` | `outputs0_control_GE_counter_marginal_pi_lump_sum_renters.txt` |
+| `exp3_decontrol_transfers_newborns.txt` | `outputs0_control_GE_counter_marginal_pi_lump_sum_young_pi_full_tax.txt` |
+| `exp4_unit_control.txt` | `outputs28_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` |
+| `exp4_unit_control_low_income_only.txt` | `outputs28_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top_controlled_rentals_to_low_income_only.txt` |
+| `extra_benchmark_higher_elasticity.txt` | `outputs_control_sorting_benchmark_marginal_profits_higher_elasticity.txt` |
+| `extra_benchmark_higher_elasticity_run2.txt` | `outputs_0_control_sorting_benchmark_marginal_profits_higher_elasticity.txt` |
+| `extra_fixed_prices_tax_cuts.txt` | `outputs0_control_rents_and_hp_constant_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` |
+| `extra_fixed_prices_transfers_newborns.txt` | `outputs0_control_rents_and_hp_constant_counter_marginal_pi_lump_sum_young_pi_full_tax.txt` |
+| `extra_fixed_prices_transfers_renters.txt` | `outputs0_control_rents_and_hp_constant_counter_marginal_pi_lump_sum_renters.txt` |
+| `extra_sr_fixed_stocks_tax_cuts.txt` | `outputs0_control_beq_constant_counter_marginal_pi_inc_tax_reduction_pi_to_top_sr_fixed_stocks.txt` |
+| `extra_sr_fixed_stocks_transfers_newborns.txt` | `outputs0_control_beq_constant_counter_marginal_pi_lump_sum_young_pi_full_tax_sr_fixed_stocks.txt` |
+| `extra_sr_fixed_stocks_transfers_renters.txt` | `outputs0_control_beq_constant_counter_marginal_pi_lump_sum_renters_sr_fixed_stocks.txt` |
+| `extra_sr_fixed_stocks_vs_unit_control_tax_cuts.txt` | `outputs0_control_beq_constant_counter_marginal_pi_inc_tax_reduction_pi_to_top_sr_fixed_stocks_relative_to_unit_control.txt` |
+| `extra_sr_fixed_stocks_vs_unit_transfers_newborns.txt` | `outputs0_control_beq_constant_counter_marginal_pi_lump_sum_young_pi_full_tax_sr_fixed_stocks_relative_to_unit_control.txt` |
+| `extra_sr_fixed_stocks_vs_unit_transfers_renters.txt` | `outputs0_control_beq_constant_counter_marginal_pi_lump_sum_renters_sr_fixed_stocks_relative_to_unit_control.txt` |
+| `extra_sr_tax_cuts.txt` | `outputs0_control_beq_constant_counter_marginal_pi_inc_tax_reduction_pi_to_top_sr.txt` |
+| `extra_sr_transfers_newborns.txt` | `outputs0_control_beq_constant_counter_marginal_pi_lump_sum_young_pi_full_tax_sr.txt` |
+| `extra_sr_transfers_renters.txt` | `outputs0_control_beq_constant_counter_marginal_pi_lump_sum_renters_sr.txt` |
+| `extra_sr_vs_unit_control_tax_cuts.txt` | `outputs0_control_beq_constant_counter_marginal_pi_inc_tax_reduction_pi_to_top_sr_relative_to_unit_control.txt` |
+| `extra_sr_vs_unit_control_transfers_newborns.txt` | `outputs0_control_beq_constant_counter_marginal_pi_lump_sum_young_pi_full_tax_sr_relative_to_unit_control.txt` |
+| `extra_sr_vs_unit_control_transfers_renters.txt` | `outputs0_control_beq_constant_counter_marginal_pi_lump_sum_renters_sr_relative_to_unit_control.txt` |
+| `extra_tax_cuts_higher_elasticity.txt` | `outputs0_control_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top_higher_elasticity.txt` |
+| `extra_transfers_bottom_renters.txt` | `outputs0_control_GE_counter_marginal_pi_lump_sum_bottom_renters.txt` |
+| `extra_transfers_by_income_and_age.txt` | `outputs0_control_GE_counter_marginal_pi_lump_sum_to_all_by_income_and_age.txt` |
+| `extra_transfers_renters_higher_elasticity.txt` | `outputs0_control_GE_counter_marginal_pi_lump_sum_renters_higher_elasticity.txt` |
+| `extra_transfers_two_bottom_renters.txt` | `outputs0_control_GE_counter_marginal_pi_lump_sum_two_bottom_renters.txt` |
+| `grid_unit_control_label16.txt` | `outputs16_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` |
+| `grid_unit_control_label24.txt` | `outputs24_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` |
+| `grid_unit_control_label25.txt` | `outputs25_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` |
+| `grid_unit_control_label25_run2.txt` | `outputs_25_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` |
+| `grid_unit_control_label26.txt` | `outputs26_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` |
+| `grid_unit_control_label28_run2.txt` | `outputs_28_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` |
+| `grid_unit_control_label29.txt` | `outputs29_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` |
+| `grid_unit_control_label30.txt` | `outputs30_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` |
+| `grid_unit_control_label31.txt` | `outputs31_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` |
+| `grid_unit_control_label31_run2.txt` | `outputs_31_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` |
+| `grid_unit_control_label32.txt` | `outputs32_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` |
 
 ## 6. List of all files
 
@@ -166,7 +210,7 @@ Each entry gives the file's format, size and purpose. File formats:
 **code/**
 
 - `code/readme.txt` (plain text, 5 KB). How to compile and run the model and which switches select each simulation.
-- `code/rent_control_bad_in_theory_not_always_in_practice_Rotberg_Zhang_v11.f90` (Fortran 90 source, 1.1 MB). Fortran source for the model; produces every simulation (benchmark and counterfactuals).
+- `code/rent_control_Rotberg_Zhang_v11.f90` (Fortran 90 source, 1.1 MB). Fortran source for the model; produces every simulation (benchmark and counterfactuals).
 
 **data/**
 
@@ -187,45 +231,45 @@ Each entry gives the file's format, size and purpose. File formats:
 
 **outputs/**
 
-- `outputs/outputs0_control_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (model output, text, 58 KB). Experiment 1: decontrol with income tax cuts (Tables 5-6, row 1).
-- `outputs/outputs0_control_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top_higher_elasticity.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (higher rental supply elasticity).
-- `outputs/outputs0_control_GE_counter_marginal_pi_lump_sum_bottom_renters.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (transfers to bottom-quintile renters).
-- `outputs/outputs0_control_GE_counter_marginal_pi_lump_sum_renters.txt` (model output, text, 58 KB). Experiment 2: decontrol with transfers to renters and the homeless (Tables 5-6, row 2).
-- `outputs/outputs0_control_GE_counter_marginal_pi_lump_sum_renters_higher_elasticity.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (higher rental supply elasticity).
-- `outputs/outputs0_control_GE_counter_marginal_pi_lump_sum_to_all_by_income_and_age.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (transfers to all households by income and age).
-- `outputs/outputs0_control_GE_counter_marginal_pi_lump_sum_two_bottom_renters.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (transfers to bottom-two-quintile renters).
-- `outputs/outputs0_control_GE_counter_marginal_pi_lump_sum_young_pi_full_tax.txt` (model output, text, 58 KB). Experiment 3: decontrol, full profit tax, transfers to newborns (Tables 5-6, row 3).
-- `outputs/outputs0_control_beq_constant_counter_marginal_pi_inc_tax_reduction_pi_to_top_sr.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (short run; bequests held fixed).
-- `outputs/outputs0_control_beq_constant_counter_marginal_pi_inc_tax_reduction_pi_to_top_sr_fixed_stocks.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (housing stocks held fixed; short run; bequests held fixed).
-- `outputs/outputs0_control_beq_constant_counter_marginal_pi_inc_tax_reduction_pi_to_top_sr_fixed_stocks_relative_to_unit_control.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (measured against the unit-control economy; housing stocks held fixed; short run; bequests held fixed).
-- `outputs/outputs0_control_beq_constant_counter_marginal_pi_inc_tax_reduction_pi_to_top_sr_relative_to_unit_control.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (measured against the unit-control economy; short run; bequests held fixed).
-- `outputs/outputs0_control_beq_constant_counter_marginal_pi_lump_sum_renters_sr.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (short run; bequests held fixed).
-- `outputs/outputs0_control_beq_constant_counter_marginal_pi_lump_sum_renters_sr_fixed_stocks.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (housing stocks held fixed; short run; bequests held fixed).
-- `outputs/outputs0_control_beq_constant_counter_marginal_pi_lump_sum_renters_sr_fixed_stocks_relative_to_unit_control.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (measured against the unit-control economy; housing stocks held fixed; short run; bequests held fixed).
-- `outputs/outputs0_control_beq_constant_counter_marginal_pi_lump_sum_renters_sr_relative_to_unit_control.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (measured against the unit-control economy; short run; bequests held fixed).
-- `outputs/outputs0_control_beq_constant_counter_marginal_pi_lump_sum_young_pi_full_tax_sr.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (short run; bequests held fixed).
-- `outputs/outputs0_control_beq_constant_counter_marginal_pi_lump_sum_young_pi_full_tax_sr_fixed_stocks.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (housing stocks held fixed; short run; bequests held fixed).
-- `outputs/outputs0_control_beq_constant_counter_marginal_pi_lump_sum_young_pi_full_tax_sr_fixed_stocks_relative_to_unit_control.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (measured against the unit-control economy; housing stocks held fixed; short run; bequests held fixed).
-- `outputs/outputs0_control_beq_constant_counter_marginal_pi_lump_sum_young_pi_full_tax_sr_relative_to_unit_control.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (measured against the unit-control economy; short run; bequests held fixed).
-- `outputs/outputs0_control_rents_and_hp_constant_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (rents and house prices held at benchmark values).
-- `outputs/outputs0_control_rents_and_hp_constant_counter_marginal_pi_lump_sum_renters.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (rents and house prices held at benchmark values).
-- `outputs/outputs0_control_rents_and_hp_constant_counter_marginal_pi_lump_sum_young_pi_full_tax.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (rents and house prices held at benchmark values).
-- `outputs/outputs16_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (model output, text, 58 KB). Experiment 4 grid point (discount label 16); used to choose the welfare-maximizing discount.
-- `outputs/outputs24_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (model output, text, 58 KB). Experiment 4 grid point (discount label 24); used to choose the welfare-maximizing discount.
-- `outputs/outputs25_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (model output, text, 58 KB). Experiment 4 grid point (discount label 25); used to choose the welfare-maximizing discount.
-- `outputs/outputs26_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (model output, text, 58 KB). Experiment 4 grid point (discount label 26); used to choose the welfare-maximizing discount.
-- `outputs/outputs28_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (model output, text, 58 KB). Experiment 4: optimal unit control, discount_in_unit_control=0.27 (Tables 4-6).
-- `outputs/outputs28_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top_controlled_rentals_to_low_income_only.txt` (model output, text, 58 KB). Experiment 4 with controlled units for low-income renters only (2.57% welfare gain, footnote in Section 5.1).
-- `outputs/outputs29_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (model output, text, 58 KB). Experiment 4 grid point (discount label 29); used to choose the welfare-maximizing discount.
-- `outputs/outputs30_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (model output, text, 58 KB). Experiment 4 grid point (discount label 30); used to choose the welfare-maximizing discount.
-- `outputs/outputs31_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (model output, text, 58 KB). Experiment 4 grid point (discount label 31); used to choose the welfare-maximizing discount.
-- `outputs/outputs32_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (model output, text, 58 KB). Experiment 4 grid point (discount label 32); used to choose the welfare-maximizing discount.
-- `outputs/outputs_0_control_sorting_benchmark_marginal_profits_higher_elasticity.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (higher rental supply elasticity).
-- `outputs/outputs_25_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (model output, text, 58 KB). Separate run of a discount grid point (not used in the paper); the space the code wrote into the file name is replaced by an underscore.
-- `outputs/outputs_28_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (model output, text, 58 KB). Separate run of a discount grid point (not used in the paper); the space the code wrote into the file name is replaced by an underscore.
-- `outputs/outputs_31_discount_control_random_GE_counter_marginal_pi_inc_tax_reduction_pi_to_top.txt` (model output, text, 58 KB). Separate run of a discount grid point (not used in the paper); the space the code wrote into the file name is replaced by an underscore.
-- `outputs/outputs_control_sorting_benchmark_marginal_profits.txt` (model output, text, 58 KB). Benchmark (tenancy control): Tables 2-4 and Figure 2 (model); baseline for Tables 5-6.
-- `outputs/outputs_control_sorting_benchmark_marginal_profits_higher_elasticity.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (higher rental supply elasticity).
+- `outputs/benchmark.txt` (model output, text, 58 KB). Benchmark (tenancy control): Tables 2-4 and Figure 2 (model); baseline for Tables 5-6.
+- `outputs/exp1_decontrol_tax_cuts.txt` (model output, text, 58 KB). Experiment 1: decontrol with income tax cuts (Tables 5-6, row 1).
+- `outputs/exp2_decontrol_transfers_renters.txt` (model output, text, 58 KB). Experiment 2: decontrol with transfers to renters and the homeless (Tables 5-6, row 2).
+- `outputs/exp3_decontrol_transfers_newborns.txt` (model output, text, 58 KB). Experiment 3: decontrol, full profit tax, transfers to newborns (Tables 5-6, row 3).
+- `outputs/exp4_unit_control.txt` (model output, text, 58 KB). Experiment 4: optimal unit control, discount_in_unit_control=0.27 (Tables 4-6).
+- `outputs/exp4_unit_control_low_income_only.txt` (model output, text, 58 KB). Experiment 4 with controlled units for low-income renters only (2.57% welfare gain, footnote in Section 5.1).
+- `outputs/extra_benchmark_higher_elasticity.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (higher rental supply elasticity).
+- `outputs/extra_benchmark_higher_elasticity_run2.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (higher rental supply elasticity).
+- `outputs/extra_fixed_prices_tax_cuts.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (rents and house prices held at benchmark values).
+- `outputs/extra_fixed_prices_transfers_newborns.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (rents and house prices held at benchmark values).
+- `outputs/extra_fixed_prices_transfers_renters.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (rents and house prices held at benchmark values).
+- `outputs/extra_sr_fixed_stocks_tax_cuts.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (housing stocks held fixed; short run; bequests held fixed).
+- `outputs/extra_sr_fixed_stocks_transfers_newborns.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (housing stocks held fixed; short run; bequests held fixed).
+- `outputs/extra_sr_fixed_stocks_transfers_renters.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (housing stocks held fixed; short run; bequests held fixed).
+- `outputs/extra_sr_fixed_stocks_vs_unit_control_tax_cuts.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (measured against the unit-control economy; housing stocks held fixed; short run; bequests held fixed).
+- `outputs/extra_sr_fixed_stocks_vs_unit_transfers_newborns.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (measured against the unit-control economy; housing stocks held fixed; short run; bequests held fixed).
+- `outputs/extra_sr_fixed_stocks_vs_unit_transfers_renters.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (measured against the unit-control economy; housing stocks held fixed; short run; bequests held fixed).
+- `outputs/extra_sr_tax_cuts.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (short run; bequests held fixed).
+- `outputs/extra_sr_transfers_newborns.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (short run; bequests held fixed).
+- `outputs/extra_sr_transfers_renters.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (short run; bequests held fixed).
+- `outputs/extra_sr_vs_unit_control_tax_cuts.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (measured against the unit-control economy; short run; bequests held fixed).
+- `outputs/extra_sr_vs_unit_control_transfers_newborns.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (measured against the unit-control economy; short run; bequests held fixed).
+- `outputs/extra_sr_vs_unit_control_transfers_renters.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (measured against the unit-control economy; short run; bequests held fixed).
+- `outputs/extra_tax_cuts_higher_elasticity.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (higher rental supply elasticity).
+- `outputs/extra_transfers_bottom_renters.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (transfers to bottom-quintile renters).
+- `outputs/extra_transfers_by_income_and_age.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (transfers to all households by income and age).
+- `outputs/extra_transfers_renters_higher_elasticity.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (higher rental supply elasticity).
+- `outputs/extra_transfers_two_bottom_renters.txt` (model output, text, 58 KB). Additional simulation from an earlier revision, not reported in the final paper (transfers to bottom-two-quintile renters).
+- `outputs/grid_unit_control_label16.txt` (model output, text, 58 KB). Experiment 4 grid point (discount label 16); used to choose the welfare-maximizing discount.
+- `outputs/grid_unit_control_label24.txt` (model output, text, 58 KB). Experiment 4 grid point (discount label 24); used to choose the welfare-maximizing discount.
+- `outputs/grid_unit_control_label25.txt` (model output, text, 58 KB). Experiment 4 grid point (discount label 25); used to choose the welfare-maximizing discount.
+- `outputs/grid_unit_control_label25_run2.txt` (model output, text, 58 KB). Separate run of a discount grid point (not used in the paper).
+- `outputs/grid_unit_control_label26.txt` (model output, text, 58 KB). Experiment 4 grid point (discount label 26); used to choose the welfare-maximizing discount.
+- `outputs/grid_unit_control_label28_run2.txt` (model output, text, 58 KB). Separate run of a discount grid point (not used in the paper).
+- `outputs/grid_unit_control_label29.txt` (model output, text, 58 KB). Experiment 4 grid point (discount label 29); used to choose the welfare-maximizing discount.
+- `outputs/grid_unit_control_label30.txt` (model output, text, 58 KB). Experiment 4 grid point (discount label 30); used to choose the welfare-maximizing discount.
+- `outputs/grid_unit_control_label31.txt` (model output, text, 58 KB). Experiment 4 grid point (discount label 31); used to choose the welfare-maximizing discount.
+- `outputs/grid_unit_control_label31_run2.txt` (model output, text, 58 KB). Separate run of a discount grid point (not used in the paper).
+- `outputs/grid_unit_control_label32.txt` (model output, text, 58 KB). Experiment 4 grid point (discount label 32); used to choose the welfare-maximizing discount.
 
 **plots/**
 
