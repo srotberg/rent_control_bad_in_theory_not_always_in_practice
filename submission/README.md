@@ -9,6 +9,8 @@ This note is for the authors' reference; it is not uploaded to the journal.
 | Supplementary material for online publication | `EEREV-D-26-00102R2_Replication_files.zip` |
 | Revision Notes 2 | `EEREV-D-26-00102R2_Revision_Notes.pdf` |
 | Highlights | `EEREV-D-26-00102R2_highlights.docx` |
+| Response to Reviewers | `EEREV-D-26-00102R2_Response_to_Reviewers.pdf` |
+| Declaration of Competing Interest | `EEREV-D-26-00102R2_Declaration_of_Competing_Interest.docx` |
 
 Every file name, including those inside the two zip folders, is 64 characters or fewer, and no file name appears twice.
 
@@ -25,5 +27,9 @@ The Guide for Authors asks for a concise caption for each supplementary file. Fo
 - **Replication files zip**: `EEREV-D-26-00102R2_ReadMe.pdf`, `code/`, `data/`, `outputs/`, `plots/`.
 - **Revision Notes**: point-by-point response to the editor's letter, the corrections made while preparing the files, and the changes made to follow the Guide for Authors.
 - **Highlights**: five bullet points (at most 85 characters each) summarising the paper.
+- **Response to Reviewers**: thanks the editor and reviewers, notes that Reviewer #2 had no further comments, and points to the Revision Notes.
+- **Declaration of Competing Interest**: Elsevier's standard declaration that the authors have no competing interests (Word format, as the Guide for Authors requires).
 
-The editable text of the revision notes and highlights is in `writing/submission_sources/`.
+Upload each file on its own; do not upload a zip of this whole folder, because it contains the manuscript PDF again and Editorial Manager rejects duplicate file names.
+
+The editable text of the revision notes, response, declaration and highlights is in `writing/submission_sources/`.

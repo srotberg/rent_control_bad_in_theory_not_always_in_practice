@@ -1,0 +1,9 @@
+# Declaration of interests
+
+**Manuscript:** EEREV-D-26-00102R2, "Rent Control? Bad in Theory, Not Always in Practice"
+
+**Authors:** Shahar Rotberg and Lin Zhang
+
+☒ The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.
+
+☐ The authors declare the following financial interests/personal relationships which may be considered as potential competing interests:
